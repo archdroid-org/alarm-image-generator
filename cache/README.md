@@ -1,2 +1,2 @@
 Holds packages that where downloaded and installed to prevent
-continues downloading when generating multiple images.
+downloading multiple times when generating multiple images.
