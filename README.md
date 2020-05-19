@@ -129,7 +129,7 @@ platform and environment to generate a new image you would call the
 script as follows:
 
 ```sh
-./build.sh build -e sway rpi3
+./build.sh build -e sway c2
 ```
 
 Pull requests with improvements, new platforms or environments are
