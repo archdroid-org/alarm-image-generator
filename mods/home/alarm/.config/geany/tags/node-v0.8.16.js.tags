@@ -1,0 +1,415 @@
+# format=pipe
+log|console.|([data], [...])|
+info|console.|([data], [...])|
+error|console.|([data], [...])|
+warn|console.|([data], [...])|
+dir|console.|(obj)|
+time|console.|(label)|
+timeEnd|console.|(label)|
+trace|console.|(label)|
+assert|console.|(expression, [message])|
+abort|process.|()|
+chdir|process.|(directory)|
+cwd|process.|()|
+exit|process.|([code])|
+getgid|process.|()|
+setgid|process.|(id)|
+getuid|process.|()|
+setuid|process.|(id)|
+kill|process.|(pid, [signal])|
+memoryUsage|process.|()|
+nextTick|process.|(callback)|
+umask|process.|([mask])|
+uptime|process.|()|
+hrtime|process.|()|
+resolve|require.|()|
+setTimeout||(cb, ms)|
+clearTimeout||(t)|
+setInterval||(cb, ms)|
+log|console.|([data], [...])|
+info|console.|([data], [...])|
+error|console.|([data], [...])|
+warn|console.|([data], [...])|
+dir|console.|(obj)|
+time|console.|(label)|
+timeEnd|console.|(label)|
+trace|console.|(label)|
+assert|console.|(expression, [message])|
+abort|process.|()|
+chdir|process.|(directory)|
+cwd|process.|()|
+exit|process.|([code])|
+getgid|process.|()|
+setgid|process.|(id)|
+getuid|process.|()|
+setuid|process.|(id)|
+kill|process.|(pid, [signal])|
+memoryUsage|process.|()|
+nextTick|process.|(callback)|
+umask|process.|([mask])|
+uptime|process.|()|
+hrtime|process.|()|
+resolve|require.|()|
+setTimeout||(cb, ms)|
+clearTimeout||(t)|
+setInterval||(cb, ms)|
+require|module.|(id): Object|
+format|util.|(format, [...])|
+debug|util.|(string)|
+error|util.|([...])|
+puts|util.|([...])|
+print|util.|([...])|
+log|util.|(string)|
+inspect|util.|(object, [showHidden], [depth], [colors])|
+isArray|util.|(object)|
+isRegExp|util.|(object)|
+isDate|util.|(object)|
+isError|util.|(object)|
+pump|util.|(readableStream, writableStream, [callback])|
+inherits|util.|(constructor, superConstructor)|
+addListener|events.EventEmitter#|(event, listener)|
+on|events.EventEmitter#|(event, listener)|
+once|events.EventEmitter#|(event, listener)|
+removeListener|events.EventEmitter#|(event, listener)|
+removeAllListeners|events.EventEmitter#|([event])|
+setMaxListeners|events.EventEmitter#|(n)|
+listeners|events.EventEmitter#|(event)|
+emit|events.EventEmitter#|(event, [arg1], [arg2], [...])|
+create|domain.|(): Domain|
+run|Domain#|(fn)|
+add|Domain#|(emitter)|
+remove|Domain#|(emitter)|
+bind|Domain#|(callback): Function|
+intercept|Domain#|(callback): Function|
+dispose|Domain#|()|
+write|Buffer#|(string, [offset], [length], [encoding])|
+toString|Buffer#|([encoding], [start], [end])|
+copy|Buffer#|(targetBuffer, [targetStart], [sourceStart], [sourceEnd])|
+slice|Buffer#|([start], [end])|
+readUInt8|Buffer#|(offset, [noAssert])|
+readUInt16LE|Buffer#|(offset, [noAssert])|
+readUInt16BE|Buffer#|(offset, [noAssert])|
+readUInt32LE|Buffer#|(offset, [noAssert])|
+readUInt32BE|Buffer#|(offset, [noAssert])|
+readInt8|Buffer#|(offset, [noAssert])|
+readInt16LE|Buffer#|(offset, [noAssert])|
+readInt16BE|Buffer#|(offset, [noAssert])|
+readInt32LE|Buffer#|(offset, [noAssert])|
+readInt32BE|Buffer#|(offset, [noAssert])|
+readFloatLE|Buffer#|(offset, [noAssert])|
+readFloatBE|Buffer#|(offset, [noAssert])|
+readDoubleLE|Buffer#|(offset, [noAssert])|
+readDoubleBE|Buffer#|(offset, [noAssert])|
+writeUInt8|Buffer#|(value, offset, [noAssert])|
+writeUInt16LE|Buffer#|(value, offset, [noAssert])|
+writeUInt16BE|Buffer#|(value, offset, [noAssert])|
+writeUInt32LE|Buffer#|(value, offset, [noAssert])|
+writeUInt32BE|Buffer#|(value, offset, [noAssert])|
+writeInt8|Buffer#|(value, offset, [noAssert])|
+writeInt16LE|Buffer#|(value, offset, [noAssert])|
+writeInt16BE|Buffer#|(value, offset, [noAssert])|
+writeInt32LE|Buffer#|(value, offset, [noAssert])|
+writeInt32BE|Buffer#|(value, offset, [noAssert])|
+writeFloatLE|Buffer#|(value, offset, [noAssert])|
+writeFloatBE|Buffer#|(value, offset, [noAssert])|
+writeDoubleLE|Buffer#|(value, offset, [noAssert])|
+writeDoubleBE|Buffer#|(value, offset, [noAssert])|
+fill|Buffer#|(value, [offset], [end])|
+isBuffer|Buffer#|(obj)|
+byteLength|Buffer#|(string, [encoding])|
+concat|Buffer#|(list, [totalLength])|
+Buffer|buffer.||
+setEncoding|Readable Stream#|([encoding])|
+pause|Readable Stream#|()|
+resume|Readable Stream#|()|
+destroy|Readable Stream#|()|
+pipe|Readable Stream#|(destination, [options])|
+write|Writable Stream#|(string, [encoding])|
+write|Writable Stream#|(buffer)|
+end|Writable Stream#|()|
+end|Writable Stream#|(string, encoding)|
+end|Writable Stream#|(buffer)|
+destroy|Writable Stream#|()|
+destroySoon|Writable Stream#|()|
+createCredentials|crypto.|(details)|
+createHash|crypto.|(algorithm)|
+createHmac|crypto.|(algorithm, key)|
+createCipher|crypto.|(algorithm, password)|
+createCipheriv|crypto.|(algorithm, key, iv)|
+createDecipher|crypto.|(algorithm, password)|
+createDecipheriv|crypto.|(algorithm, key, iv)|
+createSign|crypto.|(algorithm)|
+createVerify|crypto.|(algorithm)|
+createDiffieHellman|crypto.|(prime_length)|
+createDiffieHellman|crypto.|(prime, [encoding])|
+getDiffieHellman|crypto.|(group_name)|
+pbkdf2|crypto.|(password, salt, iterations, keylen, callback)|
+randomBytes|crypto.|(size, [callback])|
+update|Hash#|(data, [input_encoding])|
+digest|Hash#|([encoding])|
+update|Hmac#|(data)|
+digest|Hmac#|([encoding])|
+update|Cipher#|(data, [input_encoding], [output_encoding])|
+final|Cipher#|([output_encoding])|
+setAutoPadding|Cipher#|(auto_padding=true)|
+update|Decipher#|(data, [input_encoding], [output_encoding])|
+final|Decipher#|([output_encoding])|
+setAutoPadding|Decipher#|(auto_padding=true)|
+update|Signer#|(data)|
+sign|Signer#|(private_key, [output_format])|
+update|Verify#|(data)|
+verify|Verify#|(object, signature, [signature_format])|
+generateKeys|DiffieHellman#|([encoding])|
+computeSecret|DiffieHellman#|(other_public_key, [input_encoding], [output_encoding])|
+getPrime|DiffieHellman#|([encoding])|
+getGenerator|DiffieHellman#|([encoding])|
+getPublicKey|DiffieHellman#|([encoding])|
+getPrivateKey|DiffieHellman#|([encoding])|
+setPublicKey|DiffieHellman#|(public_key, [encoding])|
+setPrivateKey|DiffieHellman#|(public_key, [encoding])|
+createServer|tls_(ssl).|(options, [secureConnectionListener])|
+connect|tls_(ssl).|(options, [callback])|
+connect|tls_(ssl).|(port, [host], [options], [callback])|
+createSecurePair|tls_(ssl).|([credentials], [isServer], [requestCert], [rejectUnauthorized])|
+listen|tls.Server#|(port, [host], [callback])|
+close|tls.Server#|()|
+address|tls.Server#|()|
+addContext|tls.Server#|(hostname, credentials)|
+getPeerCertificate|tls.CleartextStream#|()|
+getCipher|tls.CleartextStream#|()|
+address|tls.CleartextStream#|()|
+write|StringDecoder#|(buffer)|
+rename|fs.|(oldPath, newPath, [callback])|
+renameSync|fs.|(oldPath, newPath)|
+truncate|fs.|(fd, len, [callback])|
+truncateSync|fs.|(fd, len)|
+chown|fs.|(path, uid, gid, [callback])|
+chownSync|fs.|(path, uid, gid)|
+fchown|fs.|(fd, uid, gid, [callback])|
+fchownSync|fs.|(fd, uid, gid)|
+lchown|fs.|(path, uid, gid, [callback])|
+lchownSync|fs.|(path, uid, gid)|
+chmod|fs.|(path, mode, [callback])|
+chmodSync|fs.|(path, mode)|
+fchmod|fs.|(fd, mode, [callback])|
+fchmodSync|fs.|(fd, mode)|
+lchmod|fs.|(path, mode, [callback])|
+lchmodSync|fs.|(path, mode)|
+stat|fs.|(path, [callback])|
+lstat|fs.|(path, [callback])|
+fstat|fs.|(fd, [callback])|
+statSync|fs.|(path)|
+lstatSync|fs.|(path)|
+fstatSync|fs.|(fd)|
+link|fs.|(srcpath, dstpath, [callback])|
+linkSync|fs.|(srcpath, dstpath)|
+symlink|fs.|(srcpath, dstpath, [type], [callback])|
+symlinkSync|fs.|(srcpath, dstpath, [type])|
+readlink|fs.|(path, [callback])|
+readlinkSync|fs.|(path)|
+realpath|fs.|(path, [cache], callback)|
+realpathSync|fs.|(path, [cache])|
+unlink|fs.|(path, [callback])|
+unlinkSync|fs.|(path)|
+rmdir|fs.|(path, [callback])|
+rmdirSync|fs.|(path)|
+mkdir|fs.|(path, [mode], [callback])|
+mkdirSync|fs.|(path, [mode])|
+readdir|fs.|(path, [callback])|
+readdirSync|fs.|(path)|
+close|fs.|(fd, [callback])|
+closeSync|fs.|(fd)|
+open|fs.|(path, flags, [mode], [callback])|
+openSync|fs.|(path, flags, [mode])|
+utimes|fs.|(path, atime, mtime, [callback])|
+utimesSync|fs.|(path, atime, mtime)|
+futimes|fs.|(fd, atime, mtime, [callback])|
+futimesSync|fs.|(fd, atime, mtime)|
+fsync|fs.|(fd, [callback])|
+fsyncSync|fs.|(fd)|
+write|fs.|(fd, buffer, offset, length, position, [callback])|
+writeSync|fs.|(fd, buffer, offset, length, position)|
+read|fs.|(fd, buffer, offset, length, position, [callback])|
+readSync|fs.|(fd, buffer, offset, length, position)|
+readFile|fs.|(filename, [encoding], [callback])|
+readFileSync|fs.|(filename, [encoding])|
+writeFile|fs.|(filename, data, [encoding], [callback])|
+writeFileSync|fs.|(filename, data, [encoding])|
+appendFile|fs.|(filename, data, encoding='utf8', [callback])|
+appendFileSync|fs.|(filename, data, encoding='utf8')|
+watchFile|fs.|(filename, [options], listener)|
+unwatchFile|fs.|(filename, [listener])|
+watch|fs.|(filename, [options], [listener])|
+exists|fs.|(path, [callback])|
+existsSync|fs.|(path)|
+createReadStream|fs.|(path, [options])|
+createWriteStream|fs.|(path, [options])|
+close|fs.FSWatcher#|()|
+normalize|path.|(p)|
+join|path.|([path1], [path2], [...])|
+resolve|path.|([from ...], to)|
+relative|path.|(from, to)|
+dirname|path.|(p)|
+basename|path.|(p, [ext])|
+extname|path.|(p)|
+createServer|net.|([options], [connectionListener])|
+connect|net.|(options, [connectionListener])|
+createConnection|net.|(options, [connectionListener])|
+connect|net.|(port, [host], [connectListener])|
+createConnection|net.|(port, [host], [connectListener])|
+connect|net.|(path, [connectListener])|
+createConnection|net.|(path, [connectListener])|
+isIP|net.|(input)|
+isIPv4|net.|(input)|
+isIPv6|net.|(input)|
+listen|net.Server#|(port, [host], [backlog], [callback])|
+listen|net.Server#|(path, [callback])|
+listen|net.Server#|(handle, [callback])|
+close|net.Server#|([callback])|
+address|net.Server#|()|
+Socket|net.Socket#|([options])|
+connect|net.Socket#|(port, [host], [connectListener])|
+connect|net.Socket#|(path, [connectListener])|
+setEncoding|net.Socket#|([encoding])|
+write|net.Socket#|(data, [encoding], [callback])|
+end|net.Socket#|([data], [encoding])|
+destroy|net.Socket#|()|
+pause|net.Socket#|()|
+resume|net.Socket#|()|
+setTimeout|net.Socket#|(timeout, [callback])|
+setNoDelay|net.Socket#|([noDelay])|
+setKeepAlive|net.Socket#|([enable], [initialDelay])|
+address|net.Socket#|()|
+createSocket|dgram.|(type, [callback])|
+send|Socket#|(buf, offset, length, port, address, [callback])|
+bind|Socket#|(port, [address])|
+close|Socket#|()|
+address|Socket#|()|
+setBroadcast|Socket#|(flag)|
+setTTL|Socket#|(ttl)|
+setMulticastTTL|Socket#|(ttl)|
+setMulticastLoopback|Socket#|(flag)|
+addMembership|Socket#|(multicastAddress, [multicastInterface])|
+dropMembership|Socket#|(multicastAddress, [multicastInterface])|
+lookup|dns.|(domain, [family], callback)|
+resolve|dns.|(domain, [rrtype], callback)|
+resolve4|dns.|(domain, callback)|
+resolve6|dns.|(domain, callback)|
+resolveMx|dns.|(domain, callback)|
+resolveTxt|dns.|(domain, callback)|
+resolveSrv|dns.|(domain, callback)|
+resolveNs|dns.|(domain, callback)|
+resolveCname|dns.|(domain, callback)|
+reverse|dns.|(ip, callback)|
+setEncoding|ClientResponse.|([encoding])|
+pause|ClientResponse.|()|
+resume|ClientResponse.|()|
+createServer|http.|([requestListener])|
+createClient|http.|([port], [host])|
+request|http.|(options, callback)|
+get|http.|(options, callback)|
+listen|http.Server#|(port, [hostname], [backlog], [callback])|
+listen|http.Server#|(path, [callback])|
+listen|http.Server#|(handle, [callback])|
+close|http.Server#|([callback])|
+setEncoding|http.ServerRequest#|([encoding])|
+pause|http.ServerRequest#|()|
+resume|http.ServerRequest#|()|
+writeContinue|http.ServerResponse#|()|
+writeHead|http.ServerResponse#|(statusCode, [reasonPhrase], [headers])|
+setHeader|http.ServerResponse#|(name, value)|
+getHeader|http.ServerResponse#|(name)|
+removeHeader|http.ServerResponse#|(name)|
+write|http.ServerResponse#|(chunk, [encoding])|
+addTrailers|http.ServerResponse#|(headers)|
+end|http.ServerResponse#|([data], [encoding])|
+write|http.ClientRequest#|(chunk, [encoding])|
+end|http.ClientRequest#|([data], [encoding])|
+abort|http.ClientRequest#|()|
+setTimeout|http.ClientRequest#|(timeout, [callback])|
+setNoDelay|http.ClientRequest#|([noDelay])|
+setSocketKeepAlive|http.ClientRequest#|([enable], [initialDelay])|
+listen|createServer.|(path, [callback])|
+listen|createServer.|(handle, [callback])|
+close|createServer.|([callback])|
+createServer|https.|(options, [requestListener])|
+request|https.|(options, callback)|
+get|https.|(options, callback)|
+parse|url.|(urlStr, [parseQueryString], [slashesDenoteHost])|
+format|url.|(urlObj)|
+resolve|url.|(from, to)|
+stringify|querystring.|(obj, [sep], [eq])|
+parse|querystring.|(str, [sep], [eq], [options])|
+decode|punycode.|(string)|
+encode|punycode.|(string)|
+toUnicode|punycode.|(domain)|
+toASCII|punycode.|(domain)|
+createInterface|readline.|(options)|
+setPrompt|Interface#|(prompt, length)|
+prompt|Interface#|([preserveCursor])|
+question|Interface#|(query, callback)|
+pause|Interface#|()|
+resume|Interface#|()|
+close|Interface#|()|
+write|Interface#|(data, [key])|
+start|repl.|(options)|
+runInThisContext|vm.|(code, [filename])|
+runInNewContext|vm.|(code, [sandbox], [filename])|
+runInContext|vm.|(code, context, [filename])|
+createContext|vm.|([initSandbox])|
+createScript|vm.|(code, [filename])|
+runInThisContext|Script#|()|
+runInNewContext|Script#|([sandbox])|
+kill|ChildProcess#|([signal])|
+send|ChildProcess#|(message, [sendHandle])|
+disconnect|ChildProcess#|()|
+spawn|child_process.|(command, [args], [options]): ChildProcess object|
+exec|child_process.|(command, [options], callback)|
+execFile|child_process.|(file, args, options, callback)|
+fork|child_process.|(modulePath, [args], [options])|
+fail|assert.|(actual, expected, message, operator)|
+ok|assert.|(value, message), assert.ok(value, [message])|
+equal|assert.|(actual, expected, [message])|
+notEqual|assert.|(actual, expected, [message])|
+deepEqual|assert.|(actual, expected, [message])|
+notDeepEqual|assert.|(actual, expected, [message])|
+strictEqual|assert.|(actual, expected, [message])|
+notStrictEqual|assert.|(actual, expected, [message])|
+throws|assert.|(block, [error], [message])|
+doesNotThrow|assert.|(block, [error], [message])|
+ifError|assert.|(value)|
+isatty|tty.|(fd)|
+setRawMode|tty.|(mode)|
+setRawMode|ReadStream#|(mode)|
+createGzip|zlib.|([options])|
+createGunzip|zlib.|([options])|
+createDeflate|zlib.|([options])|
+createInflate|zlib.|([options])|
+createDeflateRaw|zlib.|([options])|
+createInflateRaw|zlib.|([options])|
+createUnzip|zlib.|([options])|
+deflate|zlib.|(buf, callback)|
+deflateRaw|zlib.|(buf, callback)|
+gzip|zlib.|(buf, callback)|
+gunzip|zlib.|(buf, callback)|
+inflate|zlib.|(buf, callback)|
+inflateRaw|zlib.|(buf, callback)|
+unzip|zlib.|(buf, callback)|
+tmpDir|os.|()|
+hostname|os.|()|
+type|os.|()|
+platform|os.|()|
+arch|os.|()|
+release|os.|()|
+uptime|os.|()|
+loadavg|os.|()|
+totalmem|os.|()|
+freemem|os.|()|
+cpus|os.|()|
+networkInterfaces|os.|()|
+setupMaster|cluster.|([settings])|
+fork|cluster.|([env]): Worker object|
+disconnect|cluster.|([callback])|
+send|Worker#|(message, [sendHandle])|
+destroy|Worker#|()|
+disconnect|Worker#|()|

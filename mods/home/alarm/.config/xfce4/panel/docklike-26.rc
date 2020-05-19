@@ -1,0 +1,8 @@
+[user]
+pinned=/usr/share/applications/thunar.desktop;/usr/share/applications/audacious.desktop;/usr/share/applications/firefox.desktop;/usr/share/applications/org.gnome.Calculator.desktop;/usr/share/applications/geany.desktop;/usr/share/applications/nl.hjdskes.gcolor3.desktop;/usr/share/applications/gimp.desktop;/usr/share/applications/org.inkscape.Inkscape.desktop;
+forceIconSize=false
+iconSize=48
+keyAloneActive=false
+keyComboActive=false
+indicatorStyle=1
+noWindowsListIfSingle=true

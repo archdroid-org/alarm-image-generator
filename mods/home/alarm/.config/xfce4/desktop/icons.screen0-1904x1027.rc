@@ -1,0 +1,10 @@
+[xfdesktop-version-4.10.3+-rcfile_format]
+4.10.3+=true
+
+[Trash]
+row=1
+col=0
+
+[/home/alarm]
+row=0
+col=0

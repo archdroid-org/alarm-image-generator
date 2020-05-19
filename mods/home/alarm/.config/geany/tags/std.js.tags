@@ -1,0 +1,211 @@
+# format=pipe
+## global objects
+Array|||
+ArrayBuffer|||
+Boolean|||
+Date|||
+decodeURI||(encodedURI): string|
+decodeURIComponent||(encodedURI): string|
+encodeURI||(URI): string|
+encodeURIComponent||(str): string|
+Error|||
+eval||(string): void|
+EvalError|||
+Float32Array|||
+Float64Array|||
+Function|||
+Infinity|||
+Int16Array|||
+Int32Array|||
+Int8Array|||
+isFinite||(number): boolean|
+isNaN||(object): boolean|
+Iterator|||
+JSON|||
+Math|||
+NaN|||
+Number|||
+Object|||
+parseFloat||(string): number|
+parseInt||(string[, radix]): number|
+RangeError|||
+ReferenceError|||
+RegExp|||
+StopIteration|||
+String|||
+SyntaxError|||
+TypeError|||
+Uint16Array|||
+Uint32Array|||
+Uint8Array|||
+Uint8ClampedArray|||
+undefined|||
+uneval|||
+URIError|||
+## Array
+isArray|[static] Array.|(obj: Object): Boolean|
+length|Array.||
+pop|Array.|(): Array|
+push|Array.|(element1: Object, ..., elementN: Object): Number|
+reverse|Array.|(): Array|
+shift|Array.|(): Object|
+sort|Array.|([compareFunction]): Array|
+splice|Array.|(index: number[, howMany: number[, element1: Object[, ...[, elementN: Object]]]]): Array|
+unshift|Array.|(element1: Object, ..., elementN: Object): Number|
+concat|Array.|(value1: Object, value2: Object, ..., valueN: Object): Array|
+join|Array.|(separator: string): Array|
+slice|Array.|(begin: number[, end: number]): Array|
+indexOf|Array.|(element: Object): Number|
+lastIndexOf|Array.|(element: Object): Number|
+filter|Array.|(callback: Function[, thisObject: Object]): Array|
+forEach|Array.|(callback: Function[, thisObject: Object]): Array|
+every|Array.|(callback: Function[, thisObject: Object]): Boolean|
+map|Array.|(callback: Function[, thisObject: Object]): Array|
+some|Array.|(callback: Function[, thisObject: Object]): Boolean|
+reduce|Array.|(callback: Function[, initialValue: Object]): Object|
+reduceRight|Array.|(callback: Function[, initialValue: Object]): Object|
+## Date
+now|[static] Date.|(): void|
+parse|[static] Date.|(): number|
+UTC|[static] Date.|(): number|
+getDate|Date.|(): number|
+getDay|Date.|(): number|
+getFullYear|Date.|(): number|
+getHours|Date.|(): number|
+getMilliseconds|Date.|(): number|
+getMinutes|Date.|(): number|
+getMonth|Date.|(): number|
+getSeconds|Date.|(): number|
+getTime|Date.|(): number|
+getTimezoneOffset|Date.|(): number|
+getUTCDate|Date.|(): number|
+getUTCDay|Date.|(): number|
+getUTCFullYear|Date.|(): number|
+getUTCHours|Date.|(): number|
+getUTCMilliseconds|Date.|(): number|
+getUTCMinutes|Date.|(): number|
+getUTCMonth|Date.|(): number|
+getUTCSeconds|Date.|(): number|
+getYear|Date.|(): number|
+setFullYear|Date.|(year, [month], [day]): void|
+setMonth|Date.|(month, [day]): void|
+setDate|Date.|(day_of_month): void|
+setHours|Date.|(hours, [minutes], [seconds], [millisec]): void|
+setMinutes|Date.|(minutes, [seconds], [millisec]): void|
+setSeconds|Date.|(seconds, [millisec]): void|
+setMilliseconds|Date.|(milli): void|
+setTime|Date.|(milli): void|
+setUTCFullYear|Date.|(year, [month], [day]): void|
+setUTCMonth|Date.|(month, [day]): void|
+setUTCDate|Date.|(day_of_month): void|
+setUTCHours|Date.|(hours, [minutes], [seconds], [millisec]): void|
+setUTCMinutes|Date.|(minutes, [seconds], [millisec]): void|
+setUTCSeconds|Date.|(seconds, [millisec]): void|
+setUTCMilliseconds|Date.|(milli): void|
+setYear|Date.|(year): void|
+toDateString|Date.|(): string|
+toISOString|Date.|(): string|
+toGMTString|Date.|(): string|
+toLocaleDateString|Date.|(): string|
+toLocaleFormat|Date.|(): string|
+toLocaleString|Date.|(): string|
+toLocaleTimeString|Date.|(): string|
+toSource|Date.|(): string|
+toString|Date.|(): string|
+toTimeString|Date.|(): string|
+toUTCString|Date.|(): string|
+## Function
+arguments|function(){|: Object}|
+arguments.callee|||
+arguments.caller|||
+arguments.length|||
+length|Function.||
+apply|Function.|(thisArg[, argsArray]): void|
+bind|Function.|(thisArg[, arg1[, arg2[, ...]]]): Function|
+call|Function.|(thisArg[, arg1[, arg2[, ...]]]): void|
+isGenerator|Function.|(): boolean)|
+## Math
+E|[static] Math.||
+LN2|[static] Math.||
+LN10|[static] Math.||
+LOG2E|[static] Math.||
+LOG10E|[static] Math.||
+PI|[static] Math.||
+SQRT1_2|[static] Math.||
+SQRT2|[static] Math.||
+abs|[static] Math.|(x: number): number|
+acos|[static] Math.|(x: number): number|
+asin|[static] Math.|(x: number): number|
+atan|[static] Math.|(x: number): number|
+atan2|[static] Math.|(y: number, x: number): number|
+ceil|[static] Math.|(x: number): number|
+cos|[static] Math.|(x: number): number|
+exp|[static] Math.|(x: number): number|
+floor|[static] Math.|(x: number): number|
+log|[static] Math.|(x: number): number|
+max|[static] Math.|(a: number, b: number): number|
+min|[static] Math.|(a: number, b: number): number|
+pow|[static] Math.|(x: number, y: number): number|
+random|[static] Math.|(): number|
+round|[static] Math.|(x: number): number|
+sin|[static] Math.|(x: number): number|
+sqrt|[static] Math.|(x: number): number|
+tan|[static] Math.|(x: number): number|
+## Number
+MAX_VALUE|[static] Number.||
+MIN_VALUE|[static] Number.||
+NEGATIVE_INFINITY|[static] Number.||
+POSITIVE_INFINITY|[static] Number.||
+toExponential|Number.|(x: number): string|
+toFixed|Number.|(trail: number): string|
+toPrecision|Number.|(length: number): string|
+## Object
+create|[static] Object.|(proto [, propertiesObject ]): Object|
+defineProperty|[static] Object.|(obj, prop, descriptor): Object|
+defineProperties|[static] Object.|(obj, props): Object|
+getOwnPropertyDescriptor|[static] Object.|(obj, prop): Object|
+keys|[static] Object.|(obj): Array|
+getOwnPropertyNames|[static] Object.|(obj: Object): Array|
+getPrototypeOf|[static] Object.|(obj): Object|
+preventExtensions|[static] Object.|(obj): Object|
+isExtensible|[static] Object.|(): boolean|
+seal|[static] Object.|(obj): Object|
+isSealed|[static] Object.|(): boolean|
+freeze|[static] Object.|()|
+isFrozen|[static] Object.|(): boolean|
+constructor|Object.||
+hasOwnProperty|Object.|(prop: string): boolean|
+isPrototypeOf|Object.|(obj: Object): boolean|
+propertyIsEnumerable|Object.|(prop: string): boolean|
+toLocaleString|Object.|(): string|
+toString|Object.|(): string|
+valueOf|Object.|(): Object|
+## RegExp
+global|[static] RegExp.||
+ignoreCase|[static] RegExp.||
+lastIndex|[static] RegExp.||
+multiline|[static] RegExp.||
+exec|RegExp.|(str: string): Array|
+test|RegExp.|(str: string): boolean|
+## String
+fromCharCode|[static] String.|(num1, ..., numN): string|
+charAt|String.|(index: number): String|
+charCodeAt|String.|(index: number): Number|
+concat|String.|(v1: Object,..., vN: Object): String|
+indexOf|String.|(substr: string, [start: number]): Number|
+lastIndexOf|String.|(substr: string, [start: number]): Number|
+localeCompare|String.|(compareString: string): number|
+match|String.|(RegExp regexp): Array|
+replace|String.|(RegExp regexp, replacement: string): String|
+search|String.|(RegExp regexp): Number|
+slice|String.|(start: number, end: number): String|
+split|String.|(delimiter: string, [limit: number]): Array|
+substr|String.|(start: number[, length: number]): String|
+substring|String.|(from: number[, to: number]): String|
+toLocaleLowerCase|String.|(): String|
+toLocaleUpperCase|String.|(): String|
+toLowerCase|String.|(): String|
+toUpperCase|String.|(): String|
+trim|String.|(): String|
+trimLeft|String.|(): String|
+trimRight|String.|(): String|

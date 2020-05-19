@@ -1,0 +1,1486 @@
+# format=pipe
+# Extract from: DOMCore.xml
+## DOMImplementationRegistry
+getDOMImplementation|DOMImplementationRegistry.|(features: String): void|
+getDOMImplementationList|DOMImplementationRegistry.|(features: String): void|
+## DOMException
+code|DOMException.||
+## DOMStringList
+length|DOMStringList.||
+item|DOMStringList.|(index: Number): String|
+contains|DOMStringList.|(str: String): Boolean|
+## NameList
+length|NameList.||
+getName|NameList.|(index: Number): String|
+getNamespaceURI|NameList.|(index: Number): String|
+contains|NameList.|(str: String): Boolean|
+containsNS|NameList.|(namespaceURI: String, name: String): Boolean|
+## DOMImplementationList
+length|DOMImplementationList.||
+item|DOMImplementationList.|(index: Number): DOMImplementation|
+## DOMImplementationSource
+getDOMImplementation|DOMImplementationSource.|(features: String): DOMImplementation|
+getDOMImplementationList|DOMImplementationSource.|(features: String): DOMImplementationList|
+## DOMImplementation
+hasFeature|DOMImplementation.|(feature: String, version: String): Boolean|
+createDocumentType|DOMImplementation.|(qualifiedName: String, publicId: String, systemId: String): DocumentType|
+createDocument|DOMImplementation.|(namespaceURI: String, qualifiedName: String, doctype: DocumentType): Document|
+getFeature|DOMImplementation.|(feature: String, version: String): Object|
+## DocumentFragment
+## Document
+doctype|Document.||
+implementation|Document.||
+documentElement|Document.||
+inputEncoding|Document.||
+xmlEncoding|Document.||
+xmlStandalone|Document.||
+xmlVersion|Document.||
+strictErrorChecking|Document.||
+documentURI|Document.||
+domConfig|Document.||
+createElement|Document.|(tagName: String): Element|
+createDocumentFragment|Document.|(): DocumentFragment|
+createTextNode|Document.|(data: String): Text|
+createComment|Document.|(data: String): Comment|
+createCDATASection|Document.|(data: String): CDATASection|
+createProcessingInstruction|Document.|(target: String, data: String): ProcessingInstruction|
+createAttribute|Document.|(name: String): Attr|
+createEntityReference|Document.|(name: String): EntityReference|
+getElementsByTagName|Document.|(tagname: String): NodeList|
+importNode|Document.|(importedNode: Node, deep: Boolean): Node|
+createElementNS|Document.|(namespaceURI: String, qualifiedName: String): Element|
+createAttributeNS|Document.|(namespaceURI: String, qualifiedName: String): Attr|
+getElementsByTagNameNS|Document.|(namespaceURI: String, localName: String): NodeList|
+getElementById|Document.|(elementId: String): Element|
+adoptNode|Document.|(source: Node): Node|
+normalizeDocument|Document.|(): void|
+renameNode|Document.|(n: Node, namespaceURI: String, qualifiedName: String): Node|
+nodeFromID|(browser ie) Document.|(idString: *): Node|
+load|(browser IE) Document.|(filename: String): void|
+loadXML|(browser IE) Document.|(xmlString: String): void|
+save|(browser IE) Document.|(filename: String): void|
+setProperty|(browser IE) Document.|(name: String, value: String): void|
+selectSingleNode|(browser IE) Document.|(xpathExpression: String): void|
+selectNodes|(browser IE) Document.|(xpathExpression: String): void|
+parseError|(browser IE) Document.||
+## IXMLDOMParseError
+reason|IXMLDOMParseError.||
+errorCode|IXMLDOMParseError.||
+## Node
+nodeName|Node.||
+nodeValue|Node.||
+nodeType|Node.||
+parentNode|Node.||
+childNodes|Node.||
+firstChild|Node.||
+lastChild|Node.||
+previousSibling|Node.||
+nextSibling|Node.||
+attributes|Node.||
+ownerDocument|Node.||
+namespaceURI|Node.||
+prefix|Node.||
+localName|Node.||
+baseURI|Node.||
+textContent|Node.||
+xml|(browser ie) Node.||
+ELEMENT_NODE|[static] Node.||
+ATTRIBUTE_NODE|[static] Node.||
+TEXT_NODE|[static] Node.||
+CDATA_SECTION_NODE|[static] Node.||
+ENTITY_SECTION_NODE|[static] Node.||
+ENTITY_NODE|[static] Node.||
+PROCESSING_INSTRUCTION_NODE|[static] Node.||
+COMMENT_NODE|[static] Node.||
+DOCUMENT_NODE|[static] Node.||
+DOCUMENT_TYPE_NODE|[static] Node.||
+DOCUMENT_FRAGMENT_NODE|[static] Node.||
+NOTATION_NODE|[static] Node.||
+insertBefore|Node.|(newChild: Node, refChild: Node): Node|
+replaceChild|Node.|(newChild: Node, refChild: Node): Node|
+removeChild|Node.|(oldChild: Node): Node|
+appendChild|Node.|(newChild: Node): Node|
+hasChildNodes|Node.|(): Boolean|
+cloneNode|Node.|(deep: Boolean): Node|
+normalize|Node.|(): void|
+isSupported|Node.|(feature: String, version: String): Boolean|
+hasAttributes|Node.|(): Boolean|
+compareDocumentPosition|Node.|(other: Node): Node|
+isSameNode|Node.|(other: Node): Boolean|
+lookupPrefix|Node.|(namespaceURI: String): String|
+isDefaultNamespace|Node.|(namespaceURI: String): String|
+lookupNamespaceURI|Node.|(prefix: String): String|
+isEqualNode|Node.|(arg: Node): Boolean|
+getFeature|Node.|(feature: String, version: String): Object|
+setUserData|Node.|(key: String, data: *, handler: UserDataHandler): void|
+getUserData|Node.|(key: String): void|
+## NodeList
+length|NodeList.||
+item|NodeList.|(index: Number): Node|
+## NamedNodeMap
+length|NamedNodeMap.||
+getNamedItem|NamedNodeMap.|(name: String): Node|
+setNamedItem|NamedNodeMap.|(arg: Node): Node|
+removeNamedItem|NamedNodeMap.|(name: String): Node|
+item|NamedNodeMap.|(index: Number): Node|
+getNamedItemNS|NamedNodeMap.|(namespaceURI: String, localName: String): Node|
+setNamedItemNS|NamedNodeMap.|(arg: Node): Node|
+removeNamedItemNS|NamedNodeMap.|(namespaceURI: String, localName: String): Node|
+## CharacterData
+data|CharacterData.||
+length|CharacterData.||
+substringData|CharacterData.|(offset: Number, count: Number): String|
+appendData|CharacterData.|(arg: String): void|
+insertData|CharacterData.|(offset: Number, arg: String): void|
+deleteData|CharacterData.|(offset: Number, count: Number): void|
+replaceData|CharacterData.|(offset: Number, count: Number, arg: String): void|
+## Attr
+name|Attr.||
+specified|Attr.||
+value|Attr.||
+ownerElement|Attr.||
+schemaTypeInfo|Attr.||
+isId|Attr.||
+## Element
+tagName|Element.||
+schemaTypeInfo|Element.||
+getAttribute|Element.|(name: String): String|
+setAttribute|Element.|(name: String, value: String): void|
+removeAttribute|Element.|(name: String): void|
+getAttributeNode|Element.|(name: String): Attr|
+setAttributeNode|Element.|(newAttr: Attr): Attr|
+removeAttributeNode|Element.|(oldAttr: Attr): Attr|
+getElementsByTagName|Element.|(name: String): NodeList|
+getAttributeNS|Element.|(namespaceURI: String, localName: String): String|
+setAttributeNS|Element.|(namespaceURI: String, qualifiedName: String, value: String): void|
+removeAttributeNS|Element.|(namespaceURI: String, localName: String): void|
+getAttributeNodeNS|Element.|(namespaceURI: String, localName: String): void|
+setAttributeNodeNS|Element.|(newAttr: Attr): void|
+getElementsByTagNameNS|Element.|(namespaceURI: String, localName: String): NodeList|
+hasAttribute|Element.|(name: String): Boolean|
+hasAttributeNS|Element.|(namespaceURI: String, localName: String): Boolean|
+setIdAttribute|Element.|(name: String, isId: Boolean): void|
+setIdAttributeNS|Element.|(namespaceURI: String, localName: String, isId: Boolean): void|
+setIdAttributeNode|Element.|(idAttr: Attr, isId: Boolean): void|
+## Text
+isElementContentWhitespace|Text.||
+wholeText|Text.||
+splitText|Text.|(offset: Number): Text|
+replaceWholeText|Text.|(content: String): Text|
+## Comment
+## TypeInfo
+typeName|TypeInfo.||
+typeNamespace|TypeInfo.||
+isDerivedFrom|TypeInfo.|(typeNamespaceArg: String, typeNameArg: String, derivationMethod:  Number): Boolean|
+## UserDataHandler
+handle|UserDataHandler.|(param1: Number, param2: String, param3: *, param4: Node, param5: Node): void|
+## DOMError
+severity|DOMError.||
+message|DOMError.||
+type|DOMError.||
+relatedException|DOMError.||
+relatedData|DOMError.||
+location|DOMError.||
+## DOMErrorHandler
+handler|DOMErrorHandler.|(error: DOMError): Boolean|
+## DOMLocator
+lineNumber|DOMLocator.||
+columnNumber|DOMLocator.||
+byteOffset|DOMLocator.||
+utf16Offset|DOMLocator.||
+relatedNode|DOMLocator.||
+uri|DOMLocator.||
+## DOMConfiguration
+parameterNames|DOMConfiguration.||
+setParameter|DOMConfiguration.|(name: String, value: *): void|
+getParameter|DOMConfiguration.|(name: String): void|
+canSetParameter|DOMConfiguration.|(name: String, value: *): Boolean|
+## CDATASection
+## DocumentType
+name|DocumentType.||
+entities|DocumentType.||
+notations|DocumentType.||
+publicId|DocumentType.||
+systemId|DocumentType.||
+internalSubset|DocumentType.||
+## Notation
+publicId|Notation.||
+systemId|Notation.||
+## Entity
+publicId|Entity.||
+systemId|Entity.||
+notationName|Entity.||
+inputEncoding|Entity.||
+xmlEncoding|Entity.||
+xmlVersion|Entity.||
+## EntityReference
+## ProcessingInstruction
+target|ProcessingInstruction.||
+data|ProcessingInstruction.||
+# Extract from: DOMEvents.xml
+## Event
+type|Event.||
+target|Event.||
+currentTarget|Event.||
+eventPhase|Event.||
+bubbles|Event.||
+cancelable|Event.||
+timeStamp|Event.||
+namespaceURI|Event.||
+stopPropagation|Event.|(): void|
+preventDefault|Event.|(): void|
+initEvent|Event.|(eventTypeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean): void|
+isCustom|Event.|(): Boolean|
+stopImmediatePropagation|Event.|(): void|
+isDefaultPrevented|Event.|(): Boolean|
+initEventNS|Event.|(namespaceURIArg: String, eventTypeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean): void|
+## EventTarget
+addEventListener|EventTarget.|(type: String, listener: EventListener/Function, useCapture: Boolean): void|
+removeEventListener|EventTarget.|(type: String, listener: EventListener/Function, useCapture: Boolean): void|
+dispatchEvent|EventTarget.|(evt: Event): Boolean|
+addEventListenerNS|EventTarget.|(namespaceURI: String, type: String, listener: EventListener, useCapture: Boolean, evtGroup: Object): void|
+removeEventListenerNS|EventTarget.|(namespaceURI: String, type: String, listener: EventListener, useCapture: Boolean): void|
+willTriggerNS|EventTarget.|(namespaceURI: String, type: String): Boolean|
+hasEventListenerNS|EventTarget.|(namespaceURI: String, type: String): Boolean|
+## EventListener
+handleEvent|EventListener.|(evt: Event): void|
+## EventException
+code|EventException.||
+## DocumentEvent
+createEvent|DocumentEvent.|(eventType: String): Event|
+canDispatch|DocumentEvent.|(namespaceURI: String, type: String): String|
+## CustomEvent
+setDispatchState|CustomEvent.|(target: EventTarget, phase: Number): void|
+isPropagationStopped|CustomEvent.|(): Boolean|
+isImmediatePropagationStopped|CustomEvent.|(): Boolean|
+## UIEvent
+view|UIEvent.||
+detail|UIEvent.||
+initUIEvent|UIEvent.|(typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, detailArg: Number): void|
+initUIEventNS|UIEvent.|(namespaceURI: String, typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, detailArg: Number): void|
+## TextEvent
+data|TextEvent.||
+initTextEvent|TextEvent.|(typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, dataArg: Number): void|
+initTextEventNS|TextEvent.|(namespaceURI: String, typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, dataArg: Number): void|
+## MouseEvent
+screenX|MouseEvent.||
+screenY|MouseEvent.||
+clientX|MouseEvent.||
+clientY|MouseEvent.||
+ctrlKey|MouseEvent.||
+shiftKey|MouseEvent.||
+altKey|MouseEvent.||
+metaKey|MouseEvent.||
+button|MouseEvent.||
+relatedTarget|MouseEvent.||
+getModifierState|MouseEvent.|(keyIdentifierArg: String): Boolean|
+initMouseEvent|(browser Gecko) MouseEvent.|(typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, detailArg: Number, screenXArg: Number, screenYArg: Number, clientXArg: Number, clientYArg: Number, ctrlKeyArg: Boolean, altKeyArg: Boolean, shiftKeyArg: Boolean, metaKeyArg: Boolean, buttonArg: Number, relatedTargetArg: EventTarget): void|
+initMouseEventNS|MouseEvent.|(namespaceURI: String, typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, detailArg: Number, screenXArg: Number, screenYArg: Number, clientXArg: Number, clientYArg: Number, ctrlKeyArg: Boolean, altKeyArg: Boolean, shiftKeyArg: Boolean, metaKeyArg: Boolean, buttonArg: Number, relatedTargetArg: EventTarget): void|
+## KeyboardEvent
+keyIdentifier|KeyboardEvent.||
+keyLocation|KeyboardEvent.||
+ctrlKey|KeyboardEvent.||
+shiftKey|KeyboardEvent.||
+altKey|KeyboardEvent.||
+metaKey|(browser Gecko) KeyboardEvent.||
+getModifierState|KeyboardEvent.|(keyIdentifierArg: String): Boolean|
+initKeyboardEvent|KeyboardEvent.|(typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, keyIdentifierArg: String, keyLocationArg: Number, modifiersList: String): void|
+initKeyboardEventNS|KeyboardEvent.|(namespaceURI: String, typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, viewArg: AbstractView, keyIdentifierArg: String, keyLocationArg: Number, modifiersList: String): void|
+## MutationEvent
+relatedNode|MutationEvent.||
+prevValue|MutationEvent.||
+newValue|MutationEvent.||
+attrName|MutationEvent.||
+attrChange|MutationEvent.||
+initMutationEvent|MutationEvent.|(typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, relatedNodeArg: Node, prevValueArg: String, newValueArg: String, attrNameArg: String, attrChangeArg: Number): void|
+initMutationEventNS|MutationEvent.|(namespaceURI: String, typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, relatedNodeArg: Node, prevValueArg: String, newValueArg: String, attrNameArg: String, attrChangeArg: Number): void|
+## MutationNameEvent
+prevNamespaceURI|MutationNameEvent.||
+prevNodeName|MutationNameEvent.||
+initMutationNameEvent|MutationNameEvent.|(typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, relatedNodeArg: Node, prevNamespaceURIArg: String, prevNodeNameArg: String): void|
+initMutationNameEventNS|MutationNameEvent.|(namespaceURI: String, typeArg: String, canBubbleArg: Boolean, cancelableArg: Boolean, relatedNodeArg: Node, prevNamespaceURIArg: String, prevNodeNameArg: String): void|
+# Extract from: DHTML.xml
+## Object
+__defineGetter__|(browser Gecko) Object.|(propertyName: *, func: *): void|
+__defineSetter__|(browser Gecko) Object.|(propertyName: *, func: *): void|
+__lookupGetter__|(browser Gecko) Object.|(propertyName: *): Function|
+__lookupSetter__|(browser Gecko) Object.|(propertyName: *): Function|
+__proto__|(browser Gecko) Object.|(propertyName: *): Function|
+## Image
+constructor|Image.||
+naturalWidth|(browser Gecko) Image.||
+naturalHeight|(browser Gecko) Image.||
+## Navigator
+userAgent|Navigator.||
+product|Navigator.||
+appVersion|Navigator.||
+appName|Navigator.||
+appCodeName|Navigator.||
+language|Navigator.||
+systemLanguage|(browser IE) Navigator.||
+userLanguage|(browser IE) Navigator.||
+mimeTypes|Navigator.||
+platform|Navigator.||
+plugins|Navigator.||
+taintEnabled|Navigator.|(): Boolean|
+javaEnabled|Navigator.|(): Boolean|
+preference|Navigator.|(prefName: String, prefValue: String): String|
+## Screen
+width|Screen.||
+height|Screen.||
+availHeight|Screen.||
+availWidth|Screen.||
+pixelDepth|Screen.||
+colorDepth|Screen.||
+## Option
+defaultSelected|Option.||
+selected|Option.||
+text|Option.||
+value|Option.||
+## Location
+href|Location.||
+hash|Location.||
+port|Location.||
+host|Location.||
+hostname|Location.||
+pathname|Location.||
+protocol|Location.||
+port|Location.||
+search|Location.||
+target|Location.||
+reload|Location.|(): void|
+replace|Location.|(url: String): void|
+## XSLTProcessor
+constructor|XSLTProcessor.||
+importStylesheet|XSLTProcessor.|(domNode: Node): void|
+transformToDocument|XSLTProcessor.|(domNode: Node): Document|
+transformToFragment|XSLTProcessor.|(domToBeTransformed: Node, ownerDocument: Document): DocumentFragment|
+## DOMParser
+constructor|DOMParser.||
+parseFromString|DOMParser.|(stringToParse: String, contentType: String): Document|
+## XMLSerializer
+constructor|XMLSerializer.||
+serializeToStream|XMLSerializer.|(domNode: Document, stream: Object, encoding: String): void|
+serializeToString|XMLSerializer.|(domNode: Document): String|
+## Event
+data|Event.||
+height|Event.||
+x|(browser IE) Event.||
+screenX|Event.||
+clientX|Event.||
+offsetX|(browser IE) Event.||
+layerX|(browser Gecko) Event.||
+fromElement|(browser IE) Event.||
+wheelDelta|(browser IE) Event.||
+repeat|(browser IE) Event.||
+pageX|Event.||
+y|(browser IE) Event.||
+screenY|Event.||
+clientY|Event.||
+offsetY|(browser IE) Event.||
+layerY|(browser Gecko) Event.||
+pageY|Event.||
+width|Event.||
+modifiers|Event.||
+keyCode|Event.||
+type|Event.||
+which|Event.||
+srcElement|(browser IE) Event.||
+toElement|(browser IE) Event.||
+cancelBubble|(browser IE) Event.||
+returnValue|(browser IE) Event.||
+altKey|Event.||
+ctrlKey|Event.||
+shiftKey|Event.||
+button|Event.||
+charCode|(browser Gecko) Event.||
+ABORT|(browser Gecko) Event.||
+BLUR|(browser Gecko) Event.||
+CLICK|(browser Gecko) Event.||
+CHANGE|(browser Gecko) Event.||
+DBLCLICK|(browser Gecko) Event.||
+DRAGDROP|(browser Gecko) Event.||
+ERROR|(browser Gecko) Event.||
+FOCUS|(browser Gecko) Event.||
+KEYDOWN|(browser Gecko) Event.||
+KEYPRESS|(browser Gecko) Event.||
+KEYUP|(browser Gecko) Event.||
+LOAD|(browser Gecko) Event.||
+MOUSEDOWN|(browser Gecko) Event.||
+MOUSEMOVE|(browser Gecko) Event.||
+MOUSEOUT|(browser Gecko) Event.||
+MOUSEOVER|(browser Gecko) Event.||
+MOUSEUP|(browser Gecko) Event.||
+MOVE|(browser Gecko) Event.||
+RESET|(browser Gecko) Event.||
+RESIZE|(browser Gecko) Event.||
+SELECT|(browser Gecko) Event.||
+SUBMIT|(browser Gecko) Event.||
+UNLOAD|(browser Gecko) Event.||
+## Selection
+anchorNode|(browser Gecko) Selection.||
+anchorOffset|(browser Gecko) Selection.||
+focusNode|(browser Gecko) Selection.||
+focusOffset|(browser Gecko) Selection.||
+isCollapsed|(browser Gecko) Selection.||
+rangeCount|(browser Gecko) Selection.||
+getRangeAt|(browser Gecko) Selection.|(index: Number): Range|
+collapse|(browser Gecko) Selection.|(parentNode: Node, offset: Number): void|
+extend|(browser Gecko) Selection.|(parentNode: Node, offset: Number): void|
+collapseToStart|(browser Gecko) Selection.|(): void|
+collapseToEnd|(browser Gecko) Selection.|(): void|
+selectAllChildren|(browser Gecko) Selection.|(parentNode: Node): void|
+addRange|(browser Gecko) Selection.|(range: Range): void|
+removeRange|(browser Gecko) Selection.|(range: Range): void|
+removeAllRanges|(browser Gecko) Selection.|(): void|
+containsNode|(browser Gecko) Selection.|(node: Node, partlyContained: Boolean): Boolean|
+type|(browser IE) Selection.||
+clear|(browser IE) Selection.|(): Boolean|
+empty|(browser IE) Selection.|(): Boolean|
+createRange|(browser IE) Selection.|(): TextRange|
+## TextRange
+htmlText|TextRange.||
+text|TextRange.||
+boundingWidth|TextRange.||
+boundingHeight|TextRange.||
+boundingLeft|TextRange.||
+offsetLeft|TextRange.||
+boundingTop|TextRange.||
+offsetTop|TextRange.||
+getBookmark|TextRange.|(): String|
+moveToBookmark|TextRange.|(sBookmark: String): Boolean|
+collapse|TextRange.|(start: Boolean): void|
+expand|TextRange.|(unit: String): void|
+duplicate|TextRange.|(): TextRange|
+select|TextRange.|(): void|
+parentElement|TextRange.|(): Node|
+inRange|TextRange.|(other: TextRange): boolean|
+isEqual|TextRange.|(other: TextRange): boolean|
+scrollIntoView|TextRange.|(start: Boolean): void|
+setEndPoint|TextRange.|(type: String, range: TextRange): void|
+compareEndPoint|TextRange.|(type: String, range: TextRange): void|
+move|TextRange.|(unit: String, count: Number): void|
+moveStart|TextRange.|(unit: String, count: Number): void|
+moveEnd|TextRange.|(unit: String, count: Number): void|
+pasteHTML|TextRange.|(htmlText: String): void|
+moveToElementText|TextRange.|(element: HTMLElement): void|
+compareEndPoints|TextRange.|(sType: String, oRange: TextRange): Number|
+## document
+selection|(browser IE) document.||
+namespaces|(browser IE) document.||
+all|(browser IE) document.||
+styleSheets|document.||
+execCommand|(browser IE) document.|(sCommand: String, bUserInterface: Boolean, vValue: Object): Boolean|
+## CssRule
+selectorText|CssRule.||
+## Stylesheet
+cssRules|(browser Gecko) Stylesheet.||
+rules|(browser IE) Stylesheet.||
+owningElement|(browser IE) Stylesheet.||
+addRule|(browser IE) Stylesheet.|(selector: Object, style: Object): void|
+insertRule|(browser Gecko) Stylesheet.|(ruleText: Object, index: Number): void|
+removeRule|(browser IE) Stylesheet.|(index: Number): void|
+deleteRule|(browser Gecko) Stylesheet.|(index: Number): void|
+## MozillaSideBar
+addPanel|MozillaSideBar.|(title: String, url: String, param3: String): void|
+## IEExternal
+AddFavorite|IEExternal.|(title: String, url: String): void|
+## History
+back|History.|(): void|
+forward|History.|(): void|
+go|History.|(count: Number): void|
+## Console
+log|Console.|(message: *): void|
+## window
+document|window.||
+event|window.||
+navigator|window.||
+screen|window.||
+location|window.||
+console|(browser Opera) window.||
+frameElement|window.||
+opener|window.||
+window|window.||
+parent|window.||
+top|window.||
+self|window.||
+frames|window.||
+innerHeight|window.||
+innerWidth|window.||
+outerHeight|window.||
+outerWidth|window.||
+screenLeft|(browser IE) window.||
+screenTop|(browser IE) window.||
+scrollX|window.||
+scrollY|window.||
+pageXOffset|window.||
+pageYOffset|window.||
+scrollMaxX|window.||
+scrollMaxY|window.||
+status|window.||
+defaultStatus|window.||
+toolbar|window.||
+menubar|window.||
+scrollbars|window.||
+directories|window.||
+history|window.||
+sidebar|(browser Gecko) window.||
+external|(browser IE) window.||
+opera|(browser Opera) window.||
+getSelection|(browser Gecko) window.|(): Selection|
+clipboardData|(browser ie) window.||
+open|window.|(strUrl: String, strWindowName: String, strWindowFeatures: String, bReplace: Boolean): window|
+print|window.|(): void|
+alert|window.|(sMesssage: *): void|
+atob|(browser Gecko) window.|(encodedData: *): void|
+btoa|(browser Gecko) window.|(decodedData: *): void|
+confirm|window.|(sMesssage: *): void|
+prompt|window.|(sMessage: *, sDefaultValue: *): void|
+clearInterval|window.|(intervalId: Number): void|
+clearTimeout|window.|(intervalId: Number): void|
+setInterval|window.|(vCode: String/Function, iMillis: Number): Number|
+setTimeout|window.|(vCode: String/Function, iMillis: Number): Number|
+captureEvents|(browser Gecko) window.|(eventType: Event): void|
+releaseEvents|(browser Gecko) window.|(eventType: Event): void|
+routeEvent|(browser Gecko) window.|(event: Event): void|
+preventBubble|(browser Gecko) window.|(event: Event): void|
+GetObject|(browser IE) window.|(classOrPath: String, clazz: String): Object|
+ScriptEngine|(browser IE) window.|(): String|
+ScriptEngineBuildVersion|(browser IE) window.|(): String|
+ScriptEngineMajorVersion|(browser IE) window.|(): String|
+ScriptEngineMinorVersion|(browser IE) window.|(): String|
+scrollTo|window.|(x: Number, y: Number): void|
+scrollBy|window.|(xDelta: Number, yDelta: Number): void|
+moveTo|window.|(x: Number, y: Number): void|
+moveBy|window.|(xDelta: Number, yDelta: Number): void|
+resizeTo|window.|(width: Number, height: Number): void|
+resizeBy|window.|(widthDelta: Number, heightDelta: Number): void|
+getComputedStyle|(browser Gecko) window.|(element: Element, pseudoElt: String): CSSStyleDeclaration|
+showModalDialog|(browser IE) window.|(sUrl: String, vArguments: Object, sFeatures: String): Object|
+attachEvent|(browser IE) window.|(type: String, listener: Function): void|
+detachEvent|(browser IE) window.|(type: String, listener: Function): void|
+addEventListener|(browser Gecko) window.|(type: String, listener: Function, useCapture: Boolean): void|
+removeEventListener|(browser Gecko) window.|(type: String, listener: Function, useCapture: Boolean): void|
+execScript|(browser IE) window.|(sScript: String): void|
+CollectGarbage|(browser IE) window.|(): void|
+onload|window.||
+onunload|window.||
+## ClipboardData
+setData|ClipboardData.|(sDataFormat: String, sData: String): Boolean|
+getData|ClipboardData.|(sDataFormat: String): String|
+clearData|ClipboardData.|(sDataFormat: String): Boolean|
+## Global
+window|Global.||
+escape|Global.|(str: String): void|
+unescape|Global.|(str: String): void|
+## HTMLCollection
+length|HTMLCollection.||
+item|HTMLCollection.|(index: Number): Node|
+namedItem|HTMLCollection.|(name: String): Node|
+## HTMLOptionsCollection
+length|HTMLOptionsCollection.||
+item|HTMLOptionsCollection.|(index: Number): Node|
+namedItem|HTMLOptionsCollection.|(name: String): Node|
+## HTMLDocument
+title|HTMLDocument.||
+referrer|HTMLDocument.||
+domain|HTMLDocument.||
+URL|HTMLDocument.||
+body|HTMLDocument.||
+images|HTMLDocument.||
+applets|HTMLDocument.||
+links|HTMLDocument.||
+forms|HTMLDocument.||
+anchors|HTMLDocument.||
+cookie|HTMLDocument.||
+open|HTMLDocument.|(): void|
+close|HTMLDocument.|(): void|
+write|HTMLDocument.|(text: String): void|
+writeln|HTMLDocument.|(text: String): void|
+getElementsByName|HTMLDocument.|(elementName: String): NodeList|
+getElementsByClassName|(browser Gecko) HTMLDocument.|(className: String): NodeList|
+defaultView|(browser Gecko) HTMLDocument.||
+activeElement|(browser IE) HTMLDocument.||
+compatMode|HTMLDocument.||
+createStyleSheet|(browser IE) HTMLDocument.|(): Stylesheet|
+parentWindow|(browser IE) HTMLDocument.||
+getBoxObjectFor|(browser Gecko) HTMLDocument.|(element: HTMLElement): Node|
+querySelectorAll|(browser Gecko) HTMLDocument.|(string: String): NodeList|
+querySelector|(browser Gecko) HTMLDocument.|(string: String): Node|
+getAnonymousNodes|(browser Gecko) HTMLDocument.|(node: HTMLElement): Node[]|
+getAnonymousElementByAttribute|(browser Gecko) HTMLDocument.|(node: HTMLElement, attrName: String, attrValue: String): NodeList|
+commandDispatcher|(browser Gecko) HTMLDocument.||
+elementFromPoint|(browser IE) HTMLDocument.|(iX: Number, iY: Number): HTMLElement|
+createEventObject|(browser IE) HTMLDocument.|(oExistingEvent: Event): Event|
+captureEvents|(browser Gecko) HTMLDocument.|(eventType: Event): void|
+releaseEvents|(browser Gecko) HTMLDocument.|(eventType: Event): void|
+routeEvent|(browser Gecko) HTMLDocument.|(event: Event): void|
+preventBubble|(browser Gecko) HTMLDocument.|(event: Event): void|
+documentMode|(browser IE) HTMLDocument.||
+onload|HTMLDocument.||
+onunload|HTMLDocument.||
+## CommandDispatcher
+focusedElement|CommandDispatcher.||
+## DocumentView
+getComputedStyle|DocumentView.|(element: Node, type: String): CssStyle|
+## CssStyle
+getPropertyValue|CssStyle.|(propertyName: String): String|
+## HTMLElement
+id|HTMLElement.||
+title|HTMLElement.||
+lang|HTMLElement.||
+dir|HTMLElement.||
+className|HTMLElement.||
+children|(browser IE) HTMLElement.||
+style|HTMLElement.||
+clientWidth|HTMLElement.||
+clientHeight|HTMLElement.||
+clientTop|HTMLElement.||
+clientLeft|HTMLElement.||
+innerHTML|HTMLElement.||
+innerText|(browser IE) HTMLElement.||
+offsetWidth|HTMLElement.||
+offsetHeight|HTMLElement.||
+offsetTop|HTMLElement.||
+offsetLeft|HTMLElement.||
+offsetParent|HTMLElement.||
+scrollWidth|HTMLElement.||
+scrollHeight|HTMLElement.||
+scrollTop|HTMLElement.||
+scrollLeft|HTMLElement.||
+stylesheet|HTMLElement.||
+sourceIndex|(browser IE) HTMLElement.||
+onblur|HTMLElement.||
+onclick|HTMLElement.||
+ondblclick|HTMLElement.||
+onfocus|HTMLElement.||
+onkeydown|HTMLElement.||
+onkeyup|HTMLElement.||
+onmouseup|HTMLElement.||
+onmousedown|HTMLElement.||
+onmouseout|HTMLElement.||
+onmouseover|HTMLElement.||
+onmousemove|HTMLElement.||
+onresize|HTMLElement.||
+insertAdjacentHTML|(browser IE) HTMLElement.|(position: String, htmlContent: String): void|
+doScroll|(browser IE) HTMLElement.|(sScrollAction: String): void|
+insertAdjacentText|(browser IE) HTMLElement.|(position: String, textContent: String): void|
+currentStyle|(browser IE) HTMLElement.||
+runtimeStyle|(browser IE) HTMLElement.||
+filters|(browser IE) HTMLElement.||
+attachEvent|(browser IE) HTMLElement.|(type: String, listener: Function): void|
+detachEvent|(browser IE) HTMLElement.|(type: String, listener: Function): void|
+fireEvent|(browser IE) HTMLElement.|(type: String, event: Event): void|
+addBehavior|(browser IE) HTMLElement.|(sUrl: String): Number|
+removeBehavior|(browser IE) HTMLElement.|(sID: Number): Boolean|
+getBoundingClientRect|(browser IE) HTMLElement.|(): TextRange|
+showPopup|(browser Gecko) HTMLElement.|(): void|
+hidePopup|(browser Gecko) HTMLElement.|(): void|
+boxObject|(browser Gecko) HTMLElement.||
+propertyName|(browser IE) HTMLElement.||
+isDisabled|(browser IE) HTMLElement.||
+setCapture|(browser IE) HTMLElement.|(bContainerCapture: Boolean): void|
+releaseCapture|(browser IE) HTMLElement.|(): void|
+clearAttributes|(browser IE) HTMLElement.|(): void|
+mergeAttributes|(browser IE) HTMLElement.|(oSource: Object, bPreserve: Boolean): void|
+## CSSStyleDeclaration
+cssText|CSSStyleDeclaration.||
+length|CSSStyleDeclaration.||
+parentRule|CSSStyleDeclaration.||
+getPropertyCSSValue|[static] CSSStyleDeclaration.|(propertyName: String): CSSValue|
+getPropertyPriority|[static] CSSStyleDeclaration.|(propertyName: String): String|
+getPropertyValue|[static] CSSStyleDeclaration.|(propertyName: String): String|
+item|[static] CSSStyleDeclaration.|(index: Number): String|
+removeProperty|[static] CSSStyleDeclaration.|(propertyName: String): String|
+setProperty|[static] CSSStyleDeclaration.|(propertyName: String, value: String, priority: String): void|
+## IEElementStyle
+hasLayout|IEElementStyle.||
+## HTMLHtmlElement
+version|HTMLHtmlElement.||
+## HTMLHeadElement
+profile|HTMLHeadElement.||
+## HTMLLinkElement
+disabled|HTMLLinkElement.||
+charset|HTMLLinkElement.||
+href|HTMLLinkElement.||
+hreflang|HTMLLinkElement.||
+media|HTMLLinkElement.||
+rel|HTMLLinkElement.||
+rev|HTMLLinkElement.||
+target|HTMLLinkElement.||
+type|HTMLLinkElement.||
+## HTMLTitleElement
+text|HTMLTitleElement.||
+## HTMLMetaElement
+content|HTMLMetaElement.||
+httpEquiv|HTMLMetaElement.||
+name|HTMLMetaElement.||
+scheme|HTMLMetaElement.||
+## HTMLBaseElement
+href|HTMLBaseElement.||
+target|HTMLBaseElement.||
+## HTMLIsIndexElement
+form|HTMLIsIndexElement.||
+prompt|HTMLIsIndexElement.||
+## HTMLStyleElement
+disabled|HTMLStyleElement.||
+media|HTMLStyleElement.||
+type|HTMLStyleElement.||
+styleSheet|(browser IE) HTMLStyleElement.||
+## HTMLBodyElement
+aLink|HTMLBodyElement.||
+background|HTMLBodyElement.||
+bgColor|HTMLBodyElement.||
+link|HTMLBodyElement.||
+text|HTMLBodyElement.||
+vLink|HTMLBodyElement.||
+onload|HTMLBodyElement.||
+onunload|HTMLBodyElement.||
+## HTMLFormElement
+elements|HTMLFormElement.||
+length|HTMLFormElement.||
+name|HTMLFormElement.||
+acceptCharset|HTMLFormElement.||
+action|HTMLFormElement.||
+enctype|HTMLFormElement.||
+method|HTMLFormElement.||
+target|HTMLFormElement.||
+submit|HTMLFormElement.|(): void|
+reset|HTMLFormElement.|(): void|
+## HTMLSelectElement
+type|HTMLSelectElement.||
+selectedIndex|HTMLSelectElement.||
+value|HTMLSelectElement.||
+length|HTMLSelectElement.||
+form|HTMLSelectElement.||
+options|HTMLSelectElement.||
+disabled|HTMLSelectElement.||
+multiple|HTMLSelectElement.||
+name|HTMLSelectElement.||
+size|HTMLSelectElement.||
+tabIndex|HTMLSelectElement.||
+add|HTMLSelectElement.|(element: HTMLElement, before: HTMLElement): void|
+remove|HTMLSelectElement.|(index: Number): void|
+blur|HTMLSelectElement.|(): void|
+focus|HTMLSelectElement.|(): void|
+## HTMLOptGroupElement
+disabled|HTMLOptGroupElement.||
+label|HTMLOptGroupElement.||
+## HTMLOptionElement
+form|HTMLOptionElement.||
+defaultSelected|HTMLOptionElement.||
+text|HTMLOptionElement.||
+index|HTMLOptionElement.||
+disabled|HTMLOptionElement.||
+label|HTMLOptionElement.||
+selected|HTMLOptionElement.||
+value|HTMLOptionElement.||
+## HTMLInputElement
+defaultValue|HTMLInputElement.||
+defaultChecked|HTMLInputElement.||
+form|HTMLInputElement.||
+accept|HTMLInputElement.||
+accessKey|HTMLInputElement.||
+align|HTMLInputElement.||
+alt|HTMLInputElement.||
+checked|HTMLInputElement.||
+disabled|HTMLInputElement.||
+maxLength|HTMLInputElement.||
+name|HTMLInputElement.||
+readOnly|HTMLInputElement.||
+size|HTMLInputElement.||
+src|HTMLInputElement.||
+tabIndex|HTMLInputElement.||
+type|HTMLInputElement.||
+useMap|HTMLInputElement.||
+value|HTMLInputElement.||
+blur|HTMLInputElement.|(): void|
+focus|HTMLInputElement.|(): void|
+select|HTMLInputElement.|(): void|
+click|HTMLInputElement.|(): void|
+setSelectionRange|(browser Gecko) HTMLInputElement.|(start: Number, end: Number): void|
+selectionStart|HTMLInputElement.||
+selectionEnd|HTMLInputElement.||
+createTextRange|(browser IE) HTMLInputElement.|(): TextRange|
+## HTMLTextAreaElement
+defaultValue|HTMLTextAreaElement.||
+form|HTMLTextAreaElement.||
+accessKey|HTMLTextAreaElement.||
+cols|HTMLTextAreaElement.||
+disabled|HTMLTextAreaElement.||
+name|HTMLTextAreaElement.||
+readOnly|HTMLTextAreaElement.||
+rows|HTMLTextAreaElement.||
+tabIndex|HTMLTextAreaElement.||
+type|HTMLTextAreaElement.||
+value|HTMLTextAreaElement.||
+blur|HTMLTextAreaElement.|(): void|
+focus|HTMLTextAreaElement.|(): void|
+select|HTMLTextAreaElement.|(): void|
+## HTMLButtonElement
+form|HTMLButtonElement.||
+accessKey|HTMLButtonElement.||
+disabled|HTMLButtonElement.||
+name|HTMLButtonElement.||
+tabIndex|HTMLButtonElement.||
+type|HTMLButtonElement.||
+value|HTMLButtonElement.||
+## HTMLLabelElement
+form|HTMLLabelElement.||
+accessKey|HTMLLabelElement.||
+htmlFor|HTMLLabelElement.||
+## HTMLFieldSetElement
+form|HTMLFieldSetElement.||
+## HTMLLegendElement
+form|HTMLLegendElement.||
+accessKey|HTMLLegendElement.||
+align|HTMLLegendElement.||
+## HTMLUListElement
+compact|HTMLUListElement.||
+type|HTMLUListElement.||
+## HTMLOListElement
+compact|HTMLOListElement.||
+start|HTMLOListElement.||
+type|HTMLOListElement.||
+## HTMLDListElement
+compact|HTMLDListElement.||
+## HTMLDirectoryElement
+compact|HTMLDirectoryElement.||
+## HTMLMenuElement
+compact|HTMLMenuElement.||
+## HTMLLIElement
+type|HTMLLIElement.||
+value|HTMLLIElement.||
+## HTMLDivElement
+align|HTMLDivElement.||
+## HTMLParagraphElement
+align|HTMLParagraphElement.||
+## HTMLHeadingElement
+align|HTMLHeadingElement.||
+## HTMLQuoteElement
+cite|HTMLQuoteElement.||
+## HTMLPreElement
+width|HTMLPreElement.||
+## HTMLBRElement
+clear|HTMLBRElement.||
+## HTMLBaseFontElement
+color|HTMLBaseFontElement.||
+face|HTMLBaseFontElement.||
+size|HTMLBaseFontElement.||
+## HTMLFontElement
+color|HTMLFontElement.||
+face|HTMLFontElement.||
+size|HTMLFontElement.||
+## HTMLHRElement
+align|HTMLHRElement.||
+noShade|HTMLHRElement.||
+size|HTMLHRElement.||
+width|HTMLHRElement.||
+## HTMLModElement
+cite|HTMLModElement.||
+dateTime|HTMLModElement.||
+## HTMLAnchorElement
+accessKey|HTMLAnchorElement.||
+charset|HTMLAnchorElement.||
+coords|HTMLAnchorElement.||
+href|HTMLAnchorElement.||
+hreflang|HTMLAnchorElement.||
+name|HTMLAnchorElement.||
+rel|HTMLAnchorElement.||
+rev|HTMLAnchorElement.||
+shape|HTMLAnchorElement.||
+tabIndex|HTMLAnchorElement.||
+target|HTMLAnchorElement.||
+type|HTMLAnchorElement.||
+blur|HTMLAnchorElement.|(): void|
+focus|HTMLAnchorElement.|(): void|
+## HTMLImageElement
+name|HTMLImageElement.||
+align|HTMLImageElement.||
+alt|HTMLImageElement.||
+border|HTMLImageElement.||
+height|HTMLImageElement.||
+hspace|HTMLImageElement.||
+isMap|HTMLImageElement.||
+longDesc|HTMLImageElement.||
+src|HTMLImageElement.||
+useMap|HTMLImageElement.||
+vspace|HTMLImageElement.||
+width|HTMLImageElement.||
+## HTMLObjectElement
+form|HTMLObjectElement.||
+code|HTMLObjectElement.||
+align|HTMLObjectElement.||
+archive|HTMLObjectElement.||
+border|HTMLObjectElement.||
+codeBase|HTMLObjectElement.||
+codeType|HTMLObjectElement.||
+data|HTMLObjectElement.||
+declare|HTMLObjectElement.||
+height|HTMLObjectElement.||
+hspace|HTMLObjectElement.||
+name|HTMLObjectElement.||
+standby|HTMLObjectElement.||
+tabIndex|HTMLObjectElement.||
+type|HTMLObjectElement.||
+useMap|HTMLObjectElement.||
+vspace|HTMLObjectElement.||
+width|HTMLObjectElement.||
+contentDocument|HTMLObjectElement.||
+## HTMLParamElement
+name|HTMLParamElement.||
+type|HTMLParamElement.||
+value|HTMLParamElement.||
+valueType|HTMLParamElement.||
+## HTMLAppletElement
+align|HTMLAppletElement.||
+alt|HTMLAppletElement.||
+archive|HTMLAppletElement.||
+code|HTMLAppletElement.||
+codeBase|HTMLAppletElement.||
+height|HTMLAppletElement.||
+hspace|HTMLAppletElement.||
+name|HTMLAppletElement.||
+object|HTMLAppletElement.||
+vspace|HTMLAppletElement.||
+width|HTMLAppletElement.||
+## HTMLMapElement
+areas|HTMLMapElement.||
+name|HTMLMapElement.||
+## HTMLAreaElement
+accessKey|HTMLAreaElement.||
+alt|HTMLAreaElement.||
+coords|HTMLAreaElement.||
+href|HTMLAreaElement.||
+noHref|HTMLAreaElement.||
+shape|HTMLAreaElement.||
+tabIndex|HTMLAreaElement.||
+target|HTMLAreaElement.||
+## HTMLScriptElement
+text|HTMLScriptElement.||
+htmlFor|HTMLScriptElement.||
+event|HTMLScriptElement.||
+charset|HTMLScriptElement.||
+defer|HTMLScriptElement.||
+src|HTMLScriptElement.||
+type|HTMLScriptElement.||
+## HTMLTableElement
+caption|HTMLTableElement.||
+tHead|HTMLTableElement.||
+tFoot|HTMLTableElement.||
+rows|HTMLTableElement.||
+tBodies|HTMLTableElement.||
+align|HTMLTableElement.||
+bgColor|HTMLTableElement.||
+border|HTMLTableElement.||
+cellPadding|HTMLTableElement.||
+cellSpacing|HTMLTableElement.||
+frame|HTMLTableElement.||
+rules|HTMLTableElement.||
+summary|HTMLTableElement.||
+width|HTMLTableElement.||
+createTHead|HTMLTableElement.|(): HTMLElement|
+deleteTHead|HTMLTableElement.|(): void|
+createTFoot|HTMLTableElement.|(): HTMLElement|
+deleteTFoot|HTMLTableElement.|(): void|
+createCaption|HTMLTableElement.|(): HTMLElement|
+deleteCaption|HTMLTableElement.|(): void|
+insertRow|HTMLTableElement.|(index: Number): HTMLElement|
+deleteRow|HTMLTableElement.|(index: Number): void|
+## HTMLTableCaptionElement
+align|HTMLTableCaptionElement.||
+## HTMLTableColElement
+align|HTMLTableColElement.||
+ch|HTMLTableColElement.||
+chOff|HTMLTableColElement.||
+span|HTMLTableColElement.||
+vAlign|HTMLTableColElement.||
+width|HTMLTableColElement.||
+## HTMLTableSectionElement
+align|HTMLTableSectionElement.||
+ch|HTMLTableSectionElement.||
+chOff|HTMLTableSectionElement.||
+vAlign|HTMLTableSectionElement.||
+rows|HTMLTableSectionElement.||
+insertRow|HTMLTableSectionElement.|(index: Number): HTMLElement|
+deleteRow|HTMLTableSectionElement.|(index: Number): void|
+## HTMLTableRowElement
+rowIndex|HTMLTableRowElement.||
+sectionRowIndex|HTMLTableRowElement.||
+cells|HTMLTableRowElement.||
+align|HTMLTableRowElement.||
+bgColor|HTMLTableRowElement.||
+ch|HTMLTableRowElement.||
+chOff|HTMLTableRowElement.||
+vAlign|HTMLTableRowElement.||
+insertCell|HTMLTableRowElement.|(index: Number): HTMLElement|
+deleteCell|HTMLTableRowElement.|(index: Number): void|
+## HTMLTableCellElement
+cellIndex|HTMLTableCellElement.||
+abbr|HTMLTableCellElement.||
+align|HTMLTableCellElement.||
+axis|HTMLTableCellElement.||
+bgColor|HTMLTableCellElement.||
+ch|HTMLTableCellElement.||
+chOff|HTMLTableCellElement.||
+colSpan|HTMLTableCellElement.||
+headers|HTMLTableCellElement.||
+height|HTMLTableCellElement.||
+noWrap|HTMLTableCellElement.||
+rowSpan|HTMLTableCellElement.||
+scope|HTMLTableCellElement.||
+vAlign|HTMLTableCellElement.||
+width|HTMLTableCellElement.||
+## HTMLFrameSetElement
+cols|HTMLFrameSetElement.||
+rows|HTMLFrameSetElement.||
+## HTMLFrameElement
+frameBorder|HTMLFrameElement.||
+longDesc|HTMLFrameElement.||
+marginHeight|HTMLFrameElement.||
+marginWidth|HTMLFrameElement.||
+name|HTMLFrameElement.||
+noResize|HTMLFrameElement.||
+scrolling|HTMLFrameElement.||
+src|HTMLFrameElement.||
+contentDocument|(browser Gecko) HTMLFrameElement.||
+## HTMLIFrameElement
+align|HTMLIFrameElement.||
+frameBorder|HTMLIFrameElement.||
+height|HTMLIFrameElement.||
+longDesc|HTMLIFrameElement.||
+marginHeight|HTMLIFrameElement.||
+marginWidth|HTMLIFrameElement.||
+name|HTMLIFrameElement.||
+scrolling|HTMLIFrameElement.||
+src|HTMLIFrameElement.||
+width|HTMLIFrameElement.||
+contentDocument|HTMLIFrameElement.||
+contentWindow|HTMLIFrameElement.||
+# Extract from: AJAX.xml
+## window
+ActiveXObject|window.|(sName: String): XMLHttpRequest|
+## XMLHttpRequest
+constructor|XMLHttpRequest.||
+abort|XMLHttpRequest.|(): void|
+getAllResponseHeaders|XMLHttpRequest.|(): String|
+getResponseHeader|XMLHttpRequest.|(headerName: String): String|
+overrideMimeType|(browser Gecko) XMLHttpRequest.|(mimeType: String): void|
+open|XMLHttpRequest.|(method: String, url: String, async: Boolean, username: String, password: String): void|
+send|XMLHttpRequest.|(content: String/FormData): void|
+setRequestHeader|XMLHttpRequest.|(label: String, value: String): void|
+onreadystatechange|XMLHttpRequest.||
+readyState|XMLHttpRequest.||
+responseText|XMLHttpRequest.||
+statusText|XMLHttpRequest.||
+status|XMLHttpRequest.||
+responseXML|XMLHttpRequest.||
+# Extract from: HTML5.xml
+## Blob
+slice|Blob.|(start: Number, end: Number, contentType: String): Blob|
+size|Blob.||
+type|Blob.||
+## FileList
+length|FileList.||
+## HTMLInputElement
+files|HTMLInputElement.||
+## File
+name|File.||
+lastModifiedDate|File.||
+## FileReader
+readAsArrayBuffer|FileReader.|(blob: Blob): void|
+readAsBinaryString|FileReader.|(blob: Blob): void|
+readAsText|FileReader.|(blob: Blob, encoding: String): void|
+readAsDataURL|FileReader.|(blob: Blob): void|
+abort|FileReader.|(): void|
+EMPTY|FileReader.||
+LOADING|FileReader.||
+DONE|FileReader.||
+readyState|FileReader.||
+result|FileReader.||
+error|FileReader.||
+onloadstart|FileReader.||
+onprogress|FileReader.||
+onload|FileReader.||
+onabort|FileReader.||
+onerror|FileReader.||
+onloadend|FileReader.||
+## Node
+dataset|Node.||
+## DatabaseCallback
+handleEvent|DatabaseCallback.|(database: Database): void|
+## Notification
+show|Notification.|(): void|
+cancel|Notification.|(): void|
+ondisplay|Notification.||
+onerror|Notification.||
+onclose|Notification.||
+## MediaError
+## HTMLMediaElement
+error|HTMLMediaElement.||
+src|HTMLMediaElement.||
+currentSrc|HTMLMediaElement.||
+NETWORK_EMPTY|HTMLMediaElement.||
+NETWORK_IDLE|HTMLMediaElement.||
+NETWORK_LOADING|HTMLMediaElement.||
+NETWORK_NO_SOURCE|HTMLMediaElement.||
+networkState|HTMLMediaElement.||
+preload|HTMLMediaElement.||
+buffered|HTMLMediaElement.||
+load|HTMLMediaElement.|(): void|
+canPlayType|HTMLMediaElement.|(type: String): String|
+HAVE_NOTHING|HTMLMediaElement.||
+HAVE_METADATA|HTMLMediaElement.||
+HAVE_CURRENT_DATA|HTMLMediaElement.||
+HAVE_FUTURE_DATA|HTMLMediaElement.||
+HAVE_ENOUGH_DATA|HTMLMediaElement.||
+readyState|HTMLMediaElement.||
+seeking|HTMLMediaElement.||
+currentTime|HTMLMediaElement.||
+startTime|HTMLMediaElement.||
+duration|HTMLMediaElement.||
+paused|HTMLMediaElement.||
+defaultPlaybackRate|HTMLMediaElement.||
+playbackRate|HTMLMediaElement.||
+played|HTMLMediaElement.||
+seekable|HTMLMediaElement.||
+ended|HTMLMediaElement.||
+autoplay|HTMLMediaElement.||
+loop|HTMLMediaElement.||
+play|HTMLMediaElement.|(): void|
+pause|HTMLMediaElement.|(): void|
+controls|HTMLMediaElement.||
+volume|HTMLMediaElement.||
+muted|HTMLMediaElement.||
+tracks|HTMLMediaElement.||
+addTrack|HTMLMediaElement.|(label: String, kind: String, language: String): MutableTimedTrack|
+## MediaError
+MEDIA_ERR_ABORTED|MediaError.||
+MEDIA_ERR_NETWORK|MediaError.||
+MEDIA_ERR_DECODE|MediaError.||
+MEDIA_ERR_SRC_NOT_SUPPORTED|MediaError.||
+code|MediaError.||
+## TimeRanges
+length|TimeRanges.||
+start|TimeRanges.|(index: Number): Number|
+end|TimeRanges.|(index: Number): Number|
+## TimedTrack
+kind|TimedTrack.||
+label|TimedTrack.||
+language|TimedTrack.||
+NONE|TimedTrack.||
+LOADING|TimedTrack.||
+LOADED|TimedTrack.||
+ERROR|TimedTrack.||
+readyState|TimedTrack.||
+onload|TimedTrack.||
+onerror|TimedTrack.||
+OFF|TimedTrack.||
+HIDDEN|TimedTrack.||
+SHOWING|TimedTrack.||
+mode|TimedTrack.||
+cues|TimedTrack.||
+activeCues|TimedTrack.||
+onentercue|TimedTrack.||
+onexitcue|TimedTrack.||
+## MutableTimedTrack
+addCue|MutableTimedTrack.|(cue: TimedTrackCue): void|
+removeCue|MutableTimedTrack.|(cue: TimedTrackCue): void|
+## TimedTrackCue
+track|TimedTrackCue.||
+id|TimedTrackCue.||
+startTime|TimedTrackCue.||
+endTime|TimedTrackCue.||
+pauseOnExit|TimedTrackCue.||
+direction|TimedTrackCue.||
+snapToLines|TimedTrackCue.||
+linePosition|TimedTrackCue.||
+textPosition|TimedTrackCue.||
+size|TimedTrackCue.||
+alignment|TimedTrackCue.||
+voice|TimedTrackCue.||
+getCueAsSource|TimedTrackCue.|(): String|
+getCueAsHTML|TimedTrackCue.|(): DocumentFragment|
+TimedTrackCue|TimedTrackCue.|(id: String, startTime: Number, endTime: Number, settings: String, text: String, pauseOnExit: Boolean): TimedTrackCue|
+## TimedTrackCueList
+length|TimedTrackCueList.||
+getCueById|TimedTrackCueList.|(id: String): TimedTrackCue|
+## HTMLVideoElement
+width|HTMLVideoElement.||
+height|HTMLVideoElement.||
+videoWidth|HTMLVideoElement.||
+videoHeight|HTMLVideoElement.||
+poster|HTMLVideoElement.||
+## Database
+transaction|Database.|(callback: SQLTransactionCallback/SQLTransactionSyncCallback|Function, errorCallback: SQLTransactionErrorCallback/Function, successCallback: SQLVoidCallback/Function): void|
+readTransaction|Database.|(callback: SQLTransactionCallback/SQLTransactionSyncCallback|Function, errorCallback: SQLTransactionErrorCallback/Function, successCallback: SQLVoidCallback/Function): void|
+version|Database.||
+changeVersion|Database.|(oldVersion: String, newVersion: String, callback: SQLTransactionCallback/Function, errorCallback: SQLTransactionErrorCallback/Function, successCallback: SQLVoidCallback/Function): void|
+## SQLVoidCallback
+handleEvent|SQLVoidCallback.|(): void|
+## SQLTransactionCallback
+handleEvent|SQLTransactionCallback.|(transaction: SQLTransaction): void|
+## SQLTransactionErrorCallback
+handleEvent|SQLTransactionErrorCallback.|(error: SQLError): void|
+## SQLTransaction
+executeSql|SQLTransaction.|(sqlStatement: String, arguments: Arguments, callback: SQLStatementCallback, errorCallback: SQLStatementErrorCallback): void|
+## SQLStatementCallback
+handleEvent|SQLStatementCallback.|(transaction: SQLTransaction, resultSet: SQLResultSet): void|
+## SQLStatementErrorCallback
+handleEvent|SQLStatementErrorCallback.|(transaction: SQLTransaction, error: SQLError): Boolean|
+## SQLTransactionSyncCallback
+handleEvent|SQLTransactionSyncCallback.|(transaction: SQLTransactionSync): void|
+## SQLTransactionSync
+executeSql|SQLTransactionSync.|(sqlStatement: String, arguments: Arguments): SQLResultSet|
+## SQLResultSet
+insertId|SQLResultSet.||
+rowsAffected|SQLResultSet.||
+rows|SQLResultSet.||
+## SQLResultSetRowList
+length|SQLResultSetRowList.||
+item|SQLResultSetRowList.|(index: Number): void|
+## SQLError
+UNKNOWN_ERR|SQLError.||
+DATABASE_ERR|SQLError.||
+VERSION_ERR|SQLError.||
+TOO_LARGE_ERR|SQLError.||
+QUOTA_ERR|SQLError.||
+SYNTAX_ERR|SQLError.||
+CONSTRAINT_ERR|SQLError.||
+TIMEOUT_ERR|SQLError.||
+code|SQLError.||
+message|SQLError.||
+## MessageEvent
+data|MessageEvent.||
+origin|MessageEvent.||
+lastEventId|MessageEvent.||
+source|MessageEvent.||
+ports|MessageEvent.||
+## History
+length|History.||
+state|History.||
+pushState|History.|(data: Object, title: String, url: String): void|
+replaceState|History.|(data: Object, title: String, url: String): void|
+## Location
+assign|Location.|(url: String): void|
+resolveURL|Location.|(url: String): String|
+## SQLException
+UNKNOWN_ERR|SQLException.||
+DATABASE_ERR|SQLException.||
+VERSION_ERR|SQLException.||
+TOO_LARGE_ERR|SQLException.||
+QUOTA_ERR|SQLException.||
+SYNTAX_ERR|SQLException.||
+CONSTRAINT_ERR|SQLException.||
+TIMEOUT_ERR|SQLException.||
+code|SQLException.||
+message|SQLException.||
+## HTMLImageElement
+crossOrigin|HTMLImageElement.||
+## HTMLCanvasElement
+width|HTMLCanvasElement.||
+height|HTMLCanvasElement.||
+getContext|HTMLCanvasElement.|(context: String, args: *): CanvasContext|
+toDataURL|HTMLCanvasElement.|(string: String, args: *): String|
+## CanvasContext
+canvas|CanvasContext.||
+save|CanvasContext.|(): void|
+restore|CanvasContext.|(): void|
+scale|CanvasContext.|(x: Number, y: Number): void|
+rotate|CanvasContext.|(angle: Number): void|
+translate|CanvasContext.|(x: Number, y: Number): void|
+transform|CanvasContext.|(m11: Number, m12: Number, m21: Number, m22: Number, dx: Number, dy: Number): void|
+setTransform|CanvasContext.|(m11: Number, m12: Number, m21: Number, m22: Number, dx: Number, dy: Number): void|
+globalAlpha|CanvasContext.||
+globalCompositeOperation|CanvasContext.||
+fillStyle|CanvasContext.||
+strokeStyle|CanvasContext.||
+createLinearGradient|CanvasContext.|(x0: Number, y0: Number, x1: Number, y1: Number): CanvasGradient|
+createRadialGradient|CanvasContext.|(x0: Number, y0: Number, r0: Number, x1: Number, y1: Number, r1: Number): CanvasGradient|
+createPattern|CanvasContext.|(image: HTMLImageElement/HTMLCanvasElement|HTMLVideoElement, repetition: String): CanvasPattern|
+lineWidth|CanvasContext.||
+lineCap|CanvasContext.||
+lineJoin|CanvasContext.||
+miterLimit|CanvasContext.||
+shadowOffsetX|CanvasContext.||
+shadowOffsetY|CanvasContext.||
+shadowBlur|CanvasContext.||
+shadowColor|CanvasContext.||
+clearRect|CanvasContext.|(x: Number, y: Number, w: Number, h: Number): void|
+fillRect|CanvasContext.|(x: Number, y: Number, w: Number, h: Number): void|
+strokeRect|CanvasContext.|(x: Number, y: Number, w: Number, h: Number): void|
+beginPath|CanvasContext.|(): void|
+closePath|CanvasContext.|(): void|
+moveTo|CanvasContext.|(x: Number, y: Number): void|
+lineTo|CanvasContext.|(x: Number, y: Number): void|
+quadraticCurveTo|CanvasContext.|(cpx: Number, cpy: Number, x: Number, y: Number): void|
+bezierCurveTo|CanvasContext.|(cp1x: Number, cp1y: Number, cp2x: Number, cp2y: Number, x: Number, y: Number): void|
+arcTo|CanvasContext.|(x1: Number, y1: Number, x2: Number, y2: Number, radius: Number): void|
+rect|CanvasContext.|(x: Number, y: Number, w: Number, h: Number): void|
+arc|CanvasContext.|(x: Number, y: Number, radius: Number, startAngle: Number, endAngle: Number, anticlockwise: Boolean): void|
+fill|CanvasContext.|(): void|
+stroke|CanvasContext.|(): void|
+clip|CanvasContext.|(): void|
+isPointInPath|CanvasContext.|(x: Number, y: Number): Boolean|
+drawFocusRing|CanvasContext.|(element: Element, xCaret: Number, yCaret: Number, canDrawCustom: Boolean): void|
+font|CanvasContext.||
+textAlign|CanvasContext.||
+textBaseline|CanvasContext.||
+fillText|CanvasContext.|(text: String, x: Number, y: Number, maxWidth: Number): void|
+strokeText|CanvasContext.|(text: String, x: Number, y: Number, maxWidth: Number): void|
+measureText|CanvasContext.|(text: String): TextMetrics|
+drawImage|CanvasContext.|(img_elem: Element, dx_or_sx: Number, dy_or_sy: Number, dw_or_sw: Number, dh_or_sh: Number, dx: Number, dy: Number, dw: Number, dh: Number): void|
+createImageData|CanvasContext.|(imagedata_or_sw: ImageData/Number, sh: Number): ImageData|
+getImageData|CanvasContext.|(sx: Number, sy: Number, sw: Number, sh: Number): ImageData|
+putImageData|CanvasContext.|(image_data: ImageData, dx: Number, dy: Number, dirtyX: Number, dirtyY: Number, dirtyWidth: Number, dirtyHeight: Number): void|
+## CanvasGradient
+addColorStop|CanvasGradient.|(offset: Number, color: String): void|
+## ImageData
+data|ImageData.||
+width|ImageData.||
+height|ImageData.||
+## CanvasPixelArray
+length|CanvasPixelArray.||
+## TextMetrics
+width|TextMetrics.||
+## window
+webkitRequestAnimationFrame|window.|(callback: Function, element: Element): Number|
+webkitCancelRequestAnimationFrame|window.|(handle: *): void|
+msRequestAnimationFrame|window.|(callback: Function): Number|
+msCancelRequestAnimationFrame|window.|(handle: *): void|
+oRequestAnimationFrame|window.|(callback: Function): Number|
+oCancelRequestAnimationFrame|window.|(handle: *): void|
+mozRequestAnimationFrame|window.|(callback: Function): Number|
+mozCancelRequestAnimationFrame|window.|(handle: *): void|
+requestAnimationFrame|window.|(callback: Function, element: Element): Number|
+cancelRequestAnimationFrame|window.|(handle: *): void|
+importScripts|window.|(urls: String): void|
+navigator|window.||
+openDatabase|window.|(name: String, version: String, displayName: String, estimatedSize: Number, creationCallback: DatabaseCallback/Function): Database|
+openDatabaseSync|window.|(name: String, version: String, displayName: String, estimatedSize: Number, creationCallback: DatabaseCallback/Function): Database|
+localStorage|window.||
+sessionStorage|window.||
+## WorkerNavigator
+## AbstractWorker
+onerror|AbstractWorker.||
+## Worker
+terminate|Worker.|(): void|
+postMessage|Worker.|(message: *, ports: MessagePortArray): void|
+onmessage|Worker.||
+## SharedWorker
+port|SharedWorker.||
+## Storage
+length|Storage.||
+key|Storage.|(index: Number): String|
+getItem|Storage.|(key: String): void|
+setItem|Storage.|(key: String, data: *): void|
+removeItem|Storage.|(key: String): void|
+clear|Storage.|(): void|
+## WebSocket
+url|WebSocket.||
+CONNECTING|WebSocket.||
+OPEN|WebSocket.||
+CLOSING|WebSocket.||
+CLOSED|WebSocket.||
+readyState|WebSocket.||
+bufferedAmount|WebSocket.||
+onopen|WebSocket.||
+onmessage|WebSocket.||
+onerror|WebSocket.||
+onclose|WebSocket.||
+send|WebSocket.|(data: String): Boolean|
+close|WebSocket.|(): void|
+## ArrayBuffer
+__constructor__|ArrayBuffer.|(length: Number): void|
+byteLength|ArrayBuffer.||
+## DataView
+buffer|DataView.||
+byteOffset|DataView.||
+byteLength|DataView.||
+__constructor__|DataView.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+getInt8|DataView.|(byteOffset: Number): Number|
+## ArrayBufferView
+__constructor__|ArrayBufferView.|(): void|
+buffer|ArrayBufferView.||
+byteOffset|ArrayBufferView.||
+byteLength|ArrayBufferView.||
+## Int8Array
+__constructor__|Int8Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Int8Array.||
+BYTES_PER_ELEMENT|Int8Array.||
+set|Int8Array.|(array: $__Type__$, offset: Number): void|
+subarray|Int8Array.|(begin: Number, end: Number): $__Type__$|
+## Uint8Array
+__constructor__|Uint8Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Uint8Array.||
+BYTES_PER_ELEMENT|Uint8Array.||
+set|Uint8Array.|(array: $__Type__$, offset: Number): void|
+subarray|Uint8Array.|(begin: Number, end: Number): $__Type__$|
+## Int16Array
+__constructor__|Int16Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Int16Array.||
+BYTES_PER_ELEMENT|Int16Array.||
+set|Int16Array.|(array: $__Type__$, offset: Number): void|
+subarray|Int16Array.|(begin: Number, end: Number): $__Type__$|
+## Uint16Array
+__constructor__|Uint16Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Uint16Array.||
+BYTES_PER_ELEMENT|Uint16Array.||
+set|Uint16Array.|(array: $__Type__$, offset: Number): void|
+subarray|Uint16Array.|(begin: Number, end: Number): $__Type__$|
+## Int32Array
+__constructor__|Int32Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Int32Array.||
+BYTES_PER_ELEMENT|Int32Array.||
+set|Int32Array.|(array: $__Type__$, offset: Number): void|
+subarray|Int32Array.|(begin: Number, end: Number): $__Type__$|
+## Uint32Array
+__constructor__|Uint32Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Uint32Array.||
+BYTES_PER_ELEMENT|Uint32Array.||
+set|Uint32Array.|(array: $__Type__$, offset: Number): void|
+subarray|Uint32Array.|(begin: Number, end: Number): $__Type__$|
+## Float32Array
+__constructor__|Float32Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Float32Array.||
+BYTES_PER_ELEMENT|Float32Array.||
+set|Float32Array.|(array: $__Type__$, offset: Number): void|
+subarray|Float32Array.|(begin: Number, end: Number): $__Type__$|
+## Float64Array
+__constructor__|Float64Array.|(bufferOrArrayOrLength: *, byteOffset: Number, length: Number): void|
+length|Float64Array.||
+BYTES_PER_ELEMENT|Float64Array.||
+set|Float64Array.|(array: $__Type__$, offset: Number): void|
+subarray|Float64Array.|(begin: Number, end: Number): $__Type__$|
+## Geolocation
+getCurrentPosition|Geolocation.|(successCallback: Function, errorCallback: Function, options: Object): void|
+watchPosition|Geolocation.|(successCallback: Function, errorCallback: Function, options: Object): Number|
+clearWatch|Geolocation.|(watchId: Number): void|
+## Navigator
+geolocation|Navigator.||
+## PositionOptions
+enableHighAccuracy|PositionOptions.||
+timeout|PositionOptions.||
+maximumAge|PositionOptions.||
+## Position
+coords|Position.||
+timestamp|Position.||
+## Coordinates
+latitude|Coordinates.||
+longitude|Coordinates.||
+altitude|Coordinates.||
+accuracy|Coordinates.||
+altitudeAccuracy|Coordinates.||
+heading|Coordinates.||
+speed|Coordinates.||
+## PositionError
+PERMISSION_DENIED|PositionError.||
+POSITION_UNAVAILABLE|PositionError.||
+TIMEOUT|PositionError.||
+code|PositionError.||
+message|PositionError.||
+## XMLHttpRequest
+responseType|XMLHttpRequest.||
+response|XMLHttpRequest.||
+## FormData
+append|FormData.|(name: String, value: *): void|
