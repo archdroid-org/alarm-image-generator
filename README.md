@@ -67,41 +67,41 @@ the following code section:
 
 ```sh
 for arg in "$@"; do
-        case "$arg" in
-          "n2")
-              NAME="ArchLinuxARM-odroid-n2-latest"
-              IMAGE="ArchLinuxARM-odroid-n2"
-              PLATFORM="n2"
-              ;;
-          "c4")
-              echo "Still working on this..." 1>&2
-              exit 1
-              ;;
-        esac
-    done
+    case "$arg" in
+      "n2")
+          NAME="ArchLinuxARM-odroid-n2-latest"
+          IMAGE="ArchLinuxARM-odroid-n2"
+          PLATFORM="n2"
+          ;;
+      "c4")
+          echo "Still working on this..." 1>&2
+          exit 1
+          ;;
+    esac
+done
 ```
 
 For example:
 
 ```sh
 for arg in "$@"; do
-        case "$arg" in
-          "n2")
-              NAME="ArchLinuxARM-odroid-n2-latest"
-              IMAGE="ArchLinuxARM-odroid-n2"
-              PLATFORM="n2"
-              ;;
-          "c2")
-              NAME="ArchLinuxARM-odroid-c2-latest"
-              IMAGE="ArchLinuxARM-odroid-c2"
-              PLATFORM="c2"
-              ;;
-          "c4")
-              echo "Still working on this..." 1>&2
-              exit 1
-              ;;
-        esac
-    done
+    case "$arg" in
+      "n2")
+          NAME="ArchLinuxARM-odroid-n2-latest"
+          IMAGE="ArchLinuxARM-odroid-n2"
+          PLATFORM="n2"
+          ;;
+      "c2")
+          NAME="ArchLinuxARM-odroid-c2-latest"
+          IMAGE="ArchLinuxARM-odroid-c2"
+          PLATFORM="c2"
+          ;;
+      "c4")
+          echo "Still working on this..." 1>&2
+          exit 1
+          ;;
+    esac
+done
 ```
 
 Then you should add the installation instructions of this new platform
