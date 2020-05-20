@@ -72,8 +72,9 @@ alarm_set_name() {
               PLATFORM="n2"
               ;;
           "c4")
-              echo "Still working on this..." 1>&2
-              exit 1
+              NAME="ArchLinuxARM-odroid-n2-latest"
+              IMAGE="ArchLinuxARM-odroid-c4"
+              PLATFORM="c4"
               ;;
         esac
     done
@@ -130,7 +131,7 @@ alarm_umount_image() {
 
 alarm_build_package() {
     if [ ! -e "packages" ]; then
-        git clone https://github.com/jgmdev/archlinux-odroid-n2 packages
+        git clone https://github.com/jgmdev/archlinux-odroid packages
     fi
 
     cd packages
@@ -146,13 +147,11 @@ alarm_build_package() {
         makepkg -CAs --noconfirm
     fi
 
-    package=$(ls *.pkg.tar.* | sort | tail -n1)
-
     if [ ! -e ../../mods/packages ]; then
         mkdir ../../mods/packages
     fi
 
-    cp $package ../../mods/packages
+    cp *.pkg.tar.* ../../mods/packages
 
     cd ../../
 }
@@ -169,7 +168,7 @@ case "$1" in
     "umount")
         shift
         alarm_set_name $1
-        alarm_umount_image $NAME
+        alarm_umount_image $IMAGE
         exit
         ;;
     "clean")
@@ -232,9 +231,9 @@ fi
 #
 echo "Making Disk Image..."
 
-dd if=/dev/zero of=${NAME}.img bs=1M count=$((1024*7))
+dd if=/dev/zero of=${IMAGE}.img bs=1M count=$((1024*7))
 
-fdisk ${NAME}.img <<EOF
+fdisk ${IMAGE}.img <<EOF
 n
 p
 
@@ -255,7 +254,7 @@ EOF
 #
 echo "Preparing Image Partitions..."
 
-LOOP=$(sudo losetup -f --show ${NAME}.img)
+LOOP=$(sudo losetup -f --show ${IMAGE}.img)
 sudo partx -a ${LOOP}
 
 sudo mkfs.vfat -v -I ${LOOP}p1

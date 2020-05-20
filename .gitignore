@@ -1,4 +1,5 @@
 *.img
+*.img.xz
 *.tar.gz
 /root
 /boot

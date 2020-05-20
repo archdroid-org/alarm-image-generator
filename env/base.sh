@@ -65,8 +65,8 @@ fi
 # TWEAKS
 #
 sed -i 's/#en_US\.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
-locale-gen
 localectl set-locale en_US.UTF-8
+locale-gen
 
 # Fix domain resolution issue
 cp /mods/etc/systemd/resolved.conf /etc/systemd/

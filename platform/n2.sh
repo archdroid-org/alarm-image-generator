@@ -3,8 +3,8 @@
 platform_pre_chroot() {
     echo "Platform pre-chroot..."
     alarm_build_package dkms-mali-bifrost
-    alarm_build_package mali-bifrost-fbdev-driver
-    alarm_build_package odroid-n2-gl4es
+    alarm_build_package odroid-n2-libgl-fb
+    alarm_build_package odroid-gl4es
 }
 
 platform_chroot_setup() {
@@ -32,4 +32,5 @@ platform_post_chroot() {
 
     echo "Flashing U-Boot..."
     sudo dd if=root/boot/u-boot.bin of=${LOOP} conv=fsync,notrunc bs=512 seek=1
+    sync
 }
