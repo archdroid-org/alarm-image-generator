@@ -1,10 +1,19 @@
 #!/bin/bash
 
+platform_variables() {
+    echo "WAYLAND: set to 1 to install wayland GL libraries instead of fbdev."
+}
+
 platform_pre_chroot() {
     echo "Platform pre-chroot..."
     alarm_build_package dkms-mali-bifrost
-    alarm_build_package odroid-n2-libgl-fb
-    alarm_build_package odroid-gl4es
+
+    if [ "${WAYLAND}x" = "x" ]; then
+        alarm_build_package odroid-n2-libgl-fb
+        alarm_build_package odroid-gl4es
+    else
+        alarm_build_package odroid-n2-libgl-wl
+    fi
 }
 
 platform_chroot_setup() {
@@ -19,8 +28,13 @@ platform_chroot_setup() {
 
     # Additional packages
     alarm_install_package dkms-mali-bifrost
-    alarm_install_package mali-bifrost-fbdev-driver
-    alarm_install_package odroid-n2-gl4es
+
+    if [ "${WAYLAND}x" = "x" ]; then
+        alarm_install_package odroid-n2-libgl-fb
+        alarm_install_package odroid-n2-gl4es
+    else
+        alarm_install_package odroid-n2-libgl-wl
+    fi
 
     # Customizations
     echo "Copy boot.ini adapted for mainline kernel..."

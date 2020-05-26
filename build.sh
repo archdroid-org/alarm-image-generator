@@ -156,6 +156,21 @@ alarm_build_package() {
     cd ../../
 }
 
+alarm_print_vars() {
+    if [ -e "platform/${PLATFORM}.sh" ]; then
+        source "platform/${PLATFORM}.sh"
+    fi
+
+    if type "platform_variables" 1>/dev/null ; then
+        echo "----------------------------------------------------------------"
+        echo "Variables for ${PLATFORM}:"
+        echo "----------------------------------------------------------------"
+        platform_variables
+    else
+        echo "No variables for the given platform."
+    fi
+}
+
 case "$1" in
     "build")
         alarm_set_name $@
@@ -176,6 +191,11 @@ case "$1" in
         rm *.tar.gz
         exit
         ;;
+    "vars")
+        alarm_set_name $@
+        alarm_print_vars
+        exit
+        ;;
     *)
         echo "Usage: build.sh <command> [<arguments>]"
         echo "Creates a ready to burn ArchLinuxARM image."
@@ -189,6 +209,9 @@ case "$1" in
         echo ""
         echo "  clean"
         echo "  Removes generated images and downloaded tarballs."
+        echo ""
+        echo "  vars <platform>"
+        echo "  Print the environment variables that can be set for a platform."
         echo ""
         echo "Available platforms: "
         ls platform | sed "s/^/  /g" | sed "s/.sh$//g"
