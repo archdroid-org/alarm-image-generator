@@ -30,7 +30,7 @@ pacman -S --noconfirm bluez bluez-utils
 # Network
 pacman -S --noconfirm iw inetutils \
     wireless_tools wireless-regdb net-tools netctl whois wget openssh \
-    samba smbclient cifs-utils links
+    samba smbclient cifs-utils links wpa_supplicant
 
 # System
 pacman -S --noconfirm pciutils sudo cpupower usbutils neofetch \
