@@ -105,4 +105,13 @@ systemctl enable cpupower
 systemctl enable systemd-resolved
 systemctl enable systemd-timesyncd
 
+
+#
+# Exit HOOKS
+#
+if type "platform_chroot_setup_exit" 1>/dev/null ; then
+    echo "Executing platform chroot setup exit hook..."
+    platform_chroot_setup_exit
+fi
+
 exit

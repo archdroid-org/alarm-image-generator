@@ -99,9 +99,11 @@ alarm_set_env() {
 
     if [ "$ENVIRONMENT" = "" ]; then
         ENVIRONMENT="xfce"
-    elif [ ! -e "environments/${ENVIRONMENT}.sh" ]; then
+    elif [ ! -e "env/${ENVIRONMENT}.sh" ]; then
         echo "Invalid environment: '${ENVIRONMENT}'" 1>&2
         exit 1
+    else
+        IMAGE="${IMAGE}-${ENVIRONMENT}"
     fi
 }
 
@@ -144,7 +146,8 @@ alarm_build_package() {
 
     package=$(ls *.pkg.tar.* | sort | tail -n1)
     if [ "$package" = "" ]; then
-        makepkg -CAs --noconfirm
+        echo "Building $1..."
+        makepkg -CAs --skippgpcheck --noconfirm
     fi
 
     if [ ! -e ../../mods/packages ]; then
@@ -182,13 +185,15 @@ case "$1" in
         ;;
     "umount")
         shift
-        alarm_set_name $1
+        alarm_set_name $@
+        alarm_set_env $@
         alarm_umount_image $IMAGE
         exit
         ;;
     "clean")
         rm *.img
         rm *.tar.gz
+        rm *.img.xz
         exit
         ;;
     "vars")
@@ -205,7 +210,8 @@ case "$1" in
         echo "  build [<options>] <platform>"
         echo "    -e <environment>"
         echo ""
-        echo "  umount <platform>"
+        echo "  umount [<options>] <platform>"
+        echo "    -e <environment>"
         echo ""
         echo "  clean"
         echo "  Removes generated images and downloaded tarballs."
@@ -240,13 +246,13 @@ echo "Downloading ArchLinuxARM Tarball..."
 
 if [ ! -e "${NAME}.tar.gz" ]; then
     wget http://os.archlinuxarm.org/os/${NAME}.tar.gz
-fi
 
-echo "Verifying donwload integrity..."
-if ! curl -sSL http://archlinuxarm.org/os/${NAME}.tar.gz.md5 | md5sum -c ; then
-    echo "Wrong md5sum checksum: '${NAME}.tar.gz'" 1>&2
-    echo "Manually delete the downloaded tarball and run the script again." 1>&2
-    exit 1
+    echo "Verifying donwload integrity..."
+    if ! curl -sSL http://archlinuxarm.org/os/${NAME}.tar.gz.md5 | md5sum -c ; then
+        echo "Wrong md5sum checksum: '${NAME}.tar.gz'" 1>&2
+        echo "Manually delete the downloaded tarball and run the script again." 1>&2
+        exit 1
+    fi
 fi
 
 #
@@ -254,9 +260,13 @@ fi
 #
 echo "Making Disk Image..."
 
-dd if=/dev/zero of=${IMAGE}.img bs=1M count=$((1024*7))
+# Dont generate the image everytime which wears out storage.
+if [ ! -e "${IMAGE}.img" ]; then
+    dd if=/dev/zero of=${IMAGE}.img bs=1M count=$((1024*7))
+fi
 
 fdisk ${IMAGE}.img <<EOF
+o
 n
 p
 
@@ -281,7 +291,7 @@ LOOP=$(sudo losetup -f --show ${IMAGE}.img)
 sudo partx -a ${LOOP}
 
 sudo mkfs.vfat -v -I ${LOOP}p1
-sudo mkfs.ext4 -v ${LOOP}p2
+sudo mkfs.ext4 -F -v ${LOOP}p2
 
 mkdir boot root
 sudo mount -v -t vfat ${LOOP}p1 boot
@@ -337,6 +347,17 @@ fi
 if [ -e "env/${ENVIRONMENT}.sh" ]; then
     sudo cp "env/${ENVIRONMENT}.sh" root/env.sh
     sudo chmod 0755 root/env.sh
+fi
+
+# prepend environment variables to platform script
+if type "platform_variables" 1>/dev/null ; then
+    for var in "$(platform_variables)" ; do
+        var_name=$(echo $var | cut -d: -f1)
+        if [ "$((var_name))x" != "x" ]; then
+            sudo sed -i "s|#!/bin/bash|#!/bin/bash\n${var_name}=\"$((var_name))\"|g" \
+                root/platform.sh
+        fi
+    done
 fi
 
 sudo cp env/base.sh root/setup.sh

@@ -45,12 +45,13 @@ env_chroot_setup() {
     pacman -S --noconfirm blueman
 
     # Theming
-    pacman -S --noconfirm arc-gtk-theme papirus-icon-theme
+    pacman -S --noconfirm arc-gtk-theme papirus-icon-theme \
+        gtk-engine-murrine
 
     # Fonts
     pacman -S --noconfirm ttf-croscore ttf-dejavu ttf-hack ttf-liberation \
-        ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono \
-        cantarell-fonts adobe-source-code-pro-fonts ttf-opensans
+        ttf-nerd-fonts-symbols cantarell-fonts \
+        adobe-source-code-pro-fonts ttf-opensans
 
     # System
     pacman -S --noconfirm gparted

@@ -32,13 +32,19 @@ platform_chroot_setup() {
     if [ "${WAYLAND}x" = "x" ]; then
         alarm_install_package odroid-n2-libgl-fb
         alarm_install_package odroid-n2-gl4es
-    else
-        alarm_install_package odroid-n2-libgl-wl
     fi
 
     # Customizations
     echo "Copy boot.ini adapted for mainline kernel..."
     cp /mods/boot/boot.n2.mainline.ini /boot/boot.ini
+}
+
+platform_chroot_setup_exit() {
+    echo "Platform chroot-setup-exit..."
+    # Install at last since this causes issues
+    if [ "${WAYLAND}x" != "x" ]; then
+        alarm_install_package odroid-n2-libgl-wl
+    fi
 }
 
 platform_post_chroot() {
