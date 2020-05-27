@@ -80,8 +80,17 @@ chsh -s /usr/bin/zsh alarm
 cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
 cp /mods/etc/default/cpupower /etc/default/
 cp /mods/etc/vconsole.conf /etc/
-cp -a /mods/home/alarm/.oh-my-zsh /home/alarm/
-cp /mods/home/alarm/.zshrc /home/alarm/
+if [ ! -e "/mods/packages/.oh-my-zsh" ]; then
+    git clone -c core.eol=lf -c core.autocrlf=false \
+        -c fsck.zeroPaddedFilemode=ignore \
+        -c fetch.fsck.zeroPaddedFilemode=ignore \
+        -c receive.fsck.zeroPaddedFilemode=ignore \
+        --depth=1 --branch "master" \
+        "https://github.com/ohmyzsh/ohmyzsh" \
+        /mods/packages/.oh-my-zsh
+fi
+cp -a /mods/packages/.oh-my-zsh /home/alarm/
+cp /home/alarm/.oh-my-zsh/templates/zshrc.zsh-template /home/alarm/.zshrc
 cp /mods/home/alarm/.makepkg.conf /home/alarm/
 
 chown -R alarm:alarm /home/alarm

@@ -62,6 +62,7 @@ env_chroot_setup() {
     # Other applications
     pacman -S --noconfirm eog \
         gcolor3 \
+        qt5ct \
         kvantum-qt5 \
         evince \
         file-roller p7zip unrar unzip zip \
@@ -93,6 +94,7 @@ env_chroot_setup() {
     mkdir /home/alarm/.config
     cp -a /mods/home/alarm/.config/xfce4 /home/alarm/.config/
     cp -a /mods/home/alarm/.config/gtk-3.0 /home/alarm/.config/
+    cp -a /mods/home/alarm/.config/qt5ct /home/alarm/.config/
     cp -a /mods/home/alarm/.config/Kvantum /home/alarm/.config/
     cp -a /mods/home/alarm/.config/geany /home/alarm/.config/
     cp /mods/home/alarm/.gtkrc-2.0 /home/alarm/
