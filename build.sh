@@ -5,47 +5,47 @@
 
 # Check if required dependencies are met.
 if ! which partx 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES partx"
+    DEPENDENCIES="$DEPENDENCIES partx"
 fi
 
 if ! which losetup 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES losetup"
+    DEPENDENCIES="$DEPENDENCIES losetup"
 fi
 
 if ! which fdisk 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES fdisk"
+    DEPENDENCIES="$DEPENDENCIES fdisk"
 fi
 
 if ! which mkfs.vfat 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES mkfs.vfat"
+    DEPENDENCIES="$DEPENDENCIES mkfs.vfat"
 fi
 
 if ! which mkfs.ext4 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES mkfs.ext4"
+    DEPENDENCIES="$DEPENDENCIES mkfs.ext4"
 fi
 
 if ! which wget 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES wget"
+    DEPENDENCIES="$DEPENDENCIES wget"
 fi
 
 if ! which curl 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES curl"
+    DEPENDENCIES="$DEPENDENCIES curl"
 fi
 
 if ! which arch-chroot 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES arch-chroot"
+    DEPENDENCIES="$DEPENDENCIES arch-chroot"
 fi
 
 if ! which tar 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES tar"
+    DEPENDENCIES="$DEPENDENCIES tar"
 fi
 
 if ! which sudo 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES sudo"
+    DEPENDENCIES="$DEPENDENCIES sudo"
 fi
 
 if ! which yay 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDECIES yay"
+    DEPENDENCIES="$DEPENDENCIES yay"
 fi
 
 if [ "$DEPENDENCIES" != "" ]; then
