@@ -1,7 +1,8 @@
 #!/bin/bash
 
 alarm_install_package() {
-    yes | pacman -U /mods/packages/$1*.pkg.tar.*
+    package=$(ls /mods/packages/$1*.pkg.tar.* | sort | tail -n1)
+    yes | pacman -U $package
 }
 
 # Include environment hooks
