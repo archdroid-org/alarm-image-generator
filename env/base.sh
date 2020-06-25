@@ -76,7 +76,7 @@ cp /mods/etc/systemd/resolved.conf /etc/systemd/
 #
 # CUSTOMIZATIONS
 #
-usermod -G audio,tty,video,wheel -a alarm
+usermod -G audio,tty,video,wheel,network -a alarm
 chsh -s /usr/bin/zsh alarm
 cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
 cp /mods/etc/default/cpupower /etc/default/
