@@ -2,11 +2,17 @@
 
 platform_variables() {
     echo "WAYLAND: set to 1 to install wayland GL libraries instead of fbdev."
+    echo "MAINLINE_KERNEL: set to 1 to use mainline kernel."
 }
 
 platform_pre_chroot() {
     echo "Platform pre-chroot..."
-    alarm_build_package dkms-mali-bifrost
+
+    if [ "${MAINLINE_KERNEL}x" = "x" ]; then
+        alarm_build_package linux-odroid-n2plus
+    else
+        alarm_build_package dkms-mali-bifrost
+    fi
 
     if [ "${WAYLAND}x" = "x" ]; then
         alarm_build_package odroid-n2-libgl-fb
@@ -14,20 +20,33 @@ platform_pre_chroot() {
     else
         alarm_build_package odroid-n2-libgl-wl
     fi
+
+    alarm_build_package uboot-odroid-n2plus
 }
 
 platform_chroot_setup() {
     echo "Platform chroot-setup..."
 
     # Kernel
-    yes | pacman -Rcs linux-odroid-n2
-    yes | pacman -S --noconfirm linux-aarch64-rc linux-aarch64-rc-headers
+    yes | pacman -R uboot-odroid-n2
 
-    # Wireless
-    yes | pacman -S --noconfirm dkms dkms-8812au
+    if [ "${MAINLINE_KERNEL}x" != "x" ]; then
+        yes | pacman -S --noconfirm linux-aarch64 linux-aarch64-headers
 
-    # Additional packages
-    alarm_install_package dkms-mali-bifrost
+        yes | pacman -S --noconfirm dkms
+
+        # Wireless
+        yes | pacman -S --noconfirm dkms-8812au
+
+        # GPU kernel driver
+        alarm_install_package dkms-mali-bifrost
+    else
+        alarm_install_package linux-odroid-n2plus-4.9
+        alarm_install_package linux-odroid-n2plus-headers
+    fi
+
+    # Updated uboot
+    alarm_install_package uboot-odroid-n2plus
 
     if [ "${WAYLAND}x" = "x" ]; then
         alarm_install_package odroid-n2-libgl-fb
@@ -35,8 +54,13 @@ platform_chroot_setup() {
     fi
 
     # Customizations
-    echo "Copy boot.ini adapted for mainline kernel..."
-    cp /mods/boot/boot.n2.mainline.ini /boot/boot.ini
+    if [ "${MAINLINE_KERNEL}x" != "x" ]; then
+        echo "Copy boot.ini adapted for mainline kernel..."
+        cp /mods/boot/boot.n2.mainline.ini /boot/boot.ini
+    else
+        echo "Copy boot.ini adapted for n2+..."
+        cp /mods/boot/boot.n2plus.hardkernel.ini /boot/boot.ini
+    fi
 }
 
 platform_chroot_setup_exit() {
