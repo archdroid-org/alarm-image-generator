@@ -41,6 +41,9 @@ pacman -S --noconfirm pciutils sudo cpupower usbutils neofetch \
 pacman -S --noconfirm zsh zsh-autosuggestions zsh-completions \
     zsh-syntax-highlighting
 
+# Realtime priviliges for audio recording
+pacman -S --noconfirm realtime-privileges
+
 
 #
 # INSTALL CUSTOM PACKAGES
@@ -76,7 +79,7 @@ cp /mods/etc/systemd/resolved.conf /etc/systemd/
 #
 # CUSTOMIZATIONS
 #
-usermod -G audio,tty,video,wheel,network -a alarm
+usermod -G audio,tty,video,wheel,network,realtime -a alarm
 chsh -s /usr/bin/zsh alarm
 cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
 cp /mods/etc/default/cpupower /etc/default/
