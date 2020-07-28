@@ -60,13 +60,16 @@ platform_chroot_setup() {
     else
         echo "Copy boot.ini adapted for n2+..."
         cp /mods/boot/boot.n2plus.hardkernel.ini /boot/boot.ini
+
+        echo "Enable startup modules..."
+        cp /mods/etc/modules-load.d/modules.n2.conf /etc/modules-load.d/modules.conf
     fi
 }
 
 platform_chroot_setup_exit() {
     echo "Platform chroot-setup-exit..."
     # Install at last since this causes issues
-    if [ "${WAYLAND}x" != "x" ]; then
+    if [ "${WAYLAND}x" != "x" ] && [ "${WAYLAND}x" != "0x" ]; then
         alarm_install_package odroid-n2-libgl-wl
     fi
 }
