@@ -8,13 +8,13 @@ platform_variables() {
 platform_pre_chroot() {
     echo "Platform pre-chroot..."
 
-    if [ "${MAINLINE_KERNEL}x" = "x" ]; then
+    if [ "${MAINLINE_KERNEL}" != "1" ]; then
         alarm_build_package linux-odroid-n2plus
     else
         alarm_build_package dkms-mali-bifrost
     fi
 
-    if [ "${WAYLAND}x" = "x" ]; then
+    if [ "${WAYLAND}" != "1" ]; then
         alarm_build_package odroid-n2-libgl-fb
         alarm_build_package odroid-gl4es
     else
@@ -30,7 +30,7 @@ platform_chroot_setup() {
     # Kernel
     yes | pacman -R uboot-odroid-n2
 
-    if [ "${MAINLINE_KERNEL}x" != "x" ]; then
+    if [ "${MAINLINE_KERNEL}" = "1" ]; then
         yes | pacman -S --noconfirm linux-aarch64 linux-aarch64-headers
 
         yes | pacman -S --noconfirm dkms
@@ -48,13 +48,13 @@ platform_chroot_setup() {
     # Updated uboot
     alarm_install_package uboot-odroid-n2plus
 
-    if [ "${WAYLAND}x" = "x" ]; then
+    if [ "${WAYLAND}" != "1" ]; then
         alarm_install_package odroid-n2-libgl-fb
-        alarm_install_package odroid-n2-gl4es
+        alarm_install_package odroid-gl4es
     fi
 
     # Customizations
-    if [ "${MAINLINE_KERNEL}x" != "x" ]; then
+    if [ "${MAINLINE_KERNEL}" = "1" ]; then
         echo "Copy boot.ini adapted for mainline kernel..."
         cp /mods/boot/boot.n2.mainline.ini /boot/boot.ini
     else
@@ -69,7 +69,7 @@ platform_chroot_setup() {
 platform_chroot_setup_exit() {
     echo "Platform chroot-setup-exit..."
     # Install at last since this causes issues
-    if [ "${WAYLAND}x" != "x" ] && [ "${WAYLAND}x" != "0x" ]; then
+    if [ "${WAYLAND}" = "1" ]; then
         alarm_install_package odroid-n2-libgl-wl
     fi
 }

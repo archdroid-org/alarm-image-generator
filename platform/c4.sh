@@ -8,7 +8,7 @@ platform_pre_chroot() {
     echo "Platform pre-chroot..."
     alarm_build_package uboot-odroid-c4
 
-    if [ "${WAYLAND}x" = "x" ]; then
+    if [ "${WAYLAND}" != "1" ]; then
         alarm_build_package linux-odroid-c4
         alarm_build_package odroid-c4-libgl-fb
         alarm_build_package odroid-gl4es
@@ -29,7 +29,7 @@ platform_chroot_setup() {
     # Additional packages/configurations
     alarm_install_package uboot-odroid-c4
 
-    if [ "${WAYLAND}x" = "x" ]; then
+    if [ "${WAYLAND}" != "1" ]; then
         alarm_install_package linux-odroid-c4
         alarm_install_package odroid-c4-libgl-fb
         alarm_install_package odroid-gl4es
@@ -47,7 +47,7 @@ platform_chroot_setup() {
 platform_chroot_setup_exit() {
     echo "Platform chroot-setup-exit..."
     # Install at last since this causes issues
-    if [ "${WAYLAND}x" != "x" ]; then
+    if [ "${WAYLAND}" = "1" ]; then
         alarm_install_package odroid-c4-libgl-wl
     fi
 

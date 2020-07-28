@@ -15,6 +15,13 @@ if [ -e /platform.sh ]; then
 fi
 
 #
+# Try to set locale before installing packages.
+#
+sed -i 's/#en_US\.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+locale-gen
+localectl set-locale en_US.UTF-8
+
+#
 # PACMAN SETUP
 #
 pacman-key --init
@@ -68,9 +75,10 @@ fi
 #
 # TWEAKS
 #
-sed -i 's/#en_US\.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
-localectl set-locale en_US.UTF-8
+
+# Re-configure locale just in case.
 locale-gen
+localectl set-locale en_US.UTF-8
 
 # Fix domain resolution issue
 cp /mods/etc/systemd/resolved.conf /etc/systemd/
