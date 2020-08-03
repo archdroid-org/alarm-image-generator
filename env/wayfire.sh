@@ -32,7 +32,7 @@ env_chroot_setup() {
     # Desktop environment
     pacman -S --noconfirm thunar tumbler thunar-volman \
         thunar-archive-plugin thunar-media-tags-plugin \
-        xdg-user-dirs xdg-utils lxterminal guake grim slurp \
+        xdg-user-dirs xdg-utils lxterminal xfce4-terminal grim slurp \
         wl-clipboard qt5-wayland bemenu bemenu-wlroots kanshi \
         gnome-shell gnome-tweaks xdg-desktop-portal \
         polkit-gnome mako xorg-xrdb lxappearance-gtk3

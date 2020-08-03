@@ -11,6 +11,7 @@ platform_pre_chroot() {
     if [ "${MAINLINE_KERNEL}" != "1" ]; then
         alarm_build_package linux-odroid-n2plus
     else
+        alarm_build_package linux-odroid-n2-mainline
         alarm_build_package dkms-mali-bifrost
     fi
 
@@ -31,7 +32,8 @@ platform_chroot_setup() {
     yes | pacman -R uboot-odroid-n2
 
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
-        yes | pacman -S --noconfirm linux-aarch64 linux-aarch64-headers
+        alarm_install_package linux-odroid-n2-mainline-5
+        alarm_install_package linux-odroid-n2-mainline-headers
 
         yes | pacman -S --noconfirm dkms
 
@@ -56,7 +58,7 @@ platform_chroot_setup() {
     # Customizations
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
         echo "Copy boot.ini adapted for mainline kernel..."
-        cp /mods/boot/boot.n2.mainline.ini /boot/boot.ini
+        cp /mods/boot/boot.n2plus.mainline.ini /boot/boot.ini
     else
         echo "Copy boot.ini adapted for n2+..."
         cp /mods/boot/boot.n2plus.hardkernel.ini /boot/boot.ini

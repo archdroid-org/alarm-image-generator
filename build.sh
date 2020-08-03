@@ -351,7 +351,7 @@ fi
 
 # prepend environment variables to platform script
 if type "platform_variables" 1>/dev/null ; then
-    for var in "$(platform_variables)" ; do
+    platform_variables | while read var; do
         var_name=$(echo $var | cut -d: -f1)
         if [ "$((var_name))x" != "x" ]; then
             sudo sed -i "s|#!/bin/bash|#!/bin/bash\n${var_name}=\"$((var_name))\"|g" \
