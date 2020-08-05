@@ -1,0 +1,17 @@
+[Unit]
+Description=Initial Setup
+After=default.target
+DefaultDependencies=no
+Before=shutdown.target
+
+[Service]
+User=root
+Type=oneshot
+RemainAfterExit=no
+ExecStart=/bin/bash /usr/bin/initial-img-setup
+StandardOutput=file:/var/log/initial_img_setup.log
+StandardError=file:/var/log/initial_img_setup.log
+ExecStartPost=/bin/bash -c "/bin/rm /usr/bin/initial-img-setup && /usr/bin/reboot"
+
+[Install]
+WantedBy=default.target

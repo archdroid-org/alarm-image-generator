@@ -1,5 +1,8 @@
 #!/bin/bash
 
+NAME="ArchLinuxARM-odroid-n2-latest"
+IMAGE="ArchLinuxARM-odroid-n2"
+
 platform_variables() {
     echo "WAYLAND: set to 1 to install wayland GL libraries instead of fbdev."
     echo "MAINLINE_KERNEL: set to 1 to use mainline kernel."

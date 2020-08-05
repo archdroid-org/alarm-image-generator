@@ -83,11 +83,16 @@ localectl set-locale en_US.UTF-8
 # Fix domain resolution issue
 cp /mods/etc/systemd/resolved.conf /etc/systemd/
 
+# Add initial setup script
+cp /mods/etc/systemd/system/initial-setup.service /etc/systemd/system/
+cp /mods/usr/bin/initial-img-setup /usr/bin/
+
 
 #
 # CUSTOMIZATIONS
 #
-usermod -G audio,tty,video,wheel,network,realtime -a alarm
+cp /mods/etc/fstab /etc/
+usermod -G audio,tty,video,input,wheel,network,realtime -a alarm
 chsh -s /usr/bin/zsh alarm
 cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
 cp /mods/etc/default/cpupower /etc/default/
@@ -116,6 +121,7 @@ systemctl enable bluetooth
 systemctl enable cpupower
 systemctl enable systemd-resolved
 systemctl enable systemd-timesyncd
+systemctl enable initial-setup
 
 
 #

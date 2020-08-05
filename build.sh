@@ -4,56 +4,34 @@
 #
 
 # Check if required dependencies are met.
-if ! which partx 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES partx"
-fi
+deps=(
+    partx losetup fdisk
+    mkfs.vfat mkfs.ext4
+    wget curl tar sudo
+    arch-chroot yay
+)
 
-if ! which losetup 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES losetup"
-fi
-
-if ! which fdisk 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES fdisk"
-fi
-
-if ! which mkfs.vfat 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES mkfs.vfat"
-fi
-
-if ! which mkfs.ext4 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES mkfs.ext4"
-fi
-
-if ! which wget 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES wget"
-fi
-
-if ! which curl 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES curl"
-fi
-
-if ! which arch-chroot 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES arch-chroot"
-fi
-
-if ! which tar 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES tar"
-fi
-
-if ! which sudo 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES sudo"
-fi
-
-if ! which yay 1>/dev/null ; then
-    DEPENDENCIES="$DEPENDENCIES yay"
-fi
+DEPENDENCIES=()
+for dep in "${deps[@]}"; do
+    command -v ${dep} 1>/dev/null 2>/dev/null || DEPENDENCIES+=("${dep}")
+done
 
 if [ "$DEPENDENCIES" != "" ]; then
-    DEPENDENCIES_TRIM="$(echo "${DEPENDENCIES}" | sed 's/^ *//' 's/ *$//')"
-    echo "Please install '$DEPENDENCIES' to use this script." 1>&2
-    exit
+    echo "Please install '${DEPENDENCIES[@]}' to use this script." 1>&2
+    exit 1
 fi
 
+# Collect supported platforms
+platforms=(
+    $(ls platform | sed "s/^/  /g" | sed "s/.sh$//g")
+)
+
+# Collect supported environments
+environments=(
+    $(ls env | grep -v base.sh | sed "s/^/  /g" | sed "s/.sh$//g")
+)
+
+# check if user running script is root (currently not used)
 alarm_check_root() {
     if [ $(id -u) -ne 0 ]; then
         echo "You need to be root to execute this command." 1>&2
@@ -61,30 +39,39 @@ alarm_check_root() {
     fi
 }
 
-# Set image name and file download name
-alarm_set_name() {
+# Set image name and file download name and include platform script
+alarm_set_platform() {
     NAME=""
     for arg in "$@"; do
-        case "$arg" in
-          "n2")
-              NAME="ArchLinuxARM-odroid-n2-latest"
-              IMAGE="ArchLinuxARM-odroid-n2"
-              PLATFORM="n2"
-              ;;
-          "c4")
-              NAME="ArchLinuxARM-odroid-n2-latest"
-              IMAGE="ArchLinuxARM-odroid-c4"
-              PLATFORM="c4"
-              ;;
-        esac
+        if [[ " ${platforms[@]} " =~ " ${arg} " ]]; then
+            if [ -e "platform/${arg}.sh" ]; then
+                source "platform/${arg}.sh"
+
+                if [ "${NAME}" = "" ]; then
+                    NAME="ArchLinuxARM-odroid-${arg}-latest"
+                fi
+                if [ "${IMAGE}" = "" ]; then
+                    IMAGE="ArchLinuxARM-odroid-${arg}"
+                fi
+                if [ "${IMAGE_SIZE}" = "" ]; then
+                    IMAGE_SIZE=6
+                fi
+                if [ "${PLATFORM}" = "" ]; then
+                    PLATFORM="${arg}"
+                fi
+
+                break
+            fi
+        fi
     done
 
     if [ "$NAME" = "" ]; then
-        echo "Platform not supported." 1>&2
+        echo "Platform not yet supported." 1>&2
         exit 1
     fi
 }
 
+# set environment name and include its script
 alarm_set_env() {
     ENVIRONMENT=""
     while [ "$1" ]; do
@@ -103,15 +90,17 @@ alarm_set_env() {
         echo "Invalid environment: '${ENVIRONMENT}'" 1>&2
         exit 1
     else
-        IMAGE="${IMAGE}-${ENVIRONMENT}"
+        source "env/${ENVIRONMENT}.sh"
     fi
+
+    IMAGE="${IMAGE}-${ENVIRONMENT}"
 }
 
 # Unmount image
 alarm_umount_image() {
     image=$(losetup -j "${1}".img | cut -d: -f1)
 
-    if echo $image | grep loop ; then
+    if echo ${image} | grep loop ; then
         if [ -e boot ]; then
             sudo umount boot
             rmdir boot
@@ -176,7 +165,7 @@ alarm_print_vars() {
 
 case "$1" in
     "build")
-        alarm_set_name $@
+        alarm_set_platform $@
         alarm_set_env $@
         echo "--DETAILS-------------------------------------------------------"
         echo "  Platform:          $PLATFORM"
@@ -185,21 +174,19 @@ case "$1" in
         ;;
     "umount")
         shift
-        alarm_set_name $@
+        alarm_set_platform $@
         alarm_set_env $@
         alarm_umount_image $IMAGE
-        exit
+        exit 0
         ;;
     "clean")
-        rm *.img
-        rm *.tar.gz
-        rm *.img.xz
-        exit
+        rm -vf *.img *.tar.gz *.img.xz
+        exit 0
         ;;
     "vars")
-        alarm_set_name $@
+        alarm_set_platform $@
         alarm_print_vars
-        exit
+        exit 0
         ;;
     *)
         echo "Usage: build.sh <command> [<arguments>]"
@@ -219,24 +206,11 @@ case "$1" in
         echo "  vars <platform>"
         echo "  Print the environment variables that can be set for a platform."
         echo ""
-        echo "Available platforms: "
-        ls platform | sed "s/^/  /g" | sed "s/.sh$//g"
+        echo "Available platforms: ${platforms[@]}"
         echo ""
-        echo "Available environments: "
-        ls env | grep -v base.sh | sed "s/^/  /g" | sed "s/.sh$//g"
-        exit
+        echo "Available environments: ${environments[@]}"
+        exit 0
 esac
-
-#
-# INCLUDE PLATFORM AND ENVIRONMENT HOOKS
-#
-if [ -e "platform/${PLATFORM}.sh" ]; then
-    source "platform/${PLATFORM}.sh"
-fi
-
-if [ -e "env/${ENVIRONMENT}.sh" ]; then
-    source "env/${ENVIRONMENT}.sh"
-fi
 
 
 #
@@ -262,7 +236,7 @@ echo "Making Disk Image..."
 
 # Dont generate the image everytime which wears out storage.
 if [ ! -e "${IMAGE}.img" ]; then
-    dd if=/dev/zero of=${IMAGE}.img bs=1M count=$((1024*7))
+    dd if=/dev/zero of=${IMAGE}.img bs=1M count=$((1024*IMAGE_SIZE))
 fi
 
 fdisk ${IMAGE}.img <<EOF

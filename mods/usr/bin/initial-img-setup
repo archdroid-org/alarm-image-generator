@@ -1,0 +1,40 @@
+#!/bin/bash
+
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin
+
+DISK=$(mount | grep " / type" | cut -d" " -f1 | sed "s/p2$//g")
+
+echo "Resizing system partition..."
+
+fdisk ${DISK} <<EOF
+d
+2
+n
+
+
+
+
+N
+w
+EOF
+
+resize2fs ${DISK}p2
+
+echo "Setting locale..."
+
+locale-gen
+localectl set-locale en_US.UTF-8
+
+echo "Setting proper boot partition mount device..."
+
+FSTAB=$(cat /etc/fstab | grep /dev/)
+
+if [ "$FSTAB" != "" ]; then
+    sed -i "s/\/dev\/mmcblk[0-9]p[0-9]/${DISK}p1/g" /etc/fstab
+else
+    echo "${DISK}p1  /boot  vfat  defaults,noatime,discard  0  0" >> /etc/fstab
+    mount /boot
+fi
+
+systemctl disable initial-setup.service
+rm /etc/systemd/system/initial-setup.service

@@ -33,12 +33,11 @@ let you know, but besides this you will need the following:
 
 ## Usage
 
-For now only images for the Odroid N2 are generated with plans to add
-support for the Odroid C4. But it should be easy to add support for
-many other platforms. Pull requests with improvements and platforms/
-environments additions are welcome. The command line options need
-some refining and improvements, but for now the option that generates
-the images is working properly.
+So far Odroid N2/N2+ and Odroid C4 images are generated, but it should
+be easy to add support for many other platforms. Pull requests with
+improvements and platforms/environments additions are welcome. The
+command line options need some refining and improvements, but for now
+the option that generates the images is working properly.
 
 To generate a Odroid N2 image you would do:
 
@@ -46,10 +45,15 @@ To generate a Odroid N2 image you would do:
 ./build.sh build n2
 ```
 
-This will set the environment by default to xfce (you can specify
-a different environment by using the -e flag). Then the
-instructions on platform/n2.sh and env/xfce.sh are executed.
-By default the script will install some packages, you can
+This will set the environment by default to xfce, you can specify
+a different environment by using the -e flag, for example:
+
+```sh
+./build.sh build -e wayfire n2
+```
+
+Then the instructions on platform/n2.sh and env/wayfire.sh are
+executed. By default the script will install some packages, you can
 take a look on env/base.sh for the defaults.
 
 ## Extending
@@ -61,56 +65,33 @@ command line options.
 
 ### Platforms
 
-In case of adding a platform you would need to edit build.sh, add
-the file to download, desired image name and platform code name to
-the following code section:
+In case of adding a platform you would need to add a platform shell
+script in the **platform** directory with the name of the platform.
+Lets say for example the Odroid **C2**, you would create a file called
+**c2.sh**. After creating the file you can start by adding some variables
+used by the build script:
 
 ```sh
-for arg in "$@"; do
-    case "$arg" in
-      "n2")
-          NAME="ArchLinuxARM-odroid-n2-latest"
-          IMAGE="ArchLinuxARM-odroid-n2"
-          PLATFORM="n2"
-          ;;
-      "c4")
-          echo "Still working on this..." 1>&2
-          exit 1
-          ;;
-    esac
-done
-```
+#!/bin/bash
 
-For example:
+# Name of the tar file to download from ArchLinuxARM website
+NAME="ArchLinuxARM-odroid-c2-latest"
 
-```sh
-for arg in "$@"; do
-    case "$arg" in
-      "n2")
-          NAME="ArchLinuxARM-odroid-n2-latest"
-          IMAGE="ArchLinuxARM-odroid-n2"
-          PLATFORM="n2"
-          ;;
-      "c2")
-          NAME="ArchLinuxARM-odroid-c2-latest"
-          IMAGE="ArchLinuxARM-odroid-c2"
-          PLATFORM="c2"
-          ;;
-      "c4")
-          echo "Still working on this..." 1>&2
-          exit 1
-          ;;
-    esac
-done
+# Name of the generated image file
+IMAGE="ArchLinuxARM-odroid-c2"
+
+# The size in gigabytes of the generated image file
+IMAGE_SIZE=5
 ```
 
 Then you should add the installation instructions of this new platform
-into platform/c2.sh. On this file you have to specify 3 hook
-functions that get called by main build script:
+into platform/c2.sh. by specifying 3 hook functions that get called
+by main build script:
 
-* platform_pre_chroot
-* platform_chroot_setup
-* platform_post_chroot
+* platform_variables - declare variables used by the other hooks
+* platform_pre_chroot - executed before entering the image chroot
+* platform_chroot_setup - executed inside the image chroot
+* platform_post_chroot - executed after exiting image chroot
 
 You can take a look in platform/n2.sh to get an idea.
 
@@ -120,9 +101,12 @@ Finally, adding environments should be the same  process as adding a
 new platform. Lets say you want to add sway. You would create a new
 file as env/sway.sh, and add to it the following hook functions:
 
-* env_pre_chroot
-* env_chroot_setup
-* env_post_chroot
+* env_pre_chroot - executed before entering the image chroot
+* env_chroot_setup - executed inside the image chroot
+* env_post_chroot - executed after exiting image chroot
+
+**Note:** You can overwrite the **IMAGE_SIZE** on this file in case
+more than 6 GB are needed.
 
 You can see the env/xfce.sh file for ideas. In order to use the new
 platform and environment to generate a new image you would call the
