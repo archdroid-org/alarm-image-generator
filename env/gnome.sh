@@ -60,6 +60,8 @@ env_chroot_setup() {
 
     # Customizations
     cp /mods/etc/profile.d/qt.sh /etc/profile.d/
+    cp /mods/etc/profile.d/firefox_wayland.sh /etc/profile.d/
+    cp /mods/etc/modprobe.d/blacklist.gnome.conf /etc/modprobe.d/blacklist_gnome.conf
     mkdir -p /usr/share/backgrounds
     cp /mods/usr/share/backgrounds/space.jpg /usr/share/backgrounds/
 
