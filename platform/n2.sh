@@ -25,6 +25,7 @@ platform_pre_chroot() {
         alarm_build_package odroid-n2-libgl-wl
     fi
 
+    alarm_build_package odroid-alsa
     alarm_build_package uboot-odroid-n2plus
 }
 
@@ -49,6 +50,9 @@ platform_chroot_setup() {
         alarm_install_package linux-odroid-n2plus-4.9
         alarm_install_package linux-odroid-n2plus-headers
     fi
+
+    # Audio support
+    alarm_install_package odroid-alsa
 
     # Updated uboot
     alarm_install_package uboot-odroid-n2plus

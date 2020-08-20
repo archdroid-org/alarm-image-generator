@@ -9,7 +9,9 @@ platform_variables() {
 
 platform_pre_chroot() {
     echo "Platform pre-chroot..."
+
     alarm_build_package uboot-odroid-c4
+    alarm_build_package odroid-alsa
 
     if [ "${WAYLAND}" != "1" ]; then
         alarm_build_package linux-odroid-c4
@@ -28,6 +30,9 @@ platform_chroot_setup() {
     # Kernel
     yes | pacman -Rcs linux-odroid-n2
     yes | pacman -Rcs uboot-odroid-n2
+
+    # Audio support
+    alarm_install_package odroid-alsa
 
     # Additional packages/configurations
     alarm_install_package uboot-odroid-c4
