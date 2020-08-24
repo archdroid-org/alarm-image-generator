@@ -8,6 +8,7 @@ env_pre_chroot() {
     alarm_build_package xfce4-places-plugin
     alarm_build_package xfce4-docklike-plugin-git
     alarm_build_package mugshot
+    alarm_build_package mpv-sdl
 }
 
 # Called inside the chroot
@@ -82,6 +83,7 @@ env_chroot_setup() {
     alarm_install_package xfce4-places-plugin
     alarm_install_package xfce4-docklike-plugin-git
     alarm_install_package mugshot
+    alarm_install_package mpv-sdl
 
     # Enable Services
     systemctl enable lightdm
