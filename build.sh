@@ -39,6 +39,39 @@ alarm_check_root() {
     fi
 }
 
+alarm_getopt(){
+    local option_single="-$1"
+    local option_double="--$1"
+    local multiple="$2"
+
+    while [ "$2" ]; do
+        case "$2" in
+            "$option_single" | "$option_double" )
+                local value=""
+                while [ "$2" ]; do
+                    shift
+                    if ! echo "$2" | grep -E "^\-" > /dev/null ; then
+                        value="$value $2"
+                    else
+                        break
+                    fi
+                    if [ "$multiple" = "0" ]; then
+                        break
+                    fi
+                done
+                value=$(echo $value | xargs)
+                if [ "$value" != "" ]; then
+                    echo "$value"
+                    return 0
+                fi
+                return 1
+                ;;
+        esac
+
+        shift
+    done
+}
+
 # Set image name and file download name and include platform script
 alarm_set_platform() {
     NAME=""
@@ -73,16 +106,7 @@ alarm_set_platform() {
 
 # set environment name and include its script
 alarm_set_env() {
-    ENVIRONMENT=""
-    while [ "$1" ]; do
-        case "$1" in
-          "-e")
-              shift
-              ENVIRONMENT="$1"
-              ;;
-        esac
-        shift
-    done
+    ENVIRONMENT="$(alarm_getopt e 0 $@)"
 
     if [ "$ENVIRONMENT" = "" ]; then
         ENVIRONMENT="xfce"
@@ -194,10 +218,10 @@ case "$1" in
         echo ""
         echo "COMMANDS:"
         echo ""
-        echo "  build [<options>] <platform>"
+        echo "  build <platform> [<options>]"
         echo "    -e <environment>"
         echo ""
-        echo "  umount [<options>] <platform>"
+        echo "  umount <platform> [<options>]"
         echo "    -e <environment>"
         echo ""
         echo "  clean"
