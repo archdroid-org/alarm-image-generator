@@ -47,14 +47,14 @@ alarm_getopt(){
     local option_double="--$1"
     local multiple="$2"
 
-    while [ "$2" ]; do
-        case "$2" in
+    while [ "$3" ]; do
+        case "$3" in
             "$option_single" | "$option_double" )
                 local value=""
-                while [ "$2" ]; do
+                while [ "$3" ]; do
                     shift
-                    if ! echo "$2" | grep -E "^\-" > /dev/null ; then
-                        value="$value $2"
+                    if ! echo "$3" | grep -E "^\-" > /dev/null ; then
+                        value="$value $3"
                     else
                         break
                     fi
