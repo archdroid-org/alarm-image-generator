@@ -39,6 +39,9 @@ alarm_check_root() {
     fi
 }
 
+# get value of an argument option, usage:
+# alarm_getopt <arg_name> <multiple_values?1|0> <string>
+# eg: alarm_getopt packages 1 $@
 alarm_getopt(){
     local option_single="-$1"
     local option_double="--$1"
