@@ -135,6 +135,9 @@ alarm_umount_image() {
 
         if [ -e root ]; then
             sudo umount root/boot
+            sudo umount root/dev
+            sudo umount root/proc
+            sudo umount root/sys
             sudo umount root
             rmdir root
         fi
@@ -319,6 +322,7 @@ sudo mount -v -t vfat ${LOOP}p1 root/boot
 # BUILD PACKAGES
 #
 alarm_build_package yay-bin
+alarm_build_package archlinuxdroid-repo
 
 
 #

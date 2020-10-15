@@ -27,6 +27,14 @@ localectl set-locale en_US.UTF-8
 pacman-key --init
 pacman-key --populate archlinuxarm
 
+#
+# Add custom repo for some extra packages
+#
+alarm_install_package archlinuxdroid-repo
+
+#
+# Sync pacman databases
+#
 pacman -Suy --noconfirm
 
 # Devel
@@ -76,10 +84,6 @@ fi
 # TWEAKS
 #
 
-# Re-configure locale just in case.
-locale-gen
-localectl set-locale en_US.UTF-8
-
 # Fix domain resolution issue
 cp /mods/etc/systemd/resolved.conf /etc/systemd/
 
@@ -94,6 +98,7 @@ cp /mods/usr/bin/initial-img-setup /usr/bin/
 cp /mods/etc/fstab /etc/
 usermod -G audio,tty,video,input,wheel,network,realtime -a alarm
 chsh -s /usr/bin/zsh alarm
+cp /mods/etc/sysctl.d/general.conf /etc/sysctl.d/general.conf
 cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
 cp /mods/etc/default/cpupower /etc/default/
 cp /mods/etc/vconsole.conf /etc/

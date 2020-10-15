@@ -5,24 +5,33 @@ IMAGE="ArchLinuxARM-odroid-n2"
 
 platform_variables() {
     echo "WAYLAND: set to 1 to install wayland GL libraries instead of fbdev."
+    echo "DISABLE_MALIGL: set to 1 to disable installation of mali libraries."
     echo "MAINLINE_KERNEL: set to 1 to use mainline kernel."
+    echo "PANFROST_KERNEL: set to 1 to use panfrost enabled kernel."
 }
 
 platform_pre_chroot() {
     echo "Platform pre-chroot..."
 
-    if [ "${MAINLINE_KERNEL}" != "1" ]; then
-        alarm_build_package linux-odroid-n2plus
+    if [ "${MAINLINE_KERNEL}" = "1" ]; then
+        alarm_build_package linux-odroid-n2-58
+        alarm_build_package dkms-mali-bifrost-next
+        alarm_build_package rtl88xxau-aircrack-dkms-git
+    elif [ "${PANFROST_KERNEL}" = "1" ]; then
+        alarm_build_package linux-odroid-n2-panfrost-59
+        alarm_build_package rtl88xxau-aircrack-dkms-git
+        alarm_build_package mesa-arm-git
     else
-        alarm_build_package linux-odroid-n2-mainline
-        alarm_build_package dkms-mali-bifrost
+        alarm_build_package linux-odroid-n2plus
     fi
 
-    if [ "${WAYLAND}" != "1" ]; then
-        alarm_build_package odroid-n2-libgl-fb
-        alarm_build_package odroid-gl4es
-    else
-        alarm_build_package odroid-n2-libgl-wl
+    if [ "${DISABLE_MALIGL}" != 1 ]; then
+        if [ "${WAYLAND}" != "1" ]; then
+            alarm_build_package odroid-n2-libgl
+            alarm_build_package odroid-gl4es
+        else
+            alarm_build_package odroid-n2-libgl
+        fi
     fi
 
     alarm_build_package odroid-alsa
@@ -36,16 +45,30 @@ platform_chroot_setup() {
     yes | pacman -R uboot-odroid-n2
 
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
-        alarm_install_package linux-odroid-n2-mainline-5
-        alarm_install_package linux-odroid-n2-mainline-headers
+        alarm_install_package linux-odroid-n2-58-5
+        alarm_install_package linux-odroid-n2-58-headers
 
         yes | pacman -S --noconfirm dkms
 
         # Wireless
-        yes | pacman -S --noconfirm dkms-8812au
+        alarm_install_package rtl88xxau-aircrack-dkms-git
 
         # GPU kernel driver
-        alarm_install_package dkms-mali-bifrost
+        alarm_install_package dkms-mali-bifrost-next
+    elif [ "${PANFROST_KERNEL}" = "1" ]; then
+        alarm_install_package linux-odroid-n2-panfrost-59-5
+        alarm_install_package linux-odroid-n2-panfrost-59-headers
+
+        yes | pacman -S --noconfirm dkms
+
+        # Wireless
+        alarm_install_package rtl88xxau-aircrack-dkms-git
+
+        # mesa git for panfrost
+        alarm_install_package mesa-arm-git
+
+        # Enable mesa bifrost support (still under development)
+        echo "PAN_MESA_DEBUG=bifrost" >> /etc/environment
     else
         alarm_install_package linux-odroid-n2plus-4.9
         alarm_install_package linux-odroid-n2plus-headers
@@ -57,13 +80,20 @@ platform_chroot_setup() {
     # Updated uboot
     alarm_install_package uboot-odroid-n2plus
 
-    if [ "${WAYLAND}" != "1" ]; then
-        alarm_install_package odroid-n2-libgl-fb
-        alarm_install_package odroid-gl4es
+    if [ "${DISABLE_MALIGL}" != 1 ]; then
+        if [ "${WAYLAND}" != "1" ]; then
+            alarm_install_package odroid-n2-libgl-fb
+            alarm_install_package odroid-gl4es
+        fi
     fi
 
     # Customizations
+    cp /mods/boot/boot-logo.alarm.bmp.gz /boot/boot-logo.bmp.gz
+
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
+        echo "Copy boot.ini adapted for mainline kernel..."
+        cp /mods/boot/boot.n2plus.mainline.ini /boot/boot.ini
+    elif [ "${PANFROST_KERNEL}" = "1" ]; then
         echo "Copy boot.ini adapted for mainline kernel..."
         cp /mods/boot/boot.n2plus.mainline.ini /boot/boot.ini
     else
@@ -78,8 +108,10 @@ platform_chroot_setup() {
 platform_chroot_setup_exit() {
     echo "Platform chroot-setup-exit..."
     # Install at last since this causes issues
-    if [ "${WAYLAND}" = "1" ]; then
-        alarm_install_package odroid-n2-libgl-wl
+    if [ "${DISABLE_MALIGL}" != 1 ]; then
+        if [ "${WAYLAND}" = "1" ]; then
+            alarm_install_package odroid-n2-libgl-wl
+        fi
     fi
 }
 
