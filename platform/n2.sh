@@ -25,7 +25,7 @@ platform_pre_chroot() {
         alarm_build_package linux-odroid-n2plus
     fi
 
-    if [ "${DISABLE_MALIGL}" != 1 ]; then
+    if [ "${DISABLE_MALIGL}" != "1" ]; then
         if [ "${WAYLAND}" != "1" ]; then
             alarm_build_package odroid-n2-libgl
             alarm_build_package odroid-gl4es
@@ -80,7 +80,7 @@ platform_chroot_setup() {
     # Updated uboot
     alarm_install_package uboot-odroid-n2plus
 
-    if [ "${DISABLE_MALIGL}" != 1 ]; then
+    if [ "${DISABLE_MALIGL}" != "1" ]; then
         if [ "${WAYLAND}" != "1" ]; then
             alarm_install_package odroid-n2-libgl-fb
             alarm_install_package odroid-gl4es
@@ -108,7 +108,7 @@ platform_chroot_setup() {
 platform_chroot_setup_exit() {
     echo "Platform chroot-setup-exit..."
     # Install at last since this causes issues
-    if [ "${DISABLE_MALIGL}" != 1 ]; then
+    if [ "${DISABLE_MALIGL}" != "1" ]; then
         if [ "${WAYLAND}" = "1" ]; then
             alarm_install_package odroid-n2-libgl-wl
         fi
