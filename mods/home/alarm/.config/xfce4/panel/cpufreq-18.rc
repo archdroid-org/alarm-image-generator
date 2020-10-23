@@ -1,8 +1,8 @@
 timeout=3
-show_cpu=7
+show_cpu=0
 show_icon=true
 show_label_freq=true
-show_label_governor=true
+show_label_governor=false
 show_warning=true
 keep_compact=false
 one_line=false
