@@ -49,8 +49,8 @@ pacman -S --noconfirm iw inetutils \
     samba smbclient cifs-utils links wpa_supplicant
 
 # System
-pacman -S --noconfirm pciutils sudo cpupower usbutils neofetch \
-    nano dialog terminus-font
+pacman -S --noconfirm pciutils sudo cpupower usbutils \
+    neofetch lsb-release nano dialog terminus-font
 
 # Shell
 pacman -S --noconfirm zsh zsh-autosuggestions zsh-completions \
