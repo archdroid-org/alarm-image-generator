@@ -4,7 +4,7 @@
 env_pre_chroot() {
     echo "Env pre-chroot..."
 
-    alarm_build_package wlroots-git
+    alarm_build_package wlroots-mali-git
     alarm_build_package swaybg-git
     alarm_build_package sway-git
     alarm_build_package swayidle-git
@@ -83,7 +83,7 @@ env_chroot_setup() {
         gvfs-mtp gvfs-nfs gvfs-smb
 
     # Additional packages
-    alarm_install_package wlroots-git
+    alarm_install_package wlroots-mali-git
     alarm_install_package swaybg-git
     alarm_install_package sway-git
     alarm_install_package swayidle-git
