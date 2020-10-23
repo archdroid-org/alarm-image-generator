@@ -14,15 +14,15 @@ platform_pre_chroot() {
     echo "Platform pre-chroot..."
 
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
-        alarm_build_package linux-odroid-n2-57
-        alarm_build_package dkms-mali-bifrost
+        alarm_build_package linux-amlogic-58
+        alarm_build_package dkms-mali-bifrost-next
         alarm_build_package rtl88xxau-aircrack-dkms-git
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_build_package linux-odroid-n2-panfrost-59
+        alarm_build_package linux-amlogic-panfrost-59
         alarm_build_package rtl88xxau-aircrack-dkms-git
         alarm_build_package mesa-arm-git
     else
-        alarm_build_package linux-odroid-n2plus
+        alarm_build_package linux-odroid-g12
     fi
 
     if [ "${DISABLE_MALIGL}" != "1" ]; then
@@ -45,8 +45,8 @@ platform_chroot_setup() {
     yes | pacman -R uboot-odroid-n2
 
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
-        alarm_install_package linux-odroid-n2-57-5
-        alarm_install_package linux-odroid-n2-57-headers
+        alarm_install_package linux-amlogic-58-5
+        alarm_install_package linux-amlogic-58-headers
 
         yes | pacman -S --noconfirm dkms
 
@@ -54,10 +54,10 @@ platform_chroot_setup() {
         alarm_install_package rtl88xxau-aircrack-dkms-git
 
         # GPU kernel driver
-        alarm_install_package dkms-mali-bifrost
+        alarm_install_package dkms-mali-bifrost-next
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_install_package linux-odroid-n2-panfrost-59-5
-        alarm_install_package linux-odroid-n2-panfrost-59-headers
+        alarm_install_package linux-amlogic-panfrost-59-5
+        alarm_install_package linux-amlogic-panfrost-59-headers
 
         yes | pacman -S --noconfirm dkms
 
@@ -70,8 +70,8 @@ platform_chroot_setup() {
         # Enable mesa bifrost support (still under development)
         echo "PAN_MESA_DEBUG=bifrost" >> /etc/environment
     else
-        alarm_install_package linux-odroid-n2plus-4.9
-        alarm_install_package linux-odroid-n2plus-headers
+        alarm_install_package linux-odroid-g12-4.9
+        alarm_install_package linux-odroid-g12-headers
     fi
 
     # Audio support
