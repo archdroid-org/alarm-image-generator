@@ -193,6 +193,36 @@ alarm_print_vars() {
     fi
 }
 
+alarm_chroot() {
+    if [ ! -e $1 ]; then
+        echo "Given image file does not exists."
+        return
+    fi
+
+    local LOOP=$(sudo losetup -f --show $1)
+
+    if [ ! -e $LOOP ] ; then
+        echo "Invalid image file given."
+        return
+    fi
+
+    sudo partx -a ${LOOP}
+
+    mkdir image_chroot
+    sudo mount -v -t ext4 ${LOOP}p2 image_chroot
+    sudo mount -v -t vfat ${LOOP}p1 image_chroot/boot
+
+    sudo arch-chroot image_chroot
+
+    sudo umount image_chroot/boot
+    sudo umount image_chroot
+
+    sudo partx -d ${LOOP}
+    sudo losetup -d ${LOOP}
+
+    rmdir image_chroot
+}
+
 case "$1" in
     "build")
         alarm_set_platform $@
@@ -201,6 +231,11 @@ case "$1" in
         echo "  Platform:          $PLATFORM"
         echo "  Environment:       $ENVIRONMENT"
         echo "----------------------------------------------------------------"
+        ;;
+    "chroot")
+        shift
+        alarm_chroot $@
+        exit 0;
         ;;
     "umount")
         shift
@@ -226,6 +261,9 @@ case "$1" in
         echo ""
         echo "  build <platform> [<options>]"
         echo "    -e <environment>"
+        echo ""
+        echo "  chroot <image-file.img>"
+        echo "  chroot to an existing image file for easy modifications."
         echo ""
         echo "  umount <platform> [<options>]"
         echo "    -e <environment>"
