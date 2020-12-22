@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Overwrite platform image size since we need more space.
-IMAGE_SIZE=6
+IMAGE_SIZE=7
 
 # Called before entering the disk image chroot
 env_pre_chroot() {
