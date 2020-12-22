@@ -18,7 +18,7 @@ platform_pre_chroot() {
         alarm_build_package dkms-mali-bifrost-next
         alarm_build_package rtl88xxau-aircrack-dkms-git
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_build_package linux-amlogic-panfrost-59
+        alarm_build_package linux-amlogic-panfrost-510
         alarm_build_package rtl88xxau-aircrack-dkms-git
         alarm_build_package mesa-arm-git
     else
@@ -34,15 +34,16 @@ platform_pre_chroot() {
         fi
     fi
 
-    alarm_build_package odroid-alsa
     alarm_build_package uboot-odroid-n2plus
+    alarm_build_package odroid-alsa
 }
 
 platform_chroot_setup() {
     echo "Platform chroot-setup..."
 
     # Kernel
-    yes | pacman -R uboot-odroid-n2
+    yes | pacman -Rcs linux-odroid-n2
+    yes | pacman -Rcs uboot-odroid-n2
 
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
         alarm_install_package linux-amlogic-58-5
@@ -56,8 +57,8 @@ platform_chroot_setup() {
         # GPU kernel driver
         alarm_install_package dkms-mali-bifrost-next
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_install_package linux-amlogic-panfrost-59-5
-        alarm_install_package linux-amlogic-panfrost-59-headers
+        alarm_install_package linux-amlogic-panfrost-510-5
+        alarm_install_package linux-amlogic-panfrost-510-headers
 
         yes | pacman -S --noconfirm dkms
 
@@ -67,18 +68,21 @@ platform_chroot_setup() {
         # mesa git for panfrost
         alarm_install_package mesa-arm-git
 
-        # Enable mesa bifrost support (still under development)
-        echo "PAN_MESA_DEBUG=bifrost" >> /etc/environment
+        # Video acceleration support
+        yes | pacman -S --noconfirm libva-mesa-driver
+
+        # Enable firefox X11 egl support
+        echo "MOZ_X11_EGL=1" >> /etc/environment
     else
         alarm_install_package linux-odroid-g12-4.9
         alarm_install_package linux-odroid-g12-headers
     fi
 
-    # Audio support
-    alarm_install_package odroid-alsa
-
     # Updated uboot
     alarm_install_package uboot-odroid-n2plus
+
+    # Audio support
+    alarm_install_package odroid-alsa
 
     if [ "${DISABLE_MALIGL}" != "1" ]; then
         if [ "${WAYLAND}" != "1" ]; then
@@ -117,6 +121,17 @@ platform_chroot_setup_exit() {
 
 platform_post_chroot() {
     echo "Platform post-chroot..."
+
+    echo "Setting boot.ini UUID"
+    local loopname=$(echo "${LOOP}" | sed "s/\/dev\///g")
+
+    local uuidboot=$(lsblk -o uuid,name | grep ${loopname}p1 | awk "{print \$1}")
+    local uuidroot=$(lsblk -o uuid,name | grep ${loopname}p2 | awk "{print \$1}")
+
+    sudo sed -i "s/root=\/dev\/mmcblk\${devno}p2/root=UUID=${uuidroot}/g" \
+        root/boot/boot.ini
+    sudo echo "UUID=${uuidboot}  /boot  vfat  defaults,noatime,discard  0  0" \
+        | sudo tee --append root/etc/fstab
 
     echo "Flashing U-Boot..."
     sudo dd if=root/boot/u-boot.bin of=${LOOP} conv=fsync,notrunc bs=512 seek=1
