@@ -280,6 +280,11 @@ case "$1" in
         exit 0
 esac
 
+#
+# Clean up
+#
+echo "Removing previous builded packages..."
+sudo rm -rf mods/packages
 
 #
 # DOWNLOAD
