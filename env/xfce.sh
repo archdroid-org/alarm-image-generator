@@ -16,10 +16,13 @@ env_chroot_setup() {
     echo "Env chroot-setup..."
 
     # Graphics
-    pacman -S --noconfirm mesa mesa-demos \
+    pacman -S --noconfirm mesa-demos \
         xorg-server xorg-xinit xorg-xrefresh \
-        xf86-input-libinput xf86-video-fbdev \
-        sdl sdl2 sdl2_image
+        xf86-input-libinput sdl sdl2 sdl2_image
+
+    if ! pacman -Qi mesa-arm-git > /dev/null 2>&1 ; then
+        pacman -S --noconfirm xf86-video-fbdev
+    fi
 
     # Desktop environment
     pacman -S --noconfirm xfce4 xfce4-goodies \

@@ -51,7 +51,7 @@
       <property name="length" type="uint" value="35"/>
       <property name="length-adjust" type="bool" value="true"/>
       <property name="disable-struts" type="bool" value="false"/>
-      <property name="background-style" type="uint" value="1"/>
+      <property name="background-style" type="uint" value="0"/>
       <property name="background-rgba" type="array">
         <value type="double" value="0.750000"/>
         <value type="double" value="0.250000"/>
