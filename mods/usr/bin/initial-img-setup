@@ -2,7 +2,15 @@
 
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin
 
-DISK=$(mount | grep " / type" | cut -d" " -f1 | sed "s/p2$//g")
+DISK=$(mount | grep " / type" | cut -d" " -f1 | sed "s/p*2$//g")
+
+if echo "${DISK}" | grep "mmcblk" > /dev/null; then
+    BOOTPART="${DISK}1"
+    ROOTPART="${DISK}2"
+else
+    BOOTPART="${DISK}p1"
+    ROOTPART="${DISK}p2"
+fi
 
 echo "Resizing system partition..."
 
@@ -18,23 +26,12 @@ N
 w
 EOF
 
-resize2fs ${DISK}p2
+resize2fs ${ROOTPART}
 
 echo "Setting locale..."
 
 locale-gen
 localectl set-locale en_US.UTF-8
-
-echo "Setting proper boot partition mount device..."
-
-FSTAB=$(cat /etc/fstab | grep /dev/)
-
-if [ "$FSTAB" != "" ]; then
-    sed -i "s/\/dev\/mmcblk[0-9]p[0-9]/${DISK}p1/g" /etc/fstab
-else
-    echo "${DISK}p1  /boot  vfat  defaults,noatime,discard  0  0" >> /etc/fstab
-    mount /boot
-fi
 
 if [ -e "/usr/bin/odroid-alsa-enable" ]; then
     /usr/bin/odroid-alsa-enable
