@@ -89,6 +89,7 @@
         <value type="string" value="blueman-tray"/>
       </property>
       <property name="size-max" type="uint" value="30"/>
+      <property name="icon-size" type="int" value="0"/>
     </property>
     <property name="plugin-8" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>

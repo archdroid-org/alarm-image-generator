@@ -1,9 +1,9 @@
-loc_name=
-lat=
-lon=
-msl=159
-timezone=
-offset=-04:00
+loc_name=Florida, United States
+lat=27.756767
+lon=-81.463983
+msl=36
+timezone=America/Florida
+offset=-05:00
 cache_file_max_age=172800
 power_saving=true
 units_temperature=0
