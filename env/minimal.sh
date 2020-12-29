@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set environment name
+ENV_NAME="Minimal"
+
 # Overwrite platform image size since we need less space.
 IMAGE_SIZE=3
 

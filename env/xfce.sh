@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set environment name
+ENV_NAME="XFCE"
+
 # Called before entering the disk image chroot
 env_pre_chroot() {
     echo "Env pre-chroot..."
@@ -66,7 +69,7 @@ env_chroot_setup() {
 
     # Other applications
     pacman -S --noconfirm eog \
-        gcolor3 \
+        gcolor2 \
         qt5ct \
         kvantum-qt5 \
         evince \
@@ -104,6 +107,10 @@ env_chroot_setup() {
     cp -a /mods/home/alarm/.config/Kvantum /home/alarm/.config/
     cp -a /mods/home/alarm/.config/geany /home/alarm/.config/
     cp /mods/home/alarm/.gtkrc-2.0 /home/alarm/
+
+    mkdir -p /home/alarm/.local/share/applications
+    cp /mods/home/alarm/.local/share/applications/gcolor2.desktop \
+        /home/alarm/.local/share/applications
 
     chown -R alarm:alarm /home/alarm
 }

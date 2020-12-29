@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set environment name
+ENV_NAME="Wayfire"
+
 # Called before entering the disk image chroot
 env_pre_chroot() {
     echo "Env pre-chroot..."

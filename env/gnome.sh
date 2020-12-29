@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set environment name
+ENV_NAME="GNOME"
+
 # Overwrite platform image size since we need more space.
 IMAGE_SIZE=7
 
