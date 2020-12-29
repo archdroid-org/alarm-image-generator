@@ -4,7 +4,7 @@ PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin
 
 DISK=$(mount | grep " / type" | cut -d" " -f1 | sed "s/p*2$//g")
 
-if echo "${DISK}" | grep "mmcblk" > /dev/null; then
+if ! echo "${DISK}" | grep "mmcblk" > /dev/null; then
     BOOTPART="${DISK}1"
     ROOTPART="${DISK}2"
 else
