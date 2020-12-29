@@ -39,3 +39,6 @@ fi
 
 systemctl disable initial-setup.service
 rm /etc/systemd/system/initial-setup.service
+rm /usr/bin/initial-img-setup
+
+exit 0

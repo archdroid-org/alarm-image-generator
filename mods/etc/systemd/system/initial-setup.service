@@ -1,17 +1,15 @@
 [Unit]
-Description=Initial Setup
-After=default.target
-DefaultDependencies=no
-Before=shutdown.target
+Description=Initial System Setup
+Before=display-manager.service
 
 [Service]
 User=root
 Type=oneshot
-RemainAfterExit=no
+RemainAfterExit=yes
 ExecStart=/bin/bash /usr/bin/initial-img-setup
 StandardOutput=file:/var/log/initial_img_setup.log
 StandardError=file:/var/log/initial_img_setup.log
-ExecStartPost=/bin/bash -c "/bin/rm /usr/bin/initial-img-setup && /usr/bin/reboot"
+ExecStartPost=/usr/bin/systemctl stop initial-setup
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
