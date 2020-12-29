@@ -130,6 +130,10 @@ platform_post_chroot() {
 
     sudo sed -i "s/root=\/dev\/mmcblk\${devno}p2/root=UUID=${uuidroot}/g" \
         root/boot/boot.ini
+
+    sudo sed -i "s/setenv bootlabel \"ArchLinux\"/setenv bootlabel \"ArchLinux ${ENV_NAME}\"/g" \
+        root/boot/boot.ini
+
     sudo echo "UUID=${uuidboot}  /boot  vfat  defaults,noatime,discard  0  0" \
         | sudo tee --append root/etc/fstab
 
