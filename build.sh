@@ -412,7 +412,13 @@ sudo cp env/base.sh root/setup.sh
 
 sudo mkdir root/mods
 sudo mount --bind mods root/mods
-
+if [ ! -e usercache ]; then
+    mkdir usercache
+fi
+sudo mkdir root/home/alarm/.cache
+chown -R 1000:1000 root/home/alarm/.cache
+sudo mount --bind usercache root/home/alarm/.cache
+chown -R 1000:1000 root/home/alarm/.cache
 sudo mount --bind cache root/var/cache/pacman/pkg
 
 sudo arch-chroot root /setup.sh
@@ -449,6 +455,8 @@ fi
 # UNMOUNT AND FINISH
 #
 echo "Unmounting Image..."
+sudo umount root/home/alarm/.cache
+sudo rm -rf root/home/alarm/.cache
 sudo umount root/var/cache/pacman/pkg
 sudo umount root/mods
 sudo rmdir root/mods

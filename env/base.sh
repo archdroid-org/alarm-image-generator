@@ -5,6 +5,10 @@ alarm_install_package() {
     yes | pacman -U "$package"
 }
 
+yay_install() {
+    arch-chroot -u alarm /usr/bin/yay -S --noconfirm $@
+}
+
 # Include environment hooks
 if [ -e /env.sh ]; then
     source /env.sh
@@ -67,6 +71,15 @@ alarm_install_package yay-bin
 
 
 #
+# Initial alarm user account setup
+#
+usermod -G audio,tty,video,input,wheel,network,realtime -a alarm
+cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
+cp /mods/home/alarm/.makepkg.conf /home/alarm/
+chown -R alarm:alarm /home/alarm
+
+
+#
 # SETUP HOOKS
 #
 if type "platform_chroot_setup" 1>/dev/null ; then
@@ -96,10 +109,8 @@ cp /mods/usr/bin/initial-img-setup /usr/bin/
 # CUSTOMIZATIONS
 #
 cp /mods/etc/fstab /etc/
-usermod -G audio,tty,video,input,wheel,network,realtime -a alarm
 chsh -s /usr/bin/zsh alarm
 cp /mods/etc/sysctl.d/general.conf /etc/sysctl.d/general.conf
-cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
 cp /mods/etc/default/cpupower /etc/default/
 cp /mods/etc/vconsole.conf /etc/
 if [ ! -e "/mods/packages/.oh-my-zsh" ]; then
@@ -113,7 +124,6 @@ if [ ! -e "/mods/packages/.oh-my-zsh" ]; then
 fi
 cp -a /mods/packages/.oh-my-zsh /home/alarm/
 cp /home/alarm/.oh-my-zsh/templates/zshrc.zsh-template /home/alarm/.zshrc
-cp /mods/home/alarm/.makepkg.conf /home/alarm/
 
 chown -R alarm:alarm /home/alarm
 
@@ -124,6 +134,7 @@ chown -R alarm:alarm /home/alarm
 systemctl enable sshd
 systemctl enable bluetooth
 systemctl enable cpupower
+systemctl enable dhcpcd
 systemctl enable systemd-resolved
 systemctl enable systemd-timesyncd
 systemctl enable initial-setup
