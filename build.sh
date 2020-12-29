@@ -416,9 +416,9 @@ if [ ! -e usercache ]; then
     mkdir usercache
 fi
 sudo mkdir root/home/alarm/.cache
-chown -R 1000:1000 root/home/alarm/.cache
+sudo chown -R 1000:1000 root/home/alarm/.cache
 sudo mount --bind usercache root/home/alarm/.cache
-chown -R 1000:1000 root/home/alarm/.cache
+sudo chown -R 1000:1000 root/home/alarm/.cache
 sudo mount --bind cache root/var/cache/pacman/pkg
 
 sudo arch-chroot root /setup.sh
