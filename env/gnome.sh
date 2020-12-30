@@ -73,7 +73,8 @@ env_chroot_setup() {
     cp -a /mods/home/alarm/.config/Kvantum /home/alarm/.config/
     cp -a /mods/home/alarm/.config/qt5ct /home/alarm/.config/
     cp -a /mods/home/alarm/.config/geany /home/alarm/.config/
-    cp -a /mods/home/alarm/.config/dconf /home/alarm/.config/
+    mkdir /home/alarm/.config/dconf
+    cp /mods/home/alarm/.config/dconf/user /home/alarm/.config/dconf/user
     cp /mods/home/alarm/.config/weston.ini /home/alarm/.config/
     cp /mods/home/alarm/.gtkrc-2.0 /home/alarm/
 

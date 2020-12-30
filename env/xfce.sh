@@ -63,10 +63,6 @@ env_chroot_setup() {
     # System
     pacman -S --noconfirm gparted
 
-    # Shell
-    pacman -S --noconfirm zsh zsh-autosuggestions zsh-completions \
-        zsh-syntax-highlighting
-
     # Other applications
     pacman -S --noconfirm eog \
         gcolor2 \
