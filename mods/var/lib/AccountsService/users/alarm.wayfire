@@ -1,0 +1,6 @@
+[User]
+Language=
+Session=wayfire
+XSession=wayfire
+Icon=/home/alarm/.face
+SystemAccount=false
