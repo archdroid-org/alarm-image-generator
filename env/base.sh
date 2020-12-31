@@ -134,7 +134,6 @@ chown -R alarm:alarm /home/alarm
 systemctl enable sshd
 systemctl enable bluetooth
 systemctl enable cpupower
-systemctl enable dhcpcd
 systemctl enable systemd-resolved
 systemctl enable systemd-timesyncd
 systemctl enable initial-setup
