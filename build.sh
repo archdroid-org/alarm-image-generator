@@ -75,6 +75,15 @@ alarm_getopt(){
     done
 }
 
+# Evaluate arguments passed as name=value as variables
+alarm_eval_opts() {
+    for arg in "$@"; do
+        if echo "$arg" | grep "=" > /dev/null 2>&1 ; then
+            eval "$arg"
+        fi
+    done
+}
+
 # Set image name and file download name and include platform script
 alarm_set_platform() {
     NAME=""
@@ -178,6 +187,11 @@ alarm_build_package() {
     cd ../../
 }
 
+alarm_yay_install() {
+    sudo arch-chroot -u alarm root /usr/bin/yay -S --useask --removemake \
+        --noconfirm --norebuild $@
+}
+
 alarm_print_vars() {
     if [ -e "platform/${PLATFORM}.sh" ]; then
         source "platform/${PLATFORM}.sh"
@@ -222,6 +236,8 @@ alarm_chroot() {
 
     rmdir image_chroot
 }
+
+alarm_eval_opts $@
 
 case "$1" in
     "build")
@@ -415,10 +431,9 @@ sudo mount --bind mods root/mods
 if [ ! -e usercache ]; then
     mkdir usercache
 fi
-sudo mkdir root/home/alarm/.cache
-sudo chown -R 1000:1000 root/home/alarm/.cache
-sudo mount --bind usercache root/home/alarm/.cache
-sudo chown -R 1000:1000 root/home/alarm/.cache
+sudo mkdir root/root/.cache
+sudo mount --bind usercache root/root/.cache
+sudo chown -R 1000:1000 root/root
 sudo mount --bind cache root/var/cache/pacman/pkg
 
 sudo arch-chroot root /setup.sh
@@ -455,12 +470,17 @@ fi
 # UNMOUNT AND FINISH
 #
 echo "Unmounting Image..."
-sudo umount root/home/alarm/.cache
-sudo rm -rf root/home/alarm/.cache
+sudo umount root/root/.cache
+sudo rm -rf root/root/.cache
+sudo rm -rf root/root/.config/yay
+sudo chown -R 0:0 root/root
 sudo umount root/var/cache/pacman/pkg
 sudo umount root/mods
 sudo rmdir root/mods
 sudo umount root/boot
+sudo umount root/sys
+sudo umount root/dev
+sudo umount root/proc
 sudo umount root
 rmdir boot root
 sudo partx -d ${LOOP}
