@@ -49,7 +49,7 @@ platform_chroot_setup() {
         alarm_install_package linux-amlogic-58-5
         alarm_install_package linux-amlogic-58-headers
 
-        yes | pacman -S --noconfirm dkms
+        alarm_pacman dkms
 
         # Wireless
         alarm_install_package rtl88xxau-aircrack-dkms-git
@@ -60,7 +60,7 @@ platform_chroot_setup() {
         alarm_install_package linux-amlogic-panfrost-510-5
         alarm_install_package linux-amlogic-panfrost-510-headers
 
-        yes | pacman -S --noconfirm dkms
+        alarm_pacman dkms
 
         # Wireless
         alarm_install_package rtl88xxau-aircrack-dkms-git
@@ -69,7 +69,7 @@ platform_chroot_setup() {
         alarm_install_package mesa-arm-git
 
         # Video acceleration support
-        yes | pacman -S --noconfirm libva-mesa-driver
+        alarm_pacman libva-mesa-driver
 
         # Enable firefox X11 egl support
         echo "MOZ_X11_EGL=1" >> /etc/environment

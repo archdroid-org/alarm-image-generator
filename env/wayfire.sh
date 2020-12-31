@@ -29,11 +29,11 @@ env_chroot_setup() {
     echo "Env chroot-setup..."
 
     # Graphics
-    pacman -S --noconfirm mesa mesa-demos wayland weston \
+    alarm_pacman mesa mesa-demos wayland weston \
         xorg-server-xwayland sdl sdl2 sdl2_image
 
     # Desktop environment
-    pacman -S --noconfirm thunar tumbler thunar-volman \
+    alarm_pacman thunar tumbler thunar-volman \
         thunar-archive-plugin thunar-media-tags-plugin \
         xdg-user-dirs xdg-utils lxterminal xfce4-terminal grim slurp \
         wl-clipboard qt5-wayland bemenu bemenu-wlroots kanshi \
@@ -42,37 +42,33 @@ env_chroot_setup() {
 
 
     # Audio
-    pacman -S --noconfirm alsa-utils \
+    alarm_pacman alsa-utils \
         pulseaudio pavucontrol pulseaudio-alsa pulseaudio-bluetooth \
         audacious audacious-plugins
 
     # Video
-    pacman -S --noconfirm ffmpeg ffmpegthumbnailer mpv vlc
+    alarm_pacman ffmpeg ffmpegthumbnailer mpv vlc
 
     # Network
-    pacman -S --noconfirm connman cmst
+    alarm_pacman connman cmst
 
     # Bluetooth
-    pacman -S --noconfirm blueman
+    alarm_pacman blueman
 
     # Theming
-    pacman -S --noconfirm arc-gtk-theme papirus-icon-theme \
+    alarm_pacman arc-gtk-theme papirus-icon-theme \
         adwaita-icon-theme gtk-engine-murrine
 
     # Fonts
-    pacman -S --noconfirm ttf-croscore ttf-dejavu ttf-hack ttf-liberation \
+    alarm_pacman ttf-croscore ttf-dejavu ttf-hack ttf-liberation \
         ttf-nerd-fonts-symbols cantarell-fonts \
         adobe-source-code-pro-fonts ttf-opensans
 
     # System
-    pacman -S --noconfirm gparted
-
-    # Shell
-    pacman -S --noconfirm zsh zsh-autosuggestions zsh-completions \
-        zsh-syntax-highlighting
+    alarm_pacman gparted
 
     # Other applications
-    pacman -S --noconfirm eog \
+    alarm_pacman eog \
         qt5ct \
         kvantum-qt5 \
         evince \

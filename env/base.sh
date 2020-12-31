@@ -5,8 +5,8 @@ alarm_install_package() {
     yes | pacman -U "$package"
 }
 
-yay_install() {
-    arch-chroot -u alarm /usr/bin/yay -S --noconfirm $@
+alarm_pacman() {
+    pacman -S --needed --noconfirm $@
 }
 
 # Include environment hooks
@@ -42,26 +42,26 @@ alarm_install_package archlinuxdroid-repo
 pacman -Suy --noconfirm
 
 # Devel
-pacman -S --noconfirm base-devel cmake git arch-install-scripts
+alarm_pacman base-devel cmake git arch-install-scripts
 
 # Bluetooth
-pacman -S --noconfirm bluez bluez-utils
+alarm_pacman bluez bluez-utils
 
 # Network
-pacman -S --noconfirm iw inetutils \
+alarm_pacman iw inetutils \
     wireless_tools wireless-regdb net-tools netctl whois wget openssh \
     samba smbclient cifs-utils links wpa_supplicant
 
 # System
-pacman -S --noconfirm pciutils sudo cpupower usbutils \
+alarm_pacman pciutils sudo cpupower usbutils \
     neofetch lsb-release nano dialog terminus-font
 
 # Shell
-pacman -S --noconfirm zsh zsh-autosuggestions zsh-completions \
+alarm_pacman zsh zsh-autosuggestions zsh-completions \
     zsh-syntax-highlighting
 
 # Realtime priviliges for audio recording
-pacman -S --noconfirm realtime-privileges
+alarm_pacman realtime-privileges
 
 
 #

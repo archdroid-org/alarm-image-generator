@@ -19,39 +19,39 @@ env_chroot_setup() {
     echo "Env chroot-setup..."
 
     # Desktop environment
-    pacman -S --noconfirm xorg-xwayland gnome-shell gnome-tweaks \
+    alarm_pacman xorg-xwayland gnome-shell gnome-tweaks \
         gnome-control-center gnome-terminal pcmanfm-gtk3 \
         gnome-calculator gnome-backgrounds gnome-system-monitor \
         gnome-screenshot gnome-shell-extensions gdm \
         xdg-user-dirs xdg-utils
 
     # Audio
-    pacman -S --noconfirm \
+    alarm_pacman \
         pulseaudio pavucontrol pulseaudio-alsa pulseaudio-bluetooth \
         audacious audacious-plugins
 
     # Video
-    pacman -S --noconfirm mpv \
+    alarm_pacman mpv \
         gst-libav gst-plugin-gtk gst-plugins-bad gst-plugins-bad-libs \
         gst-plugins-base gst-plugins-base-libs gst-plugins-good \
         gst-plugins-ugly gstreamer vlc ffmpeg ffmpegthumbnailer
 
     # Network
-    pacman -S --noconfirm networkmanager nm-connection-editor
+    alarm_pacman networkmanager nm-connection-editor
 
     # Theming
-    pacman -S --noconfirm arc-gtk-theme papirus-icon-theme
+    alarm_pacman arc-gtk-theme papirus-icon-theme
 
     # Fonts
-    pacman -S --noconfirm ttf-croscore ttf-dejavu ttf-hack \
+    alarm_pacman ttf-croscore ttf-dejavu ttf-hack \
         ttf-liberation ttf-nerd-fonts-symbols cantarell-fonts \
         adobe-source-code-pro-fonts ttf-opensans
 
     # System
-    pacman -S --noconfirm gparted
+    alarm_pacman gparted
 
     # Other applications
-    pacman -S --noconfirm \
+    alarm_pacman \
         eog evince \
         gcolor3 \
         kvantum-qt5 \

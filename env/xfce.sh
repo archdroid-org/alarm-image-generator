@@ -19,52 +19,52 @@ env_chroot_setup() {
     echo "Env chroot-setup..."
 
     # Graphics
-    pacman -S --noconfirm mesa-demos \
+    alarm_pacman mesa-demos \
         xorg-server xorg-xinit xorg-xrefresh \
         xf86-input-libinput sdl sdl2 sdl2_image
 
     if ! pacman -Qi mesa-arm-git > /dev/null 2>&1 ; then
-        pacman -S --noconfirm xf86-video-fbdev
+        alarm_pacman xf86-video-fbdev
     fi
 
     # Desktop environment
-    pacman -S --noconfirm xfce4 xfce4-goodies \
+    alarm_pacman xfce4 xfce4-goodies \
         tumbler thunar-volman thunar-archive-plugin \
         thunar-media-tags-plugin xdg-user-dirs xdg-utils \
         lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
     # Audio
-    pacman -S --noconfirm \
+    alarm_pacman \
         pulseaudio pavucontrol pulseaudio-alsa pulseaudio-bluetooth \
         audacious audacious-plugins
 
     # Video
-    pacman -S --noconfirm \
+    alarm_pacman \
         gst-libav gst-plugin-gtk gst-plugins-bad gst-plugins-bad-libs \
         gst-plugins-base gst-plugins-base-libs gst-plugins-good \
         gst-plugins-ugly gstreamer vlc ffmpeg ffmpegthumbnailer
 
     # Network
-    pacman -S --noconfirm \
+    alarm_pacman \
         network-manager-applet networkmanager nm-connection-editor
 
     # Bluetooth
-    pacman -S --noconfirm blueman
+    alarm_pacman blueman
 
     # Theming
-    pacman -S --noconfirm arc-gtk-theme papirus-icon-theme \
+    alarm_pacman arc-gtk-theme papirus-icon-theme \
         gtk-engine-murrine
 
     # Fonts
-    pacman -S --noconfirm ttf-croscore ttf-dejavu ttf-hack ttf-liberation \
+    alarm_pacman ttf-croscore ttf-dejavu ttf-hack ttf-liberation \
         ttf-nerd-fonts-symbols cantarell-fonts \
         adobe-source-code-pro-fonts ttf-opensans
 
     # System
-    pacman -S --noconfirm gparted
+    alarm_pacman gparted
 
     # Other applications
-    pacman -S --noconfirm eog \
+    alarm_pacman eog \
         gcolor2 \
         qt5ct \
         kvantum-qt5 \

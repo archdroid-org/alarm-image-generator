@@ -19,31 +19,31 @@ env_chroot_setup() {
     echo "Env chroot-setup..."
 
     # Desktop environment
-    pacman -S --noconfirm gnome gnome-tweaks gdm
+    alarm_pacman gnome gnome-tweaks gdm
 
     # Audio
-    pacman -S --noconfirm \
-        pulseaudio pavucontrol pulseaudio-alsa pulseaudio-bluetooth
+    alarm_pacman pulseaudio pavucontrol pulseaudio-alsa \
+        pulseaudio-bluetooth
 
     # Video
-    pacman -S --noconfirm mpv
+    alarm_pacman mpv
 
     # Network
-    pacman -S --noconfirm networkmanager nm-connection-editor
+    alarm_pacman networkmanager nm-connection-editor
 
     # Theming
-    pacman -S --noconfirm arc-gtk-theme papirus-icon-theme
+    alarm_pacman arc-gtk-theme papirus-icon-theme
 
     # Fonts
-    pacman -S --noconfirm ttf-croscore ttf-dejavu ttf-hack \
+    alarm_pacman ttf-croscore ttf-dejavu ttf-hack \
         ttf-liberation ttf-nerd-fonts-symbols cantarell-fonts \
         adobe-source-code-pro-fonts ttf-opensans
 
     # System
-    pacman -S --noconfirm gparted
+    alarm_pacman gparted
 
     # Other applications
-    pacman -S --noconfirm \
+    alarm_pacman \
         gcolor3 \
         kvantum-qt5 \
         file-roller p7zip unrar unzip zip \
