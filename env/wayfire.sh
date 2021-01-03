@@ -113,6 +113,7 @@ env_chroot_setup() {
 
     mkdir /home/alarm/.config
     cp -a /mods/home/alarm/.config/mako /home/alarm/.config/
+    cp -a /mods/home/alarm/.config/wofi /home/alarm/.config/
     cp -a /mods/home/alarm/.config/mpv /home/alarm/.config/
     cp -a /mods/home/alarm/.config/xfce4 /home/alarm/.config/
     cp -a /mods/home/alarm/.config/gtk-3.0 /home/alarm/.config/

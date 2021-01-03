@@ -1,0 +1,6 @@
+show=drun
+allow_images=true
+image_size=48
+columns=2
+key_expand=Shift_L-space
+no_actions=true
