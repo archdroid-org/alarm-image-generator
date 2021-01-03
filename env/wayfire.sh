@@ -81,6 +81,9 @@ env_chroot_setup() {
         gvfs gvfs-afc gvfs-google gvfs-gphoto2 \
         gvfs-mtp gvfs-nfs gvfs-smb
 
+    # Required for wayland-logout
+    alarm_pacman lsof
+
     # Additional packages
     alarm_install_package wlroots-mali-git
     alarm_install_package swaybg-git
