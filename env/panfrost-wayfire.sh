@@ -93,6 +93,7 @@ env_chroot_setup() {
     cp /mods/usr/share/backgrounds/space.jpg /usr/share/backgrounds/
 
     mkdir /home/alarm/.config
+    cp -a /mods/home/alarm/.config/mako /home/alarm/.config/
     cp -a /mods/home/alarm/.config/xfce4 /home/alarm/.config/
     cp -a /mods/home/alarm/.config/gtk-3.0 /home/alarm/.config/
     cp -a /mods/home/alarm/.config/Kvantum /home/alarm/.config/
