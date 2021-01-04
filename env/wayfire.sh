@@ -22,6 +22,7 @@ env_pre_chroot() {
     alarm_build_package greetd-gtkgreet-git
     alarm_build_package pamac-aur
     alarm_build_package mugshot
+    alarm_build_package wl-color-picker
 }
 
 # Called inside the chroot
@@ -100,6 +101,7 @@ env_chroot_setup() {
     alarm_install_package greetd-gtkgreet-git
     alarm_install_package pamac-aur
     alarm_install_package mugshot
+    alarm_install_package wl-color-picker
 
     # Enable Services
     systemctl enable greetd

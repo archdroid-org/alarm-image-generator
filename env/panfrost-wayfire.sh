@@ -8,6 +8,7 @@ env_pre_chroot() {
     echo "Env pre-chroot..."
 
     alarm_build_package pamac-aur
+    alarm_build_package wl-color-picker
 }
 
 # Called inside the chroot
@@ -75,6 +76,7 @@ env_chroot_setup() {
 
     # Additional packages
     alarm_install_package pamac-aur
+    alarm_install_package wl-color-picker
 
     # Enable Services
     systemctl enable gdm
