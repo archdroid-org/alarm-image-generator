@@ -68,9 +68,6 @@ platform_chroot_setup() {
         # mesa git for panfrost
         alarm_install_package mesa-arm-git
 
-        # Video acceleration support
-        alarm_pacman libva-mesa-driver
-
         # Enable firefox X11 egl support
         echo "MOZ_X11_EGL=1" >> /etc/environment
     else
