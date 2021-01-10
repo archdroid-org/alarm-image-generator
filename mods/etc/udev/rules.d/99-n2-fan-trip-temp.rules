@@ -1,0 +1,8 @@
+# Set lower fan trip temperatures
+# Defaults to 75000, 85000.
+#
+# Other information can be seen with:
+# udevadm info --attribute-walk --path=devices/virtual/thermal/thermal_zone0
+#
+SUBSYSTEM=="thermal",KERNEL=="thermal_zone0",ATTR{trip_point_3_temp}="45000"
+SUBSYSTEM=="thermal",KERNEL=="thermal_zone0",ATTR{trip_point_4_temp}="55000"

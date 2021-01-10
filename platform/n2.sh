@@ -90,6 +90,7 @@ platform_chroot_setup() {
 
     # Customizations
     cp /mods/boot/boot-logo.alarm.bmp.gz /boot/boot-logo.bmp.gz
+    cp /mods/etc/udev/rules.d/99-n2-fan-trip-temp.rules /etc/udev/rules.d/
 
     if [ "${MAINLINE_KERNEL}" = "1" ]; then
         echo "Copy boot.ini adapted for mainline kernel..."
