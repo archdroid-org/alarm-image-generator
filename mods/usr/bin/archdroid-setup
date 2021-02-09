@@ -222,8 +222,8 @@ choose_keyboard(){
             IFS=$'\n'
             for line in $(sed '/! variant/,/^$/!d;//d' \
                 < /usr/share/X11/xkb/rules/evdev.lst \
-                | grep " us: " \
-                | sed 's/us://g;s/^ \+//g;s/ \{2,\}/:/g'
+                | grep " ${layout}: " \
+                | sed "s/${layout}://g;s/^ \+//g;s/ \{2,\}/:/g"
             ); do
                 code='"'$(echo "$line" | cut -d: -f1)'"'
                 label='"'$(echo "$line" | cut -d: -f2)'"'
@@ -382,7 +382,7 @@ start_setup(){
             if ! sed "s/#${SETUP_LOCALE}\.UTF-8/${SETUP_LOCALE}\.UTF-8/" \
                 /etc/locale.gen | cmp /etc/locale.gen > /dev/null 2>&1;
             then
-                sed -i "s/#${SETUP_LOCALE}\.UTF-8/${SETUP_LOCALE}\.UTF-8" \
+                sed -i "s/#${SETUP_LOCALE}\.UTF-8/${SETUP_LOCALE}\.UTF-8/" \
                     /etc/locale.gen
             else
                 sed -i "s/#${SETUP_LOCALE} UTF-8/${SETUP_LOCALE} UTF-8/" \
