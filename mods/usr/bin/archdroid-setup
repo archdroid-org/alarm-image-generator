@@ -1,0 +1,422 @@
+#!/bin/bash
+SETUP_TITLE="ArchLinuxARM Setup"
+
+PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin"
+
+if [ "$1" = "systemd" ]; then
+    chvt 2
+fi
+
+if [ "$1" != "test" ]; then
+    if [ "$(id -u)" != "0" ]; then
+        echo "You must run this script as root."
+        exit 1
+    fi
+fi
+
+show_dialog(){
+    dialog --keep-tite "$@" 3>&2 2>&1 1>&3
+
+    return $?
+}
+
+ask_quit_setup(){
+    show_dialog --title "$SETUP_TITLE" \
+        --yesno "\n    Do you want to quit the installation?" 8 50
+
+    if [ $? -lt 1 ]; then
+        echo "Initial setup abandoned."
+        kill $$ > /dev/null 3>&2 2>&1 > /dev/null
+        exit 0
+    fi
+}
+
+setup_welcome(){
+    show_dialog --title "$SETUP_TITLE" \
+        --msgbox "\n    Welcome to the first boot system setup.\n    \
+  Follow the next steps to setup some\n    \
+          basic system settings." \
+        8 50
+}
+
+choose_timezone(){
+    local timezone="/usr/share/zoneinfo"
+
+    while [ -d "$timezone" ]; do
+        local results=$(ls $timezone \
+            | grep -E -v "posix|right" \
+            | wc -l)
+
+        zones=()
+        for zone in $(ls $timezone | grep -E -v "posix|right") ; do
+            if [ "$timezone" = "/usr/share/zoneinfo" ]; then
+                if [ -d "$timezone/$zone" ]; then
+                    zones+=("$timezone/$zone" "$zone -->")
+                fi
+            else
+                if [ -d "$timezone/$zone" ]; then
+                    zones+=("$timezone/$zone" "$zone -->")
+                else
+                    zones+=("$timezone/$zone" "$zone")
+                fi
+            fi
+        done
+
+        if [ "$timezone" = "/usr/share/zoneinfo" ]; then
+            local answer=$(show_dialog --notags --nocancel \
+                --cancel-button 'Back' \
+                --title "Timezone Setup" \
+                --menu "\nSelect your timezone:" \
+                100 50 $results \
+                "${zones[@]}"
+            )
+        else
+            local current_zone=$(echo "$timezone" | sed "s/\/usr\/share\/zoneinfo\///g")
+            local answer=$(show_dialog --notags \
+                --cancel-button 'Back' \
+                --title "Timezone Setup" \
+                --menu "\nSelect your timezone ($current_zone):" \
+                100 50 $results \
+                "${zones[@]}"
+            )
+        fi
+
+        if [ "$answer" != "" ]; then
+            timezone="$answer"
+        elif [ "$answer" = "" ] && [ "$timezone" = "/usr/share/zoneinfo" ]; then
+            ask_quit_setup
+        else
+            timezone=$(dirname $timezone)
+        fi
+    done
+
+    echo "$timezone" | sed "s/\/usr\/share\/zoneinfo\///g"
+}
+
+choose_locale(){
+    local languages=()
+
+    IFS=$'\n'
+    for language in $(grep -E -R 'language +"' \
+        /usr/share/i18n/locales \
+        | grep -E -o "\"[a-zA-Z0-9<> ]+\"" \
+        | sort | uniq \
+        | sed '/^$/d' \
+        | sed 's/"//g'
+    ); do
+        languages+=("${language//'"'/}" "${language//'"'/} -->")
+    done
+
+    local languages_count="${#languages[@]}"
+
+    local locale=""
+    while [ "$locale" = "" ]; do
+        local language=$(show_dialog --keep-window --notags --nocancel \
+            --title "Locale Setup" \
+            --menu "\nSelect your language:" \
+            100 50 $languages_count \
+            "${languages[@]}"
+        )
+
+        if [ "$language" = "" ]; then
+            ask_quit_setup
+            continue
+        fi
+
+        local files=$(grep -E -R "language +\"$language\"" \
+            /usr/share/i18n/locales \
+            | cut -d: -f1
+        )
+
+        local countries=()
+        for file in $(echo "$files") ; do
+            country=$(grep "territory" $file \
+                | sed 's/&/and/g' \
+                | grep -E -o "\"[a-zA-Z0-9<> ]+\"" \
+                | sed 's/"//g'
+            )
+            local file_base=$(basename $file)
+            countries+=("${file//'"'/}" "${country//'"'/} ($file_base)")
+        done
+
+        local answer=$(show_dialog --notags \
+            --cancel-button 'Back' \
+            --title "Locale Setup" \
+            --menu "\nSelect Country ($language):" \
+            100 50 "${#countries[@]}" \
+            "${countries[@]}"
+        )
+
+        if [ "$answer" != "" ]; then
+            locale="$answer"
+            basename "$locale" | sed "s/@.*//g"
+        fi
+    done
+}
+
+choose_keyboard(){
+    # Populate models and ask user to choose one
+    local models=()
+
+    IFS=$'\n'
+    for line in $(sed '/! model/,/^$/!d;//d;s/^ \+//g;s/ \{2,\}/:/g' \
+        < /usr/share/X11/xkb/rules/evdev.lst
+    ); do
+        code='"'$(echo "$line" | cut -d: -f1)'"'
+        label='"'$(echo "$line" | cut -d: -f2)'"'
+        models+=("${code//'"'/}" "${label//'"'/}")
+    done
+
+    local models_count="${#models[@]}"
+
+    local model=""
+    local layout=""
+    local variant=""
+    while [ "$model" = "" ]; do
+        model=$(show_dialog --keep-window --notags --nocancel \
+            --title "Keyboard Setup" \
+            --default-item "pc105" \
+            --menu "\nSelect model:" \
+            100 50 $models_count \
+            "${models[@]}"
+        )
+
+        if [ "$model" = "" ]; then
+            ask_quit_setup
+            continue
+        fi
+
+        # Populate layouts and ask user to choose one
+        local layouts=()
+
+        IFS=$'\n'
+        for line in $(sed '/! layout/,/^$/!d;//d;s/^ \+//g;s/ \{2,\}/:/g' \
+            < /usr/share/X11/xkb/rules/evdev.lst \
+            | awk -F":" '{print $2 ":" $1}' \
+            | sort
+        ); do
+            code='"'$(echo "$line" | cut -d: -f2)'"'
+            label='"'$(echo "$line" | cut -d: -f1)'"'
+            layouts+=("${code//'"'/}" "${label//'"'/}")
+        done
+
+        local layouts_count="${#layouts[@]}"
+
+        while [ "$layout" = "" ]; do
+            layout=$(show_dialog --keep-window --notags \
+                --title "Keyboard Setup" \
+                --cancel-button 'Back' \
+                --menu "\nSelect layout:" \
+                100 50 $layouts_count \
+                "${layouts[@]}"
+            )
+
+            if [ "$layout" = "" ]; then
+                model=""
+                break
+            fi
+
+            # Populate variants and ask user to choose one
+            local variants=()
+
+            IFS=$'\n'
+            for line in $(sed '/! variant/,/^$/!d;//d' \
+                < /usr/share/X11/xkb/rules/evdev.lst \
+                | grep " us: " \
+                | sed 's/us://g;s/^ \+//g;s/ \{2,\}/:/g'
+            ); do
+                code='"'$(echo "$line" | cut -d: -f1)'"'
+                label='"'$(echo "$line" | cut -d: -f2)'"'
+                variants+=("${code//'"'/}" "${label//'"'/}")
+            done
+
+            local variants_count="${#variants[@]}"
+
+            while [ "$variant" = "" ]; do
+                variant=$(show_dialog --keep-window --notags \
+                    --title "Keyboard Setup" \
+                    --cancel-button 'Back' \
+                    --menu "\nSelect variant:" \
+                    100 50 $variants_count \
+                    "${variants[@]}"
+                )
+
+                if [ "$variant" = "" ]; then
+                    layout=""
+                    break
+                fi
+
+                echo "$layout $model $variant"
+                return
+            done
+        done
+    done
+}
+
+choose_hostname(){
+    local hostname=""
+    local setup=""
+    local description="Name of this machine without spaces:"
+    local default=$(cat /etc/hostname)
+
+    while [ "$hostname" = "" ]; do
+        hostname=$(show_dialog \
+            --title "Hostname Setup" \
+            --inputbox "$description" 8 60 "$default" \
+        )
+
+        if [ "$?" != "0" ]; then
+            ask_quit_setup
+            continue
+        fi
+
+        if echo "$hostname" | grep " " > /dev/null 2>&1; then
+            description="Do not use spaces for the hostname:"
+            hostname=""
+        else
+            description="Do not leave the name empty:"
+        fi
+    done
+
+    echo $hostname
+}
+
+choose_password(){
+    local title="Password Setup for '$1'"
+    local password_setup=""
+    local password_first=""
+    local password_second=""
+    local description="Enter the password for the '$1' user:"
+
+    while [ "$password_setup" = "" ]; do
+        while [ "$password_first" = "" ]; do
+            password_first=$(show_dialog --nocancel \
+                --title "$title" \
+                --passwordbox "$description" 8 60 \
+            )
+            description="Please do not leave the password empty:"
+        done
+
+        description="Re-enter the password for the '$1' user:"
+
+        while [ "$password_second" = "" ]; do
+            password_second=$(show_dialog --nocancel \
+                --title "$title" \
+                --passwordbox "$description" 8 60 \
+            )
+            description="Please do not leave the password empty:"
+        done
+
+        if [ "$password_first" != "$password_second" ]; then
+            description="Passwords did not match, please try again:"
+            password_first=""
+            password_second=""
+            continue
+        else
+            password_setup="1"
+        fi
+    done
+
+    echo $password_first
+}
+
+change_config_value(){
+    if [ ! -e "$1" ]; then
+        return
+    fi
+
+    local file="$1"
+    local property="$2"
+    local value="$3"
+
+    local current_property=$(grep -En "^$property *=" "$file")
+    local property_line=$(echo "$current_property" | cut -d":" -f1)
+
+    if [ "$current_property" != "" ]; then
+        sed -i "${property_line}s/.*/${property} = ${value}/" "$file"
+    fi
+}
+
+start_setup(){
+    local SETUP_TYPE=""
+
+    setup_welcome
+
+    local revise_setup=1
+    while [ $revise_setup -eq 1 ]; do
+        SETUP_HOSTNAME=$(choose_hostname)
+
+        SETUP_TIMEZONE=$(choose_timezone)
+
+        SETUP_LOCALE=$(choose_locale)
+
+        SETUP_KEYBOARD=$(choose_keyboard)
+
+        USER_ROOT_PWD=$(choose_password root)
+
+        USER_ALARM_PWD=$(choose_password alarm)
+
+        local config="Hostname: $SETUP_HOSTNAME\n"
+        config="${config}Timezone: $SETUP_TIMEZONE\n"
+        config="${config}Locale: $SETUP_LOCALE\n"
+        config="${config}Keyboard: $SETUP_KEYBOARD\n\n"
+        config="${config}If the above configurations are correct select 'Yes' to finish the setup."
+
+        show_dialog --title "Setup Review" \
+            --no-label 'Reconfigure' \
+            --yesno \
+            "$(echo $config | sed 's/\n /\n/g')" \
+            20 50
+
+        if [ "$?" = "0" ]; then
+            revise_setup=0
+
+            # Setup hostname
+            hostnamectl set-hostname "$SETUP_HOSTNAME"
+
+            # Setup timezone
+            timedatectl set-timezone "$SETUP_TIMEZONE"
+            timedatectl set-ntp true
+
+            # Setup locale
+            if ! sed "s/#${SETUP_LOCALE}\.UTF-8/${SETUP_LOCALE}\.UTF-8/" \
+                /etc/locale.gen | cmp /etc/locale.gen > /dev/null 2>&1;
+            then
+                sed -i "s/#${SETUP_LOCALE}\.UTF-8/${SETUP_LOCALE}\.UTF-8" \
+                    /etc/locale.gen
+            else
+                sed -i "s/#${SETUP_LOCALE} UTF-8/${SETUP_LOCALE} UTF-8/" \
+                    /etc/locale.gen
+            fi
+
+            locale-gen
+            localectl set-locale "${SETUP_LOCALE}.UTF-8"
+
+            # Setup keyboard
+            localectl set-x11-keymap $(echo $SETUP_KEYBOARD | xargs)
+            layout=$(echo $SETUP_KEYBOARD | cut -d" " -f1)
+            model=$(echo $SETUP_KEYBOARD | cut -d" " -f2)
+            variant=$(echo $SETUP_KEYBOARD | cut -d" " -f3)
+
+            wayfire_config=/home/alarm/.config/wayfire.ini
+            change_config_value "$wayfire_config" xkb_layout "$layout"
+            change_config_value "$wayfire_config" xkb_model "$model"
+            change_config_value "$wayfire_config" xkb_variant "$variant"
+
+            weston_config=/home/alarm/.config/weston.ini
+            change_config_value "$weston_config" keymap_layout "$layout"
+            change_config_value "$weston_config" keymap_variant "$model"
+            change_config_value "$weston_config" keymap_model "$variant"
+
+            # Setup user passwords
+            echo "root:${USER_ROOT_PWD}" | chpasswd
+            echo "alarm:${USER_ALARM_PWD}" | chpasswd
+
+            echo "Initial Setup finished!"
+        fi
+    done
+}
+
+start_setup
+
+exit 0;

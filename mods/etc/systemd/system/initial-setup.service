@@ -1,15 +1,20 @@
 [Unit]
 Description=Initial System Setup
 Before=display-manager.service
+After=getty@tty2.service
 
 [Service]
 User=root
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/bin/bash /usr/bin/initial-img-setup
-StandardOutput=file:/var/log/initial_img_setup.log
-StandardError=file:/var/log/initial_img_setup.log
 ExecStartPost=/usr/bin/systemctl stop initial-setup
+#StandardOutput=file:/var/log/initial_img_setup.log
+#StandardError=file:/var/log/initial_img_setup.log
+StandardInput=tty
+TTYPath=/dev/tty2
+TTYReset=yes
+TTYVHangup=yes
 
 [Install]
 WantedBy=multi-user.target

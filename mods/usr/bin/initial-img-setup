@@ -37,6 +37,10 @@ if [ -e "/usr/bin/odroid-alsa-enable" ]; then
     /usr/bin/odroid-alsa-enable
 fi
 
+if [ -e "/usr/bin/archdroid-setup" ]; then
+    /usr/bin/archdroid-setup systemd
+fi
+
 systemctl disable initial-setup.service
 rm /etc/systemd/system/initial-setup.service
 rm /usr/bin/initial-img-setup
