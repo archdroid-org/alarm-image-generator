@@ -5,3 +5,4 @@ border-size=2
 progress-color=over #5294E2FF
 padding=10
 border-radius=10
+default-timeout=8000
