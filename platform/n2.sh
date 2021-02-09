@@ -18,7 +18,7 @@ platform_pre_chroot() {
         alarm_build_package dkms-mali-bifrost-next
         alarm_build_package rtl88xxau-aircrack-dkms-git
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_build_package linux-amlogic-panfrost-510
+        alarm_build_package linux-odroid-511
         alarm_build_package rtl88xxau-aircrack-dkms-git
         alarm_build_package mesa-arm-git
     else
@@ -57,8 +57,8 @@ platform_chroot_setup() {
         # GPU kernel driver
         alarm_install_package dkms-mali-bifrost-next
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_install_package linux-amlogic-panfrost-510-5
-        alarm_install_package linux-amlogic-panfrost-510-headers
+        alarm_install_package linux-odroid-511-5
+        alarm_install_package linux-odroid-511-headers
 
         alarm_pacman dkms
 
@@ -98,6 +98,10 @@ platform_chroot_setup() {
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
         echo "Copy boot.ini adapted for mainline kernel..."
         cp /mods/boot/boot.n2plus.mainline.ini /boot/boot.ini
+
+        echo "Enable panfrost-performance service..."
+        cp /mods/etc/systemd/system/panfrost-performance.service /etc/systemd/system/
+        systemctl enable panfrost-performance
     else
         echo "Copy boot.ini adapted for n2+..."
         cp /mods/boot/boot.n2plus.hardkernel.ini /boot/boot.ini
