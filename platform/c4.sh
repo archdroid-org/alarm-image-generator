@@ -97,6 +97,10 @@ platform_chroot_setup() {
     elif [ "${PANFROST_KERNEL}" = "1" ]; then
         echo "Copy boot.ini adapted for mainline kernel..."
         cp /mods/boot/boot.c4.mainline.ini /boot/boot.ini
+
+        echo "Enable panfrost-performance service..."
+        cp /mods/etc/systemd/system/panfrost-performance.service /etc/systemd/system/
+        systemctl enable panfrost-performance
     else
         echo "Copy boot.ini adapted for c4..."
         cp /mods/boot/boot.c4.hardkernel.ini /boot/boot.ini
