@@ -1,0 +1,13 @@
+[Unit]
+Description=Panfrost Governor Performance
+After=default.target
+DefaultDependencies=no
+
+[Service]
+User=root
+Type=oneshot
+RemainAfterExit=no
+ExecStart=/bin/bash -c "echo 'performance' > /sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/governor"
+
+[Install]
+WantedBy=default.target
