@@ -1,0 +1,59 @@
+*right {
+    border: none;
+    border-radius: 0;
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(47, 52, 63, 0.7);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#tray
+{
+    padding: 0 10px;
+    margin: 0 4px;
+    color: #ffffff;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#taskbar button
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#pulseaudio {
+    background-color: #2980b9;
+}
+
+#pulseaudio.muted {
+    background-color: #eb4d4b;
+}
+
+#tray {
+    background-color: transparent;
+}

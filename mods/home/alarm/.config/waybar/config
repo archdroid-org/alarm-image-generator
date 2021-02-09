@@ -1,0 +1,66 @@
+{
+    "layer": "top", // Waybar top or bottom layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 38, // Waybar height (remove for auto height)
+    // Modules to load
+    "modules-left": ["custom/apps", "custom/space", "custom/files"],
+    "modules-center": ["clock", "cpu", "memory", "temperature"],
+    "modules-right": ["tray", "custom/pacman", /*"network",*/ "pulseaudio"],
+    // Modules configuration
+    "custom/apps": {
+        "format": " Applications",
+        "on-click": "wofi"
+    },
+    "custom/space": {
+        "format": " | "
+    },
+    "custom/files": {
+        "format": "Files",
+        "on-click": "thunar"
+    },
+    "cpu": {
+        "format": "{usage}% "
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+    "clock": {
+        "format": "{:%a %b %e, %l:%M %p}",
+        "on-click": "osmo"
+    },
+    "tray": {
+        "icon-size": 32,
+        "spacing": 10
+    },
+    "custom/pacman": {
+        "format": " {} ",
+        "interval": 3600,
+        "exec": "pamac checkupdates | grep -v 'up-to-date' | grep -v 'available update' | wc -l | sed 's/^0$/ /g'",
+        "on-click": "pamac-manager --updates; pkill -SIGRTMIN+8 waybar",
+        "on-click-right": "pamac-manager; pkill -SIGRTMIN+8 waybar",
+        "signal": 8
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    }
+}
