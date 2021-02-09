@@ -1,6 +1,6 @@
 # Define CPUs governor
-# valid governors: ondemand, performance, powersave, conservative, userspace.
-governor='schedutil'
+# valid governors: schedutil, ondemand, performance, powersave, conservative, userspace.
+governor='performance'
 
 # Limit frequency range
 # Valid suffixes: Hz, kHz (default), MHz, GHz, THz
