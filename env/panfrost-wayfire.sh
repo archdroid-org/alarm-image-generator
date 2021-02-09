@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set environment name
-ENV_NAME="Wayfire"
+ENV_NAME="Wayfire Panfrost"
 
 # Called before entering the disk image chroot
 env_pre_chroot() {
@@ -16,31 +16,32 @@ env_chroot_setup() {
     echo "Env chroot-setup..."
 
     # Graphics
-    alarm_pacman mesa-arm-git mesa-demos wayland weston \
-        xorg-xwayland sdl sdl2 sdl2_image
+    alarm_pacman mesa-arm-git mesa-demos wayland \
+        xorg-server xorg-xwayland sdl sdl2 sdl2_image
 
     # Desktop environment
     alarm_pacman wlroots sway swaybg swayidle swaylock \
         wf-recorder mako wl-clipboard bemenu bemenu-wlroots kanshi \
-        grim slurp wofi
+        grim slurp wofi waybar-git wf-config wayfire wayfire-plugins-extra \
+        wf-shell wcm
 
     alarm_pacman thunar tumbler thunar-volman \
         thunar-archive-plugin thunar-media-tags-plugin \
         xdg-user-dirs xdg-user-dirs-gtk xdg-utils xfce4-terminal \
-        qt5-wayland gnome-control-center gnome-tweaks gnome-keyring \
-        xdg-desktop-portal xdg-desktop-portal-wlr polkit-gnome \
-        xorg-xrdb gdm
+        qt5-wayland gnome-keyring xdg-desktop-portal xdg-desktop-portal-wlr \
+        polkit-gnome xorg-xrdb osmo lightdm lightdm-gtk-greeter \
+        lightdm-gtk-greeter-settings
 
     # Audio
     alarm_pacman alsa-utils \
-        pulseaudio pavucontrol pulseaudio-alsa pulseaudio-bluetooth \
-        audacious audacious-plugins
+        pipewire pipewire-alsa pipewire-jack pipewire-pulse \
+        pavucontrol gst-plugin-pipewire audacious audacious-plugins
 
     # Video
     alarm_pacman ffmpeg ffmpegthumbnailer mpv vlc
 
     # Network
-    alarm_pacman networkmanager nm-connection-editor
+    alarm_pacman networkmanager nm-connection-editor network-manager-applet
 
     # Bluetooth
     alarm_pacman blueman
@@ -79,13 +80,19 @@ env_chroot_setup() {
     alarm_install_package wl-color-picker
 
     # Enable Services
-    systemctl enable gdm
+    systemctl enable lightdm
     systemctl enable NetworkManager
+
+    # Add initial setup
+    cp /mods/usr/bin/archdroid-setup /usr/bin/
+    chmod 0755 /usr/bin/archdroid-setup
 
     # Customizations
     echo "QT_STYLE_OVERRIDE=kvantum" >> /etc/environment
     echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
     echo "MOZ_ENABLE_WAYLAND=1" >> /etc/environment
+
+    cp /mods/etc/lightdm/* /etc/lightdm/
 
     mkdir -p /var/lib/AccountsService/users
     cp /mods/var/lib/AccountsService/users/alarm.wayfire \
@@ -96,6 +103,8 @@ env_chroot_setup() {
 
     mkdir /home/alarm/.config
     cp -a /mods/home/alarm/.config/mako /home/alarm/.config/
+    cp -a /mods/home/alarm/.config/waybar /home/alarm/.config/
+    cp -a /mods/home/alarm/.config/wlogout /home/alarm/.config/
     cp -a /mods/home/alarm/.config/wofi /home/alarm/.config/
     cp -a /mods/home/alarm/.config/xfce4 /home/alarm/.config/
     cp -a /mods/home/alarm/.config/gtk-3.0 /home/alarm/.config/
@@ -120,7 +129,7 @@ env_post_chroot() {
     echo "Env post-chroot..."
 
     # Finish desktop environment installation from AUR
-    alarm_yay_install \
-        wf-config wayfire wayfire-plugins-extra wf-shell wcm \
-        wlogout wdisplays
+    alarm_yay_install wlogout wdisplays
+
+    alarm_yay_install pipewire-jack-dropin mugshot
 }
