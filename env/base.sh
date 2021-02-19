@@ -53,7 +53,7 @@ alarm_pacman iw inetutils \
     samba smbclient cifs-utils links wpa_supplicant
 
 # System
-alarm_pacman pciutils sudo cpupower usbutils \
+alarm_pacman pciutils sudo cpupower usbutils ntfs-3g \
     neofetch lsb-release nano dialog terminus-font
 
 # Shell
