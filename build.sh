@@ -86,7 +86,10 @@ alarm_eval_opts() {
 
 # Set image name and file download name and include platform script
 alarm_set_platform() {
-    NAME=""
+    if [ "$NAME" != "none" ]; then
+        NAME=""
+    fi
+
     for arg in "$@"; do
         if [[ " ${platforms[@]} " =~ " ${arg} " ]]; then
             if [ -e "platform/${arg}.sh" ]; then
@@ -193,13 +196,30 @@ alarm_yay_install() {
 }
 
 alarm_print_vars() {
+    alarm_set_env $@
+    if [ "$ENVIRONMENT" != "" ]; then
+        if type "env_variables" 1>/dev/null 2>&1 ; then
+            echo "----------------------------------------------------------------"
+            echo "Variables for environemnt ${ENVIRONMENT}:"
+            echo "----------------------------------------------------------------"
+            env_variables
+        fi
+    fi
+
+    NAME="none"
+
+    alarm_set_platform $@
+    if [ "$NAME" = "none" ]; then
+        return
+    fi
+
     if [ -e "platform/${PLATFORM}.sh" ]; then
         source "platform/${PLATFORM}.sh"
     fi
 
-    if type "platform_variables" 1>/dev/null ; then
+    if type "platform_variables" 1>/dev/null 2>&1 ; then
         echo "----------------------------------------------------------------"
-        echo "Variables for ${PLATFORM}:"
+        echo "Variables for platform ${PLATFORM}:"
         echo "----------------------------------------------------------------"
         platform_variables
     else
@@ -265,12 +285,11 @@ case "$1" in
         exit 0
         ;;
     "vars")
-        alarm_set_platform $@
-        alarm_print_vars
+        alarm_print_vars $@
         exit 0
         ;;
     *)
-        echo "Usage: build.sh <command> [<arguments>]"
+        echo "Usage: build.sh <command> [<options>]"
         echo "Creates a ready to burn ArchLinuxARM image."
         echo ""
         echo "COMMANDS:"
@@ -279,16 +298,18 @@ case "$1" in
         echo "    -e <environment>"
         echo ""
         echo "  chroot <image-file.img>"
-        echo "  chroot to an existing image file for easy modifications."
+        echo "   chroot to an existing image file for easy modifications."
         echo ""
         echo "  umount <platform> [<options>]"
         echo "    -e <environment>"
         echo ""
         echo "  clean"
-        echo "  Removes generated images and downloaded tarballs."
+        echo "   Removes generated images and downloaded tarballs."
         echo ""
-        echo "  vars <platform>"
-        echo "  Print the environment variables that can be set for a platform."
+        echo "  vars [<platform>] [<options>]"
+        echo "   Print the environment variables that can be set for"
+        echo "   a platform or environment."
+        echo "    -e <environment>"
         echo ""
         echo "Available platforms: ${platforms[@]}"
         echo ""
@@ -387,12 +408,12 @@ alarm_build_package archlinuxdroid-repo
 #
 # PRE CHROOT HOOKS
 #
-if type "platform_pre_chroot" 1>/dev/null ; then
+if type "platform_pre_chroot" 1>/dev/null 2>&1 ; then
     echo "Executing platform pre chroot hook..."
     platform_pre_chroot
 fi
 
-if type "env_pre_chroot" 1>/dev/null ; then
+if type "env_pre_chroot" 1>/dev/null 2>&1 ; then
     echo "Executing environment pre chroot hook..."
     env_pre_chroot
 fi
@@ -414,12 +435,23 @@ if [ -e "env/${ENVIRONMENT}.sh" ]; then
 fi
 
 # prepend environment variables to platform script
-if type "platform_variables" 1>/dev/null ; then
+if type "platform_variables" 1>/dev/null 2>&1 ; then
     platform_variables | while read var; do
         var_name=$(echo $var | cut -d: -f1)
         if [ "$((var_name))x" != "x" ]; then
             sudo sed -i "s|#!/bin/bash|#!/bin/bash\n${var_name}=\"$((var_name))\"|g" \
                 root/platform.sh
+        fi
+    done
+fi
+
+# prepend environment variables to env script
+if type "env_variables" 1>/dev/null 2>&1 ; then
+    env_variables | while read var; do
+        var_name=$(echo $var | cut -d: -f1)
+        if [ "$((var_name))x" != "x" ]; then
+            sudo sed -i "s|#!/bin/bash|#!/bin/bash\n${var_name}=\"$((var_name))\"|g" \
+                root/env.sh
         fi
     done
 fi
@@ -455,12 +487,12 @@ fi
 #
 # POST CHROOT HOOKS
 #
-if type "platform_post_chroot" 1>/dev/null ; then
+if type "platform_post_chroot" 1>/dev/null 2>&1 ; then
     echo "Executing platform post chroot hook..."
     platform_post_chroot
 fi
 
-if type "env_post_chroot" 1>/dev/null ; then
+if type "env_post_chroot" 1>/dev/null 2>&1 ; then
     echo "Executing environment post chroot hook..."
     env_post_chroot
 fi
