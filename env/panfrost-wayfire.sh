@@ -3,6 +3,10 @@
 # Set environment name
 ENV_NAME="Wayfire Panfrost"
 
+env_variables() {
+    echo "PIPEWIRE: set to 1 to install pipewire instead of pulseaudio."
+}
+
 # Called before entering the disk image chroot
 env_pre_chroot() {
     echo "Env pre-chroot..."
@@ -33,9 +37,15 @@ env_chroot_setup() {
         lightdm-gtk-greeter-settings
 
     # Audio
-    alarm_pacman alsa-utils \
-        pipewire pipewire-alsa pipewire-jack pipewire-pulse \
-        pavucontrol gst-plugin-pipewire audacious audacious-plugins
+    if [ "$PIPEWIRE" = "1" ]; then
+        alarm_pacman alsa-utils \
+            pipewire pipewire-alsa pipewire-jack pipewire-pulse \
+            pavucontrol gst-plugin-pipewire audacious audacious-plugins
+    else
+        alarm_pacman alsa-utils \
+            pulseaudio pavucontrol pulseaudio-alsa pulseaudio-bluetooth \
+            audacious audacious-plugins
+    fi
 
     # Video
     alarm_pacman ffmpeg ffmpegthumbnailer mpv vlc
@@ -131,5 +141,9 @@ env_post_chroot() {
     # Finish desktop environment installation from AUR
     alarm_yay_install wlogout wdisplays
 
-    alarm_yay_install pipewire-jack-dropin mugshot
+    alarm_yay_install mugshot
+
+    if [ "$PIPEWIRE" = "1" ]; then
+        alarm_yay_install pipewire-jack-dropin
+    fi
 }
