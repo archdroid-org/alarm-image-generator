@@ -164,7 +164,7 @@ alarm_umount_image() {
 
 alarm_build_package() {
     if [ ! -e "packages" ]; then
-        git clone https://github.com/jgmdev/archlinux-odroid packages
+        git clone https://github.com/archdroid-org/pkgbuilds packages
     fi
 
     cd packages
