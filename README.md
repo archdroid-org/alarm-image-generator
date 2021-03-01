@@ -11,7 +11,7 @@ that provide the neccesary commands to generate the image. These
 scripts are divided in the following two components.
 
 * platform - Instructions for a specific SOC (system on a chip), eg:
-  odroid n2, odroid c2, etc... On these scripts you can specify
+  odroid n2, odroid c4, etc... On these scripts you can specify
   commands to install specific kernels, u-boot files, config files...
 
 * env - Instructions to install a Desktop Environment like: xfce,
@@ -85,10 +85,10 @@ IMAGE_SIZE=5
 ```
 
 Then you should add the installation instructions of this new platform
-into platform/c2.sh. by specifying 3 hook functions that get called
+into platform/c2.sh. by specifying 4 hook functions that get called
 by main build script:
 
-* platform_variables - declare variables used by the other hooks
+* platform_variables - declare variables that let the user control the platform setup process
 * platform_pre_chroot - executed before entering the image chroot
 * platform_chroot_setup - executed inside the image chroot
 * platform_post_chroot - executed after exiting image chroot
@@ -97,10 +97,11 @@ You can take a look in platform/n2.sh to get an idea.
 
 ### Environments
 
-Finally, adding environments should be the same  process as adding a
+Finally, adding environments should be the same process as adding a
 new platform. Lets say you want to add sway. You would create a new
 file as env/sway.sh, and add to it the following hook functions:
 
+* env_variables - declare variables that let the user control the env setup process
 * env_pre_chroot - executed before entering the image chroot
 * env_chroot_setup - executed inside the image chroot
 * env_post_chroot - executed after exiting image chroot
@@ -114,6 +115,36 @@ script as follows:
 
 ```sh
 ./build.sh build -e sway c2
+```
+
+### Platform and Environment Variables
+
+In order to see the variables declared on the platform_variables or
+env_variables functions one can execute:
+
+```sh
+./build.sh vars n2 -e panfrost-wayfire
+
+Output:
+
+----------------------------------------------------------------
+Variables for environemnt panfrost-wayfire:
+----------------------------------------------------------------
+PIPEWIRE: set to 1 to install pipewire instead of pulseaudio.
+----------------------------------------------------------------
+Variables for platform n2:
+----------------------------------------------------------------
+WAYLAND: set to 1 to install wayland GL libraries instead of fbdev.
+DISABLE_MALIGL: set to 1 to disable installation of mali libraries.
+MAINLINE_KERNEL: set to 1 to use mainline kernel.
+PANFROST_KERNEL: set to 1 to use panfrost enabled kernel.
+```
+
+To use any of those variables you can execute the image builder script
+as follows:
+
+```sh
+./build.sh build n2 -e panfrost-wayfire DISABLE_MALIGL=1 PANFROST_KERNEL=1
 ```
 
 Pull requests with improvements, new platforms or environments are
