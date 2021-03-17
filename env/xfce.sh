@@ -6,12 +6,6 @@ ENV_NAME="XFCE"
 # Called before entering the disk image chroot
 env_pre_chroot() {
     echo "Env pre-chroot..."
-
-    alarm_build_package pamac-aur
-    alarm_build_package xfce4-places-plugin
-    alarm_build_package xfce4-docklike-plugin-git
-    alarm_build_package mugshot
-    alarm_build_package mpv-sdl
 }
 
 # Called inside the chroot
@@ -23,7 +17,7 @@ env_chroot_setup() {
         xorg-server xorg-xinit xorg-xrefresh \
         xf86-input-libinput sdl sdl2 sdl2_image
 
-    if ! pacman -Qi mesa-arm-git > /dev/null 2>&1 ; then
+    if ! pacman -Qi mesa-devel-git > /dev/null 2>&1 ; then
         alarm_pacman xf86-video-fbdev
     fi
 
@@ -43,6 +37,8 @@ env_chroot_setup() {
         gst-libav gst-plugin-gtk gst-plugins-bad gst-plugins-bad-libs \
         gst-plugins-base gst-plugins-base-libs gst-plugins-good \
         gst-plugins-ugly gstreamer vlc ffmpeg ffmpegthumbnailer
+
+    alarm_pacman mpv-sdl
 
     # Network
     alarm_pacman \
@@ -78,14 +74,7 @@ env_chroot_setup() {
         gvfs gvfs-afc gvfs-google gvfs-gphoto2 \
         gvfs-mtp gvfs-nfs gvfs-smb
 
-    pacman -R --noconfirm mousepad parole xfburn ristretto orage
-
-    # Additional packages
-    alarm_install_package pamac-aur
-    alarm_install_package xfce4-places-plugin
-    alarm_install_package xfce4-docklike-plugin-git
-    alarm_install_package mugshot
-    alarm_install_package mpv-sdl
+    pacman -R --noconfirm mousepad parole xfburn ristretto
 
     # Enable Services
     systemctl enable lightdm
@@ -114,5 +103,10 @@ env_chroot_setup() {
 # Called after exiting the disk image chroot
 env_post_chroot() {
     echo "Env post-chroot..."
-    return
+
+    # Additional packages from aur
+    alarm_yay_install pamac-aur
+    alarm_yay_install xfce4-places-plugin
+    alarm_yay_install xfce4-docklike-plugin-git
+    alarm_yay_install mugshot
 }

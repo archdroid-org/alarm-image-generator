@@ -10,9 +10,6 @@ env_variables() {
 # Called before entering the disk image chroot
 env_pre_chroot() {
     echo "Env pre-chroot..."
-
-    alarm_build_package pamac-aur
-    alarm_build_package wl-color-picker
 }
 
 # Called inside the chroot
@@ -20,7 +17,7 @@ env_chroot_setup() {
     echo "Env chroot-setup..."
 
     # Graphics
-    alarm_pacman mesa-arm-git mesa-demos wayland \
+    alarm_pacman mesa-devel-git mesa-demos wayland \
         xorg-server xorg-xwayland sdl sdl2 sdl2_image
 
     # Desktop environment
@@ -85,10 +82,6 @@ env_chroot_setup() {
     # Required for wayland-logout
     alarm_pacman lsof
 
-    # Additional packages
-    alarm_install_package pamac-aur
-    alarm_install_package wl-color-picker
-
     # Enable Services
     systemctl enable lightdm
     systemctl enable NetworkManager
@@ -137,6 +130,10 @@ env_chroot_setup() {
 # Called after exiting the disk image chroot
 env_post_chroot() {
     echo "Env post-chroot..."
+
+    # Additional packages
+    alarm_yay_install pamac-aur
+    alarm_yay_install wl-color-picker
 
     # Finish desktop environment installation from AUR
     alarm_yay_install wlogout wdisplays

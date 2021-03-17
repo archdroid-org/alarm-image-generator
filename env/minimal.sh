@@ -15,8 +15,8 @@ env_pre_chroot() {
 env_chroot_setup() {
     echo "Env chroot-setup..."
 
-    if pacman -Qi mesa-arm-git > /dev/null 2>&1 ; then
-        pacman -Rcs --noconfirm mesa-arm-git
+    if pacman -Qi mesa-devel-git > /dev/null 2>&1 ; then
+        pacman -Rcs --noconfirm mesa-devel-git
     fi
 
     if pacman -Qi libva-mesa-driver > /dev/null 2>&1 ; then

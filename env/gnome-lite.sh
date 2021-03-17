@@ -9,9 +9,6 @@ IMAGE_SIZE=6
 # Called before entering the disk image chroot
 env_pre_chroot() {
     echo "Env pre-chroot..."
-
-    alarm_build_package pamac-aur
-    alarm_build_package gnome-shell-extension-dash-to-dock
 }
 
 # Called inside the chroot
@@ -62,10 +59,6 @@ env_chroot_setup() {
         gvfs gvfs-afc gvfs-google gvfs-gphoto2 \
         gvfs-mtp gvfs-nfs gvfs-smb
 
-    # Additional packages
-    alarm_install_package pamac-aur
-    alarm_install_package gnome-shell-extension-dash-to-dock
-
     # Enable Services
     systemctl enable gdm
     systemctl enable NetworkManager
@@ -95,5 +88,8 @@ env_chroot_setup() {
 # Called after exiting the disk image chroot
 env_post_chroot() {
     echo "Env post-chroot..."
-    return
+
+    # Additional packages from AUR
+    alarm_yay_install pamac-aur
+    alarm_yay_install gnome-shell-extension-dash-to-dock
 }

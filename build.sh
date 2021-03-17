@@ -163,10 +163,6 @@ alarm_umount_image() {
 }
 
 alarm_build_package() {
-    if [ ! -e "packages" ]; then
-        git clone https://github.com/archdroid-org/pkgbuilds packages
-    fi
-
     cd packages
 
     if [ ! -e "$1" ]; then
@@ -401,6 +397,18 @@ sudo mount -v -t vfat ${LOOP}p1 root/boot
 #
 # BUILD PACKAGES
 #
+if [ ! -e "packages" ]; then
+    git clone https://github.com/archdroid-org/pkgbuilds packages
+else
+    # Perform some cleaning
+    cd packages
+    rm -rf *
+    git restore .
+    git config pull.rebase false
+    git pull
+    cd ..
+fi
+
 alarm_build_package yay-bin
 alarm_build_package archlinuxdroid-repo
 
