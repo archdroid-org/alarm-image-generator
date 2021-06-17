@@ -4,6 +4,5 @@
 /root
 /boot
 /packages
-/cache/*.tar.xz
-/cache/*.tar.zst
+/cache/
 /mods/packages
