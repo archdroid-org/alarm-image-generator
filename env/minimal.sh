@@ -4,7 +4,7 @@
 ENV_NAME="Minimal"
 
 # Overwrite platform image size since we need less space.
-IMAGE_SIZE=3
+IMAGE_SIZE=4
 
 # Called before entering the disk image chroot
 env_pre_chroot() {
