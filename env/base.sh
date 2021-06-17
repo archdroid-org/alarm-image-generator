@@ -6,7 +6,7 @@ alarm_install_package() {
 }
 
 alarm_pacman() {
-    pacman -S --needed --noconfirm $@
+    yes | pacman -S --needed --noconfirm $@
 }
 
 # Include environment hooks
