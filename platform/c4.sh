@@ -4,38 +4,14 @@ NAME="ArchLinuxARM-odroid-n2-latest"
 IMAGE="ArchLinuxARM-odroid-c4"
 
 platform_variables() {
-    echo "WAYLAND: set to 1 to install wayland GL libraries instead of fbdev."
+    echo "WAYLAND: set to 1 to install mali wayland GL libraries instead of fbdev."
     echo "DISABLE_MALIGL: set to 1 to disable installation of mali libraries."
-    echo "MAINLINE_KERNEL: set to 1 to use mainline kernel."
-    echo "PANFROST_KERNEL: set to 1 to use panfrost enabled kernel."
+    echo "TOBETTER_KERNEL: set to 1 to use tobetter kernel branch."
+    echo "CHEWITT_KERNEL: set to 1 to use chewitt kernel branch."
 }
 
 platform_pre_chroot() {
     echo "Platform pre-chroot..."
-
-    if [ "${MAINLINE_KERNEL}" = "1" ]; then
-        alarm_build_package linux-amlogic-58
-        alarm_build_package dkms-mali-bifrost-next
-        alarm_build_package rtl88xxau-aircrack-dkms-git
-    elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_build_package linux-odroid-panfrost
-        alarm_build_package rtl88xxau-aircrack-dkms-git
-        alarm_build_package mesa-arm-git
-    else
-        alarm_build_package linux-odroid-g12
-    fi
-
-    if [ "${DISABLE_MALIGL}" != "1" ]; then
-        if [ "${WAYLAND}" != "1" ]; then
-            alarm_build_package odroid-c4-libgl
-            alarm_build_package odroid-gl4es
-        else
-            alarm_build_package odroid-c4-libgl
-        fi
-    fi
-
-    alarm_build_package uboot-odroid-c4
-    alarm_build_package odroid-alsa
 }
 
 platform_chroot_setup() {
@@ -45,62 +21,51 @@ platform_chroot_setup() {
     yes | pacman -Rcs linux-odroid-n2
     yes | pacman -Rcs uboot-odroid-n2
 
-    if [ "${MAINLINE_KERNEL}" = "1" ]; then
-        alarm_install_package linux-amlogic-58-5
-        alarm_install_package linux-amlogic-58-headers
-
+    if [ "${CHEWITT_KERNEL}" = "1" ]; then
+        alarm_pacman linux-amlogic-512
+        alarm_pacman linux-amlogic-512-headers
         alarm_pacman dkms
-
-        # Wireless
-        alarm_install_package rtl88xxau-aircrack-dkms-git
-
-        # GPU kernel driver
-        alarm_install_package dkms-mali-bifrost-next
-    elif [ "${PANFROST_KERNEL}" = "1" ]; then
-        alarm_install_package linux-odroid-panfrost-5
-        alarm_install_package linux-odroid-panfrost-headers
-
+    elif [ "${TOBETTER_KERNEL}" = "1" ]; then
+        alarm_pacman linux-odroid-512
+        alarm_pacman linux-odroid-512-headers
         alarm_pacman dkms
-
-        # Wireless
-        alarm_install_package rtl88xxau-aircrack-dkms-git
-
-        # mesa git for panfrost
-        alarm_install_package mesa-arm-git
-
-        # Enable firefox X11 egl support
-        echo "MOZ_X11_EGL=1" >> /etc/environment
     else
-        alarm_install_package linux-odroid-g12-4.9
-        alarm_install_package linux-odroid-g12-headers
+        alarm_pacman linux-odroid-g12
+        alarm_pacman linux-odroid-g12-headers
     fi
 
-    # U-Boot
-    alarm_install_package uboot-odroid-c4
+    # Updated uboot
+    alarm_pacman uboot-odroid-c4
 
     # Audio support
-    alarm_install_package odroid-alsa
+    alarm_pacman odroid-alsa
 
     if [ "${DISABLE_MALIGL}" != "1" ]; then
         if [ "${WAYLAND}" != "1" ]; then
-            alarm_install_package odroid-c4-libgl-fb
-            alarm_install_package odroid-gl4es
+            alarm_pacman odroid-c4-libgl-fb
+            alarm_pacman odroid-gl4es
+        fi
+    else
+        # mesa git for panfrost
+        alarm_pacman mesa-devel-git
+
+        if [ "${TOBETTER_KERNEL}" = "1" ] || [ "${CHEWITT_KERNEL}" = "1" ]; then
+            echo "MOZ_X11_EGL=1" >> /etc/environment
         fi
     fi
 
     # Customizations
     cp /mods/boot/boot-logo.alarm.bmp.gz /boot/boot-logo.bmp.gz
 
-    if [ "${MAINLINE_KERNEL}" = "1" ]; then
-        echo "Copy boot.ini adapted for mainline kernel..."
-        cp /mods/boot/boot.c4.mainline.ini /boot/boot.ini
-    elif [ "${PANFROST_KERNEL}" = "1" ]; then
+    if [ "${TOBETTER_KERNEL}" = "1" ] || [ "${CHEWITT_KERNEL}" = "1" ]; then
         echo "Copy boot.ini adapted for mainline kernel..."
         cp /mods/boot/boot.c4.mainline.ini /boot/boot.ini
 
-        echo "Enable panfrost-performance service..."
-        cp /mods/etc/systemd/system/panfrost-performance.service /etc/systemd/system/
-        systemctl enable panfrost-performance
+        if [ "${DISABLE_MALIGL}" = "1" ]; then
+            echo "Enable panfrost-performance service..."
+            cp /mods/etc/systemd/system/panfrost-performance.service /etc/systemd/system/
+            systemctl enable panfrost-performance
+        fi
     else
         echo "Copy boot.ini adapted for c4..."
         cp /mods/boot/boot.c4.hardkernel.ini /boot/boot.ini
@@ -112,7 +77,7 @@ platform_chroot_setup_exit() {
     # Install at last since this causes issues
     if [ "${DISABLE_MALIGL}" != "1" ]; then
         if [ "${WAYLAND}" = "1" ]; then
-            alarm_install_package odroid-c4-libgl-wl
+            alarm_pacman odroid-c4-libgl-wl
         fi
     fi
 
@@ -121,6 +86,11 @@ platform_chroot_setup_exit() {
 
 platform_post_chroot() {
     echo "Platform post-chroot..."
+
+    if [ "${TOBETTER_KERNEL}" = "1" ] || [ "${CHEWITT_KERNEL}" = "1" ]; then
+        # Wireless
+        alarm_yay_install rtl88xxau-aircrack-dkms-git
+    fi
 
     echo "Setting boot.ini UUID"
     local loopname=$(echo "${LOOP}" | sed "s/\/dev\///g")
