@@ -26,8 +26,8 @@ platform_chroot_setup() {
         alarm_pacman linux-amlogic-512-headers
         alarm_pacman dkms
     elif [ "${TOBETTER_KERNEL}" = "1" ]; then
-        alarm_pacman linux-odroid-512
-        alarm_pacman linux-odroid-512-headers
+        alarm_pacman linux-odroid-600
+        alarm_pacman linux-odroid-600-headers
         alarm_pacman dkms
     else
         alarm_pacman linux-odroid-g12
