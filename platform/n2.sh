@@ -22,8 +22,8 @@ platform_chroot_setup() {
     yes | pacman -Rcs uboot-odroid-n2
 
     if [ "${CHEWITT_KERNEL}" = "1" ]; then
-        alarm_pacman linux-amlogic-512
-        alarm_pacman linux-amlogic-512-headers
+        alarm_pacman linux-amlogic-519
+        alarm_pacman linux-amlogic-519-headers
         alarm_pacman dkms
     elif [ "${TOBETTER_KERNEL}" = "1" ]; then
         alarm_pacman linux-odroid-600
@@ -50,8 +50,8 @@ platform_chroot_setup() {
             alarm_pacman odroid-gl4es
         fi
     else
-        # mesa git for panfrost
-        alarm_pacman mesa-devel-git
+        # mesa for panfrost
+        alarm_pacman mesa
 
         if [ "${TOBETTER_KERNEL}" = "1" ] || [ "${CHEWITT_KERNEL}" = "1" ]; then
             echo "MOZ_X11_EGL=1" >> /etc/environment
