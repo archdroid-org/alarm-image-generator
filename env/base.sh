@@ -1,12 +1,52 @@
 #!/bin/bash
 
-alarm_install_package() {
-    package=$(ls /mods/packages/$1*.pkg.tar.* | sort | tail -n1)
-    yes | pacman -U "$package"
-}
-
 alarm_pacman() {
     yes | pacman -S --needed --noconfirm $@
+}
+
+alarm_install_yay() {
+    if ! which yay > /dev/null ; then
+        cd packages
+        if [ ! -e "yay-bin" ]; then
+            wget "https://aur.archlinux.org/cgit/aur.git/snapshot/yay-bin.tar.gz"
+            tar -xvzf yay-bin.tar.gz
+            rm yay-bin.tar.gz
+        fi
+        chown -R alarm:alarm yay-bin
+        cd yay-bin
+        rm yay-bin*.pkg.tar.*
+        sudo -u alarm makepkg -CAs --skippgpcheck --noconfirm
+        package=$(ls yay-bin*.pkg.tar.* | sort | tail -n1)
+        yes | pacman -U "$package"
+        cd ../../
+    fi
+}
+
+alarm_build_package() {
+    cd packages
+
+    if [ ! -e "$1" ]; then
+        yay -G "$1"
+    fi
+
+    chown -R alarm:alarm "$1"
+    cd "$1"
+
+    package=$(ls *.pkg.tar.* | sort | tail -n1)
+    if [ "$package" = "" ]; then
+        echo "Building $1..."
+        sudo -u alarm makepkg -CAs --skippgpcheck --noconfirm
+    fi
+
+    cd ../../
+}
+
+alarm_install_package() {
+    if ! ls /packages/$1/$1*.pkg.tar.* > /dev/null ; then
+        alarm_build_package $1
+    fi
+    package=$(ls /packages/$1/$1*.pkg.tar.* | sort | tail -n1)
+    yes | pacman -U "$package"
 }
 
 # Include environment hooks
@@ -32,28 +72,32 @@ pacman-key --init
 pacman-key --populate archlinuxarm
 
 #
-# Add custom repo for some extra packages
+# Update packages list and keyrings
 #
-alarm_install_package archlinuxdroid-repo
+while ! pacman -Sy ; do
+    echo "Command failed. Retrying in 5 seconds..."
+    sleep 5
+done
+alarm_pacman archlinux-keyring archlinuxarm-keyring
 
 #
-# Sync pacman databases
+# Update all packages
 #
-pacman -Suy --noconfirm
+yes | pacman -Su --noconfirm
 
 # Devel
-alarm_pacman base-devel cmake git arch-install-scripts
+alarm_pacman base-devel sudo wget cmake git arch-install-scripts
 
 # Bluetooth
 alarm_pacman bluez bluez-utils
 
 # Network
 alarm_pacman iw inetutils \
-    wireless_tools wireless-regdb net-tools netctl whois wget openssh \
+    wireless_tools wireless-regdb net-tools networkmanager whois openssh \
     samba smbclient cifs-utils links wpa_supplicant
 
 # System
-alarm_pacman pciutils sudo cpupower usbutils ntfs-3g \
+alarm_pacman pciutils cpupower usbutils ntfs-3g \
     neofetch lsb-release nano dialog terminus-font
 
 # Shell
@@ -65,18 +109,33 @@ alarm_pacman realtime-privileges
 
 
 #
-# INSTALL CUSTOM PACKAGES
-#
-alarm_install_package yay-bin
-
-
-#
 # Initial alarm user account setup
 #
 usermod -G audio,tty,video,input,wheel,network,realtime -a alarm
 cp /mods/etc/sudoers.d/wheel /etc/sudoers.d/
 cp /mods/home/alarm/.makepkg.conf /home/alarm/
 chown -R alarm:alarm /home/alarm
+
+#
+# Enable more build cores on makepkg.conf for faster AUR builds
+#
+cp /etc/makepkg.conf /home/alarm/.makepkg.conf
+sed -i 's|#MAKEFLAGS="-j2"|MAKEFLAGS="-j'"$(nproc)"'"|g' makepkg.conf
+chown alarm:alarm /home/alarm/.makepkg.conf
+
+#
+# Install yay AUR helper
+#
+alarm_install_yay
+
+#
+# Add custom repo for some extra packages
+#
+alarm_install_package archlinuxdroid-repo
+while ! pacman -Sy ; do
+    echo "Command failed. Retrying in 5 seconds..."
+    sleep 5
+done
 
 
 #
@@ -134,6 +193,8 @@ chown -R alarm:alarm /home/alarm
 systemctl enable sshd
 systemctl enable bluetooth
 systemctl enable cpupower
+systemctl disable systemd-networkd
+systemctl enable NetworkManager
 systemctl enable systemd-resolved
 systemctl enable systemd-timesyncd
 systemctl enable initial-setup
@@ -146,5 +207,10 @@ if type "platform_chroot_setup_exit" 1>/dev/null ; then
     echo "Executing platform chroot setup exit hook..."
     platform_chroot_setup_exit
 fi
+
+#
+# Remove customized makepkg.conf
+#
+rm /home/alarm/.makepkg.conf
 
 exit
