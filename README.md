@@ -28,7 +28,9 @@ copied to the target generated image.
 The main build.sh should detect if you have a missing dependency and
 let you know, but besides this you will need the following:
 
-* ArchLinux installation running same architecture of target image.
+* One of the following:
+  - ArchLinux host running same architecture of target image.
+  - ArchLinux x86_64 host with static builds of qemu and binfmt setup.
 * User account with sudo priviliges.
 
 ## Usage
@@ -45,14 +47,14 @@ To generate a Odroid N2 image you would do:
 ./build.sh build n2
 ```
 
-This will set the environment by default to xfce, you can specify
+This will set the environment by default to minimal, you can specify
 a different environment by using the -e flag, for example:
 
 ```sh
-./build.sh build -e wayfire n2
+./build.sh build -e xfce n2
 ```
 
-Then the instructions on platform/n2.sh and env/wayfire.sh are
+Then the instructions on platform/n2.sh and env/xfce.sh are
 executed. By default the script will install some packages, you can
 take a look on env/base.sh for the defaults.
 

@@ -4,10 +4,7 @@ NAME="ArchLinuxARM-odroid-n2-latest"
 IMAGE="ArchLinuxARM-odroid-c4"
 
 platform_variables() {
-    echo "WAYLAND: set to 1 to install mali wayland GL libraries instead of fbdev."
-    echo "DISABLE_MALIGL: set to 1 to disable installation of mali libraries."
-    echo "TOBETTER_KERNEL: set to 1 to use tobetter kernel branch."
-    echo "CHEWITT_KERNEL: set to 1 to use chewitt kernel branch."
+    echo "G12_KERNEL: set to 1 to use g12 kernel branch."
 }
 
 platform_pre_chroot() {
@@ -17,86 +14,43 @@ platform_pre_chroot() {
 platform_chroot_setup() {
     echo "Platform chroot-setup..."
 
-    # Kernel
     yes | pacman -Rcs linux-odroid-n2
     yes | pacman -Rcs uboot-odroid-n2
 
-    if [ "${CHEWITT_KERNEL}" = "1" ]; then
-        alarm_pacman linux-amlogic-512
-        alarm_pacman linux-amlogic-512-headers
-        alarm_pacman dkms
-    elif [ "${TOBETTER_KERNEL}" = "1" ]; then
-        alarm_pacman linux-odroid-512
-        alarm_pacman linux-odroid-512-headers
-        alarm_pacman dkms
-    else
+    if [ "${G12_KERNEL}" = "1" ]; then
+        yes | pacman -Rcs linux-aarch64
         alarm_pacman linux-odroid-g12
-        alarm_pacman linux-odroid-g12-headers
+    else
+        alarm_pacman linux-aarch64
     fi
 
     # Updated uboot
-    alarm_pacman uboot-odroid-c4
-
-    # Audio support
-    alarm_pacman odroid-alsa
-
-    if [ "${DISABLE_MALIGL}" != "1" ]; then
-        if [ "${WAYLAND}" != "1" ]; then
-            alarm_pacman odroid-c4-libgl-fb
-            alarm_pacman odroid-gl4es
-        fi
-    else
-        # mesa git for panfrost
-        alarm_pacman mesa-devel-git
-
-        if [ "${TOBETTER_KERNEL}" = "1" ] || [ "${CHEWITT_KERNEL}" = "1" ]; then
-            echo "MOZ_X11_EGL=1" >> /etc/environment
-        fi
-    fi
+    alarm_pacman uboot-tools
+    alarm_install_package uboot-odroid-c4
 
     # Customizations
     cp /mods/boot/boot-logo.alarm.bmp.gz /boot/boot-logo.bmp.gz
 
-    if [ "${TOBETTER_KERNEL}" = "1" ] || [ "${CHEWITT_KERNEL}" = "1" ]; then
-        echo "Copy boot.ini adapted for mainline kernel..."
-        cp /mods/boot/boot.c4.mainline.ini /boot/boot.ini
-
-        if [ "${DISABLE_MALIGL}" = "1" ]; then
-            echo "Enable panfrost-performance service..."
-            cp /mods/etc/systemd/system/panfrost-performance.service /etc/systemd/system/
-            systemctl enable panfrost-performance
-        fi
-    else
-        echo "Copy boot.ini adapted for c4..."
-        cp /mods/boot/boot.c4.hardkernel.ini /boot/boot.ini
-    fi
+    echo "Enable panfrost-performance service..."
+    cp /mods/etc/systemd/system/panfrost-performance.service /etc/systemd/system/
+    systemctl enable panfrost-performance
 }
 
 platform_chroot_setup_exit() {
     echo "Platform chroot-setup-exit..."
-    # Install at last since this causes issues
-    if [ "${DISABLE_MALIGL}" != "1" ]; then
-        if [ "${WAYLAND}" = "1" ]; then
-            alarm_pacman odroid-c4-libgl-wl
-        fi
-    fi
-
-    cp /mods/etc/default/cpupower.c4 /etc/default/cpupower
 }
 
 platform_post_chroot() {
     echo "Platform post-chroot..."
 
-    if [ "${TOBETTER_KERNEL}" = "1" ] || [ "${CHEWITT_KERNEL}" = "1" ]; then
-        # Wireless
-        alarm_yay_install rtl88xxau-aircrack-dkms-git
-    fi
-
     echo "Setting boot.ini UUID"
-    local loopname=$(echo "${LOOP}" | sed "s/\/dev\///g")
+    local loopname
+    loopname=$(echo "${LOOP}" | sed "s/\/dev\///g")
 
-    local uuidboot=$(lsblk -o uuid,name | grep ${loopname}p1 | awk "{print \$1}")
-    local uuidroot=$(lsblk -o uuid,name | grep ${loopname}p2 | awk "{print \$1}")
+    local uuidboot
+    uuidboot=$(lsblk -o uuid,name | grep "${loopname}p1" | awk "{print \$1}")
+    local uuidroot
+    uuidroot=$(lsblk -o uuid,name | grep "${loopname}p2" | awk "{print \$1}")
 
     sudo sed -i "s/root=\/dev\/mmcblk\${devno}p2/root=UUID=${uuidroot}/g" \
         root/boot/boot.ini
@@ -108,6 +62,6 @@ platform_post_chroot() {
         | sudo tee --append root/etc/fstab
 
     echo "Flashing U-Boot..."
-    sudo dd if=root/boot/u-boot.bin of=${LOOP} conv=fsync,notrunc bs=512 seek=1
+    sudo dd if=root/boot/u-boot.bin of="${LOOP}" conv=fsync,notrunc bs=512 seek=1
     sync
 }
